@@ -68,6 +68,25 @@
   --font-label: "Inter", sans-serif;
 }
 
+/* Prevent Material Symbols text flash before font loads */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  /* Hide text until font loads to avoid layout shift */
+  font-display: block;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--color-background);
