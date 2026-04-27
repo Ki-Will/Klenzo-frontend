@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#351000",
+                        "on-background": "#e5e2e1",
+                        "surface-variant": "#353534",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-highest": "#353534",
+                        "on-surface-variant": "#c7c4d8",
+                        "secondary-container": "#413f82",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#140f54",
+                        "tertiary-fixed": "#ffdbcc",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary": "#ffb695",
+                        "on-primary-container": "#dad7ff",
+                        "surface-dim": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "surface": "#131313",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "inverse-on-surface": "#313030",
+                        "surface-container": "#201f1f",
+                        "on-tertiary-container": "#ffd2be",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "outline": "#918fa1",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-tint": "#c3c0ff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "primary-container": "#4f46e5",
+                        "surface-bright": "#3a3939",
+                        "primary": "#c3c0ff",
+                        "on-secondary": "#2a276a",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-error": "#690005",
+                        "on-surface": "#e5e2e1",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "on-primary": "#1d00a5",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "on-primary-fixed": "#0f0069",
+                        "tertiary-container": "#a44100",
+                        "outline-variant": "#464555",
+                        "on-tertiary": "#571f00",
+                        "secondary-fixed": "#e2dfff",
+                        "primary-fixed": "#e2dfff",
+                        "on-secondary-container": "#b0aef9",
+                        "inverse-primary": "#4d44e3",
+                        "secondary": "#c3c0ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0D0D0D; font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .bg-obsidian-card { background-color: #151515; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background antialiased selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131313] flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="close-up professional portrait of a stylish user avatar with a minimalist background and soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBigqegyvRsDuS06DVNsBVDgWs6U7LT9_E0Chq9ljWD9u7BLrL1uqcFlELk3B0YlLfJWzMYDxvBMEFoC6pxnVDU_XjxAeQz0OjTlxuGznEF126qvKkDYPouF-vAtRIikmiROYR8YAO1VwSBDqQw9VEJ4XTtFljfXFQpS45j8juDezpQwHWdV6m1-ozwptit34i0bVpqTZcP9JVpcYyABUVZoGrF-MguY-uqY-HlAg-_s0B_Fkq-CYSzOlrud8yx_u_Bt8mOI2A17lGF"/>
+</div>
+<h1 class="font-['Manrope'] font-bold tracking-tight text-white text-xl">Security</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2A2A2A] transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-white" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-md mx-auto">
+<!-- Hero Visual / Status -->
+<div class="mb-10 relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary-container to-primary rounded-xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+<div class="relative bg-obsidian-card p-8 rounded-lg flex flex-col items-center text-center">
+<div class="w-16 h-16 bg-primary-container/20 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<h2 class="font-headline font-extrabold text-2xl mb-1">Your account is secure</h2>
+<p class="text-on-surface-variant text-sm font-body">Last security check: 2 hours ago</p>
+</div>
+</div>
+<!-- Section 1: Protection -->
+<div class="mb-8">
+<h3 class="text-xs font-bold uppercase tracking-widest text-outline mb-4 px-2">Protection</h3>
+<div class="space-y-3">
+<div class="bg-obsidian-card p-5 rounded-lg flex items-center justify-between group hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="lock_reset">lock_reset</span>
+<span class="font-medium">Change Password</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="bg-obsidian-card p-5 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="fingerprint">fingerprint</span>
+<span class="font-medium">Biometric Authentication</span>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</div>
+</div>
+<div class="bg-obsidian-card p-5 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="security_update_good">security_update_good</span>
+<span class="font-medium">Two-Factor Authentication</span>
+</div>
+<span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-tighter">Enabled</span>
+</div>
+</div>
+</div>
+<!-- Section 2: Active Sessions -->
+<div class="mb-8">
+<h3 class="text-xs font-bold uppercase tracking-widest text-outline mb-4 px-2">Active Sessions</h3>
+<div class="space-y-4">
+<!-- Session 1 -->
+<div class="bg-obsidian-card p-5 rounded-lg">
+<div class="flex justify-between items-start mb-4">
+<div class="flex gap-4">
+<div class="p-3 bg-surface-container-high rounded-sm">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="smartphone">smartphone</span>
+</div>
+<div>
+<h4 class="font-semibold text-on-background">iPhone 15 Pro</h4>
+<p class="text-xs text-on-surface-variant">San Francisco, USA • Current Device</p>
+</div>
+</div>
+<button class="text-xs font-bold text-error hover:bg-error/10 px-3 py-1 rounded-sm transition-colors">Log out</button>
+</div>
+<div class="h-[1px] w-full bg-outline-variant/10 mb-4"></div>
+<div class="flex items-center gap-2 text-[10px] text-outline uppercase font-bold">
+<span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span> Active now
+                    </div>
+</div>
+<!-- Session 2 -->
+<div class="bg-obsidian-card p-5 rounded-lg">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="p-3 bg-surface-container-high rounded-sm">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="laptop_mac">laptop_mac</span>
+</div>
+<div>
+<h4 class="font-semibold text-on-background">Chrome on MacOS</h4>
+<p class="text-xs text-on-surface-variant">London, UK • 2 hours ago</p>
+</div>
+</div>
+<button class="text-xs font-bold text-error hover:bg-error/10 px-3 py-1 rounded-sm transition-colors">Log out</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Privacy -->
+<div class="mb-8">
+<h3 class="text-xs font-bold uppercase tracking-widest text-outline mb-4 px-2">Privacy</h3>
+<div class="bg-obsidian-card rounded-lg overflow-hidden">
+<div class="p-5 flex items-center justify-between border-b border-outline-variant/5 hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="policy">policy</span>
+<span class="font-medium text-sm">Privacy Policy</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm" data-icon="open_in_new">open_in_new</span>
+</div>
+<div class="p-5 flex items-center justify-between hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="file_download">file_download</span>
+<span class="font-medium text-sm">Data Export</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Footer Note -->
+<div class="text-center opacity-40 px-8">
+<p class="text-[10px] leading-relaxed">Klenzoo utilizes AES-256 bit encryption to ensure your financial data remains private and secure at all times.</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-[2rem] bg-[#131313]/80 backdrop-blur-xl flex justify-around items-center px-8 py-4 w-full shadow-[0_-20px_40px_rgba(0,0,0,0.4)]">
+<a class="text-[#C7C4D8] p-3 hover:text-white transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</a>
+<a class="bg-gradient-to-br from-[#4F46E5] to-[#C3C0FF] text-white rounded-full p-3 shadow-[0_0_15px_rgba(79,70,229,0.4)] active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+</a>
+<a class="text-[#C7C4D8] p-3 hover:text-white transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</a>
+<a class="text-[#C7C4D8] p-3 hover:text-white transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+</nav>
+<!-- Visual separation logic gradient at bottom -->
+<div class="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0E0E0E] to-transparent pointer-events-none z-40"></div>
+</body></html>

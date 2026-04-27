@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Klenzoo Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#3a3939",
+                        "primary": "#c3c0ff",
+                        "on-secondary-fixed": "#140f54",
+                        "on-primary-fixed": "#0f0069",
+                        "primary-container": "#4f46e5",
+                        "surface-variant": "#353534",
+                        "secondary": "#c3c0ff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-primary-container": "#dad7ff",
+                        "outline": "#918fa1",
+                        "on-secondary-container": "#b0aef9",
+                        "primary-fixed": "#e2dfff",
+                        "on-surface-variant": "#c7c4d8",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "background": "#131313",
+                        "surface-dim": "#131313",
+                        "on-error": "#690005",
+                        "surface-container-high": "#2a2a2a",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary": "#571f00",
+                        "secondary-fixed": "#e2dfff",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-fixed": "#351000",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "on-primary": "#1d00a5",
+                        "inverse-primary": "#4d44e3",
+                        "tertiary": "#ffb695",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary": "#2a276a",
+                        "secondary-container": "#413f82",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-background": "#e5e2e1",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-container": "#201f1f",
+                        "outline-variant": "#464555",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "tertiary-container": "#a44100",
+                        "on-tertiary-container": "#ffd2be",
+                        "surface": "#131313",
+                        "surface-tint": "#c3c0ff",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#7b2f00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #131313; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(28, 27, 27, 0.6); backdrop-filter: blur(20px); }
+        .neon-line { filter: drop-shadow(0 0 8px rgba(195, 192, 255, 0.4)); }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-neutral-950/80 backdrop-blur-xl text-indigo-600 dark:text-indigo-400 fixed top-0 w-full z-50 tonal-shift bg-neutral-900/50">
+<div class="flex justify-between items-center px-8 h-20 w-full max-w-full">
+<div class="text-2xl font-black text-indigo-500 tracking-tighter font-manrope tracking-tight">Klenzoo</div>
+<div class="hidden md:flex items-center space-x-12">
+<nav class="flex items-center space-x-8">
+<a class="text-indigo-400 font-bold font-manrope tracking-tight hover:bg-neutral-800/50 transition-colors px-3 py-2 rounded-lg" href="#">Dashboard</a>
+<a class="text-neutral-400 font-manrope tracking-tight hover:bg-neutral-800/50 transition-colors px-3 py-2 rounded-lg" href="#">Analytics</a>
+<a class="text-neutral-400 font-manrope tracking-tight hover:bg-neutral-800/50 transition-colors px-3 py-2 rounded-lg" href="#">Accounts</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<button class="material-symbols-outlined p-2 hover:bg-neutral-800/50 transition-colors active:scale-95 duration-200">notifications</button>
+<button class="material-symbols-outlined p-2 hover:bg-neutral-800/50 transition-colors active:scale-95 duration-200">account_circle</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="bg-neutral-950 fixed left-0 h-full w-64 border-r border-neutral-800/20 hidden lg:flex flex-col p-6 space-y-4">
+<div class="text-xl font-bold text-white mb-8">Klenzoo</div>
+<div class="flex flex-col space-y-2 flex-grow">
+<a class="flex items-center space-x-4 p-3 text-white bg-indigo-600/10 rounded-xl transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Dashboard</span>
+</a>
+<a class="flex items-center space-x-4 p-3 text-neutral-500 hover:text-indigo-300 hover:bg-neutral-900 transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Expenses</span>
+</a>
+<a class="flex items-center space-x-4 p-3 text-neutral-500 hover:text-indigo-300 hover:bg-neutral-900 transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Groups</span>
+</a>
+<a class="flex items-center space-x-4 p-3 text-neutral-500 hover:text-indigo-300 hover:bg-neutral-900 transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Analytics</span>
+</a>
+<a class="flex items-center space-x-4 p-3 text-neutral-500 hover:text-indigo-300 hover:bg-neutral-900 transition-all ease-in-out duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Settings</span>
+</a>
+</div>
+<button class="bg-indigo-600 text-white rounded-full py-4 font-bold tracking-tight hover:brightness-110 active:scale-95 transition-all">
+            Add Expense
+        </button>
+</aside>
+<!-- Main Content -->
+<main class="lg:ml-64 mt-20 p-6 md:p-12 min-h-screen">
+<div class="max-w-7xl mx-auto space-y-12">
+<!-- Hero: Balance Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+<div class="lg:col-span-7 space-y-4">
+<h2 class="text-on-surface-variant font-label text-sm uppercase tracking-[0.2em]">Total Liquidity</h2>
+<div class="flex items-baseline space-x-4">
+<h1 class="text-display-lg text-6xl md:text-8xl font-headline font-extrabold tracking-tighter text-on-surface">
+                            $142,590<span class="text-primary">.00</span>
+</h1>
+<div class="flex items-center text-primary bg-primary-container/10 px-3 py-1 rounded-full text-sm font-semibold">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>
+                            +12.5%
+                        </div>
+</div>
+</div>
+<!-- Quick Actions Bento -->
+<div class="lg:col-span-5 grid grid-cols-3 gap-4">
+<button class="flex flex-col items-center justify-center space-y-2 p-6 rounded-lg bg-primary-container text-on-primary-container hover:brightness-110 transition-all active:scale-95 shadow-[0_0_20px_rgba(79,70,229,0.3)]">
+<span class="material-symbols-outlined text-3xl">send</span>
+<span class="text-[10px] uppercase font-bold tracking-widest">Send</span>
+</button>
+<button class="flex flex-col items-center justify-center space-y-2 p-6 rounded-lg bg-surface-container-high hover:bg-surface-bright transition-all active:scale-95">
+<span class="material-symbols-outlined text-3xl">request_page</span>
+<span class="text-[10px] uppercase font-bold tracking-widest">Request</span>
+</button>
+<button class="flex flex-col items-center justify-center space-y-2 p-6 rounded-lg bg-surface-container-high hover:bg-surface-bright transition-all active:scale-95 border border-outline-variant/10">
+<span class="material-symbols-outlined text-3xl">add</span>
+<span class="text-[10px] uppercase font-bold tracking-widest">Add</span>
+</button>
+</div>
+</section>
+<!-- Main Interactive Analytics -->
+<section class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Chart Card -->
+<div class="xl:col-span-2 bg-surface-container-low rounded-lg p-8 space-y-8">
+<div class="flex justify-between items-center">
+<h3 class="font-headline font-bold text-xl">Spending Velocity</h3>
+<div class="flex space-x-2">
+<button class="px-4 py-1 text-xs rounded-full bg-surface-container-highest text-on-surface">Weekly</button>
+<button class="px-4 py-1 text-xs rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">Monthly</button>
+</div>
+</div>
+<!-- Decorative Chart Area -->
+<div class="h-64 w-full relative flex items-end justify-between space-x-2 pt-8">
+<!-- Neon Line Representation -->
+<svg class="absolute inset-0 w-full h-full neon-line" preserveaspectratio="none" viewbox="0 0 100 100">
+<path class="text-primary" d="M0,80 Q10,75 20,40 T40,50 T60,20 T80,35 T100,10" fill="none" stroke="currentColor" stroke-width="2"></path>
+<path d="M0,80 Q10,75 20,40 T40,50 T60,20 T80,35 T100,10 V100 H0 Z" fill="url(#gradient-chart)" fill-opacity="0.1"></path>
+<defs>
+<lineargradient id="gradient-chart" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#c3c0ff"></stop>
+<stop offset="100%" stop-color="transparent"></stop>
+</lineargradient>
+</defs>
+</svg>
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-5">
+<div class="border-t border-white w-full"></div>
+<div class="border-t border-white w-full"></div>
+<div class="border-t border-white w-full"></div>
+<div class="border-t border-white w-full"></div>
+</div>
+<!-- Axis Labels -->
+<div class="absolute bottom-[-24px] left-0 w-full flex justify-between text-[10px] text-on-surface-variant font-medium">
+<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+</div>
+</div>
+</div>
+<!-- Insights Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/10 rounded-lg p-8 flex flex-col justify-between">
+<div class="space-y-6">
+<div class="flex items-center space-x-3 text-tertiary">
+<span class="material-symbols-outlined">lightbulb</span>
+<span class="text-xs font-bold uppercase tracking-widest">Klenzoo Insight</span>
+</div>
+<p class="text-2xl font-headline font-light leading-snug">
+                            You're spending <span class="text-primary font-bold">14% less</span> on luxury items this month compared to July.
+                        </p>
+</div>
+<div class="pt-8 border-t border-outline-variant/5">
+<div class="flex items-center justify-between text-sm">
+<span class="text-on-surface-variant">Recommended Savings</span>
+<span class="text-white font-bold">$2,400.00</span>
+</div>
+<div class="mt-4 w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Transactions & Secondary Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-32 lg:pb-12">
+<!-- Transactions -->
+<div class="lg:col-span-8 space-y-6">
+<div class="flex justify-between items-end">
+<h3 class="font-headline font-bold text-2xl tracking-tight">Recent Activity</h3>
+<a class="text-primary text-sm font-semibold hover:underline" href="#">View Ledger</a>
+</div>
+<div class="space-y-4">
+<!-- Transaction Item -->
+<div class="group flex items-center justify-between p-5 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Apple Store</h4>
+<p class="text-xs text-on-surface-variant">Electronics • 2 hours ago</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-on-surface">-$1,299.00</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Approved</p>
+</div>
+</div>
+<!-- Transaction Item -->
+<div class="group flex items-center justify-between p-5 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">The Alchemist Bar</h4>
+<p class="text-xs text-on-surface-variant">Dining • Yesterday</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-on-surface">-$84.20</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Pending</p>
+</div>
+</div>
+<!-- Transaction Item -->
+<div class="group flex items-center justify-between p-5 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-all">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Stripe Payout</h4>
+<p class="text-xs text-on-surface-variant">Income • Aug 14</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary">+$4,250.00</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Cleared</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Assets Card -->
+<div class="lg:col-span-4 bg-surface-container-low rounded-lg overflow-hidden relative min-h-[320px]">
+<img class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay" data-alt="Modern abstract design with fluid metallic shapes and holographic textures in deep purple and indigo tones reflecting digital wealth" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZOt6E-sAoURlvmwloak79sX6KT7i1ysJU3Z80zVAOUa-J1-9ZQ9xwIBm5RQWBO537D7upINRws3mCNFSxzH-T-G1Yzz8xH6fE9HIRnThy2G2Y6emnCWdKHaDi0J2bqOZ_dMrqNkOdNYgkEOoImNqDEnTDgsIj4HNaRTNQdlAdVOrhNHxIx0NgWZYzZ7v-LWAcpiKl8HKKd0HvAAEFWxFA9Aeghn50lhxTfGObQcOmT7QOa_UnFZxh7cKgwDVrFTdwSC4lIc27ZCX6"/>
+<div class="relative p-8 h-full flex flex-col justify-between bg-gradient-to-t from-surface-container-low to-transparent">
+<div class="space-y-1">
+<h3 class="font-headline font-bold text-xl">Vault Assets</h3>
+<p class="text-sm text-on-surface-variant">Locked liquidity &amp; investments</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">Digital Equity</span>
+<span class="font-bold">$84,000</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">Global Bonds</span>
+<span class="font-bold">$12,400</span>
+</div>
+<button class="w-full mt-4 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white font-bold text-xs uppercase tracking-widest hover:bg-white/20 transition-all">
+                                Manage Portfolio
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-end px-6 pb-8 pt-4 bg-neutral-950/90 backdrop-blur-2xl z-50 rounded-t-[2.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center bg-indigo-600 text-white rounded-full p-3 mb-2 transform -translate-y-2 shadow-[0_0_20px_rgba(79,70,229,0.4)] transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-inter text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-2 hover:text-indigo-400 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-inter text-[10px] font-medium">Costs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-2 hover:text-indigo-400 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-inter text-[10px] font-medium">Add</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-2 hover:text-indigo-400 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-inter text-[10px] font-medium">Social</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-2 hover:text-indigo-400 transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-inter text-[10px] font-medium">Insights</span>
+</a>
+</nav>
+</body></html>

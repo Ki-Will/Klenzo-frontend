@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Klenzoo SMS Transactions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#a44100",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "outline-variant": "#464555",
+                    "inverse-on-surface": "#313030",
+                    "surface-container": "#201f1f",
+                    "surface": "#131313",
+                    "on-tertiary-container": "#ffd2be",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "error-container": "#93000a",
+                    "surface-tint": "#c3c0ff",
+                    "on-secondary-fixed-variant": "#413f82",
+                    "surface-container-low": "#1c1b1b",
+                    "on-tertiary-fixed": "#351000",
+                    "secondary-fixed": "#e2dfff",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "on-surface": "#e5e2e1",
+                    "tertiary": "#ffb695",
+                    "inverse-primary": "#4d44e3",
+                    "on-primary": "#1d00a5",
+                    "tertiary-fixed": "#ffdbcc",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "secondary-container": "#413f82",
+                    "on-background": "#e5e2e1",
+                    "on-secondary": "#2a276a",
+                    "inverse-surface": "#e5e2e1",
+                    "primary-fixed": "#e2dfff",
+                    "on-surface-variant": "#c7c4d8",
+                    "surface-container-highest": "#353534",
+                    "surface-container-high": "#2a2a2a",
+                    "on-error": "#690005",
+                    "surface-dim": "#131313",
+                    "background": "#131313",
+                    "on-tertiary": "#571f00",
+                    "surface-container-lowest": "#0e0e0e",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed": "#140f54",
+                    "primary": "#c3c0ff",
+                    "surface-bright": "#3a3939",
+                    "secondary": "#c3c0ff",
+                    "surface-variant": "#353534",
+                    "primary-container": "#4f46e5",
+                    "on-primary-fixed": "#0f0069",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-container": "#b0aef9",
+                    "outline": "#918fa1",
+                    "on-primary-container": "#dad7ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        background-color: #131313;
+        color: #e5e2e1;
+        font-family: 'Inter', sans-serif;
+      }
+      .glass-card {
+        background: rgba(42, 42, 42, 0.6);
+        backdrop-filter: blur(20px);
+      }
+      .text-glow {
+        text-shadow: 0 0 15px rgba(195, 192, 255, 0.3);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-[#131313] dark:bg-[#131313] w-full sticky top-0 z-50 transition-colors duration-300">
+<div class="flex justify-between items-center px-6 py-4 w-full bg-[#1C1B1B]">
+<div class="flex items-center gap-3">
+<span class="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#4F46E5] to-[#C3C0FF]">Klenzoo</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-[#2A2A2A] transition-colors duration-300 scale-95 active:duration-150 text-[#C7C4D8]">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-[#2A2A2A] transition-colors duration-300 scale-95 active:duration-150 text-[#C7C4D8]">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-5xl mx-auto px-6 pt-8 pb-32">
+<!-- Header Section -->
+<section class="mb-12">
+<h1 class="font-headline text-5xl font-extrabold tracking-tight mb-4 text-glow">SMS Transactions</h1>
+<p class="text-on-surface-variant font-body text-lg max-w-2xl">
+                We've automatically detected potential expenses from your text messages. Review and categorize them to update your insights.
+            </p>
+</section>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<div class="md:col-span-2 bg-surface-container-low rounded-lg p-8 flex flex-col justify-between min-h-[200px]">
+<div class="flex justify-between items-start">
+<span class="font-label uppercase tracking-widest text-xs text-on-surface-variant font-bold">Unprocessed Volume</span>
+<span class="material-symbols-outlined text-primary">sms</span>
+</div>
+<div>
+<div class="font-headline text-4xl font-bold mb-1">$1,420.50</div>
+<div class="text-on-surface-variant text-sm">12 new messages detected in the last 24h</div>
+</div>
+</div>
+<div class="bg-primary-container rounded-lg p-8 flex flex-col justify-center items-center text-center">
+<div class="bg-white/20 p-4 rounded-full mb-4">
+<span class="material-symbols-outlined text-white text-3xl">auto_awesome</span>
+</div>
+<div class="text-white font-headline font-bold text-xl mb-1">98% Accuracy</div>
+<div class="text-white/80 text-sm">AI engine confidence score</div>
+</div>
+</div>
+<!-- Categorized List -->
+<div class="space-y-12">
+<!-- Pending Category -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<div class="h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_#c3c0ff]"></div>
+<h2 class="font-headline text-xl font-bold tracking-tight">Pending Review</h2>
+</div>
+<div class="space-y-4">
+<!-- Transaction Item 1 -->
+<div class="bg-surface-container-low hover:bg-surface-container transition-all duration-300 rounded-lg p-6 group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Sender: AMZ-PAY</span>
+<span class="text-on-surface-variant text-[10px]">Today, 10:42 AM</span>
+</div>
+<p class="text-on-surface italic font-body text-sm mb-4 bg-surface-container-lowest p-3 rounded-md border-l-4 border-primary/30">
+                                    "Your order for $84.99 at AMAZON.COM has been processed. Txn ID: 4920..."
+                                </p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface-container-high px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-primary">shopping_bag</span>
+<span class="text-xs font-semibold">Shopping</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container-high px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-primary">credit_card</span>
+<span class="text-xs font-semibold">Visa ...4412</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6 justify-between md:justify-end">
+<div class="text-right">
+<div class="font-headline text-2xl font-black text-on-surface">$84.99</div>
+<div class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Extracted</div>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-highest hover:bg-surface-bright text-on-surface px-5 py-3 rounded-full text-sm font-bold transition-all active:scale-95">
+                                        Dismiss
+                                    </button>
+<button class="bg-gradient-to-br from-primary-container to-primary text-white px-8 py-3 rounded-full text-sm font-bold shadow-[0_0_20px_rgba(79,70,229,0.3)] transition-all active:scale-95">
+                                        Confirm
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Transaction Item 2 -->
+<div class="bg-surface-container-low hover:bg-surface-container transition-all duration-300 rounded-lg p-6 group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Sender: UBER-INC</span>
+<span class="text-on-surface-variant text-[10px]">Yesterday, 11:15 PM</span>
+</div>
+<p class="text-on-surface italic font-body text-sm mb-4 bg-surface-container-lowest p-3 rounded-md border-l-4 border-primary/30">
+                                    "Thanks for riding with Uber. Total: $24.50. See your receipt for details."
+                                </p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 bg-surface-container-high px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-sm text-primary">local_taxi</span>
+<span class="text-xs font-semibold">Transport</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6 justify-between md:justify-end">
+<div class="text-right">
+<div class="font-headline text-2xl font-black text-on-surface">$24.50</div>
+<div class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Extracted</div>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-highest hover:bg-surface-bright text-on-surface px-5 py-3 rounded-full text-sm font-bold transition-all active:scale-95">
+                                        Dismiss
+                                    </button>
+<button class="bg-gradient-to-br from-primary-container to-primary text-white px-8 py-3 rounded-full text-sm font-bold shadow-[0_0_20px_rgba(79,70,229,0.3)] transition-all active:scale-95">
+                                        Confirm
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Confirmed Recently -->
+<section>
+<div class="flex items-center gap-3 mb-6">
+<div class="h-2 w-2 rounded-full bg-on-surface-variant opacity-50"></div>
+<h2 class="font-headline text-xl font-bold tracking-tight text-on-surface-variant">Confirmed Recently</h2>
+</div>
+<div class="space-y-4 opacity-70">
+<div class="bg-surface-container-lowest border border-outline-variant/10 rounded-lg p-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-primary font-bold text-[10px] uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                        Confirmed
+                                    </span>
+<span class="text-on-surface-variant text-[10px]">Aug 24, 2:10 PM</span>
+</div>
+<p class="text-on-surface-variant italic font-body text-sm">
+                                    "Debit Card txn: $12.40 at STARBUCKS COFFEE."
+                                </p>
+</div>
+<div class="flex items-center gap-6 justify-between md:justify-end">
+<div class="text-right">
+<div class="font-headline text-2xl font-bold text-primary-fixed-dim">$12.40</div>
+<div class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Verified</div>
+</div>
+<button class="p-3 rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Featured Insight Card -->
+<section class="mt-16">
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-8">
+<div class="absolute top-0 right-0 w-1/3 h-full opacity-20 pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="abstract flowing 3d lines and geometric shapes in indigo and violet colors over a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8XwZWH1vDKIr6wiLQQ5xvS7mNYCixk-Ku8whGNAl3QC__-J67I43jGpX5qiYXgMqta4Um_6OMTvaGJS7-5r3smyqbFrTOzDtRtqdE9Z71SIezq3RK_sTz_BQk6yM4x4Xj_yLrq4diGSTE5o_vAHb6hKBr0E7Cb2zCiR8UKwd11oAEEc6_9BzmmvN86qcEIhs3Yk2zwmEnel-jlrhbv098_gMNvcqlExZoO7WsIOKneNYDHnPx0fR4N9v4IAJipbpaPTM3vetyOk2V"/>
+</div>
+<div class="relative z-10 max-w-lg">
+<h3 class="font-headline text-2xl font-bold mb-3">Weekly Savings Boost</h3>
+<p class="text-on-surface-variant mb-6">By confirming these SMS transactions, your "Food &amp; Drink" budget has been updated. You're currently $45 under budget for the week!</p>
+<button class="flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+<span>View Budget Report</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-8 pt-4 bg-[#131313]/80 backdrop-blur-2xl shadow-[0_-20px_40px_rgba(0,0,0,0.4)] rounded-t-[3rem]">
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Groups</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#4F46E5] to-[#C3C0FF] text-white rounded-full p-3 shadow-[0_0_20px_rgba(79,70,229,0.3)]" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Add</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Insights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

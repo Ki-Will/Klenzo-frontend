@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#3323cc",
+                    "surface-bright": "#3a3939",
+                    "outline-variant": "#464555",
+                    "on-primary": "#1d00a5",
+                    "surface": "#131313",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "secondary": "#c3c0ff",
+                    "primary": "#c3c0ff",
+                    "on-background": "#e5e2e1",
+                    "on-surface-variant": "#c7c4d8",
+                    "surface-variant": "#353534",
+                    "surface-container-low": "#1c1b1b",
+                    "on-primary-container": "#dad7ff",
+                    "on-secondary-fixed": "#140f54",
+                    "on-error": "#690005",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "secondary-container": "#413f82",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "surface-tint": "#c3c0ff",
+                    "secondary-fixed": "#e2dfff",
+                    "on-tertiary-container": "#ffd2be",
+                    "on-error-container": "#ffdad6",
+                    "tertiary": "#ffb695",
+                    "on-tertiary": "#571f00",
+                    "outline": "#918fa1",
+                    "on-tertiary-fixed": "#351000",
+                    "surface-dim": "#131313",
+                    "on-primary-fixed": "#0f0069",
+                    "surface-container-high": "#2a2a2a",
+                    "tertiary-fixed": "#ffdbcc",
+                    "tertiary-container": "#a44100",
+                    "surface-container-lowest": "#0e0e0e",
+                    "inverse-surface": "#e5e2e1",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "inverse-on-surface": "#313030",
+                    "surface-container": "#201f1f",
+                    "inverse-primary": "#4d44e3",
+                    "surface-container-highest": "#353534",
+                    "primary-container": "#4f46e5",
+                    "error": "#ffb4ab",
+                    "background": "#131313",
+                    "on-secondary-fixed-variant": "#413f82",
+                    "on-secondary-container": "#b0aef9",
+                    "primary-fixed": "#e2dfff",
+                    "on-surface": "#e5e2e1",
+                    "on-secondary": "#2a276a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(42, 42, 42, 0.4);
+            backdrop-filter: blur(24px);
+        }
+        .luminous-button {
+            background: linear-gradient(135deg, #4f46e5 0%, #c3c0ff 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col items-center justify-center overflow-hidden">
+<!-- TopAppBar Suppressed per Rule (Login Page) -->
+<main class="relative w-full max-w-md px-6 py-12 md:py-24">
+<!-- Abstract Background Glows -->
+<div class="absolute -top-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute -bottom-40 -right-40 w-80 h-80 bg-secondary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center">
+<!-- Branding Header -->
+<div class="mb-12 text-center">
+<h1 class="text-4xl md:text-5xl font-headline font-black tracking-tighter text-primary-fixed mb-2">KLENZOO</h1>
+<p class="text-on-surface-variant font-label tracking-wide uppercase text-[10px]">Secure Gateway to the Void</p>
+</div>
+<!-- Login Container -->
+<div class="w-full space-y-8">
+<div class="space-y-4">
+<!-- Email Input -->
+<div class="group">
+<label class="block text-on-surface-variant font-label text-[11px] font-semibold mb-2 ml-4 uppercase tracking-widest">Identifier</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-sm">alternate_email</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-outline/50 focus:ring-1 focus:ring-primary focus:bg-surface-container-high transition-all duration-300" placeholder="email or username" type="text"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="group">
+<div class="flex justify-between items-center mb-2 px-4">
+<label class="text-on-surface-variant font-label text-[11px] font-semibold uppercase tracking-widest">Secret</label>
+<a class="text-primary text-[11px] font-bold hover:text-secondary transition-colors uppercase tracking-widest" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-sm">lock</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-outline/50 focus:ring-1 focus:ring-primary focus:bg-surface-container-high transition-all duration-300" placeholder="••••••••" type="password"/>
+</div>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full luminous-button text-on-primary-fixed font-headline font-extrabold py-4 rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                    ACCESS PORTAL
+                </button>
+<!-- Divider -->
+<div class="relative flex items-center py-4">
+<div class="flex-grow border-t border-outline-variant/10"></div>
+<span class="flex-shrink mx-4 text-on-surface-variant font-label text-[10px] tracking-[0.2em] uppercase">Auth Sync</span>
+<div class="flex-grow border-t border-outline-variant/10"></div>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-3 glass-panel border border-outline-variant/10 py-3 rounded-lg hover:bg-surface-container-high transition-all group">
+<img alt="Google Logo" class="w-5 h-5 opacity-80 group-hover:opacity-100 transition-opacity" data-alt="clean minimalist colorful google logo icon on a transparent background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVFdj7O0dMFSPWkxwUqf-Vf4YNiuZp12gzKx-0Z7cxXAAyr76Jkn4je9c8JFUqiIqA1hOHN7nLstbpDeX3vYat2l3toEiZKT2UfZqBMiYhlds1xvwlzuLAkC2SHXw5YGWN1ardaXABx2dWBS3AbTFgTmyADz6A8L3nmRufdfHTIPV2erSV2fBXn2lZde0lvFJ1VW0xTtfZfkLxcI5eXPjdFxW3Yh41u_p04ndJkvy6RQVZXDzC2xcwUl9S8W_tALqwGxGJgdunwr-9"/>
+<span class="font-label text-xs font-semibold tracking-wider">GOOGLE</span>
+</button>
+<button class="flex items-center justify-center gap-3 glass-panel border border-outline-variant/10 py-3 rounded-lg hover:bg-surface-container-high transition-all group">
+<span class="material-symbols-outlined text-xl opacity-80 group-hover:opacity-100 transition-opacity" data-weight="fill">ios</span>
+<span class="font-label text-xs font-semibold tracking-wider">APPLE</span>
+</button>
+</div>
+<!-- Secondary Action -->
+<div class="text-center mt-12">
+<p class="text-on-surface-variant text-sm">
+                        New to the void? 
+                        <a class="text-primary font-bold hover:underline underline-offset-4 ml-1" href="#">Create Account</a>
+</p>
+</div>
+</div>
+</div>
+<!-- Footnote Decoration -->
+<div class="mt-24 text-center opacity-20 select-none">
+<span class="text-[8px] font-label tracking-[1em] text-on-surface uppercase">Encrypted 256-bit Environment</span>
+</div>
+</main>
+<!-- BottomNavBar Suppressed per Rule (Login Page) -->
+</body></html>

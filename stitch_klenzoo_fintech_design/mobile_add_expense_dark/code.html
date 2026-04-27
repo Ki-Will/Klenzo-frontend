@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Klenzoo - Add Expense</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-tint": "#c3c0ff",
+                "secondary-container": "#413f82",
+                "on-tertiary-fixed-variant": "#7b2f00",
+                "tertiary": "#ffb695",
+                "on-tertiary": "#571f00",
+                "secondary-fixed": "#e2dfff",
+                "on-tertiary-container": "#ffd2be",
+                "on-error-container": "#ffdad6",
+                "on-surface-variant": "#c7c4d8",
+                "tertiary-fixed-dim": "#ffb695",
+                "secondary": "#c3c0ff",
+                "primary": "#c3c0ff",
+                "on-background": "#e5e2e1",
+                "on-primary-fixed-variant": "#3323cc",
+                "surface": "#131313",
+                "error-container": "#93000a",
+                "surface-bright": "#3a3939",
+                "outline-variant": "#464555",
+                "on-primary": "#1d00a5",
+                "on-secondary-fixed": "#140f54",
+                "on-error": "#690005",
+                "primary-fixed-dim": "#c3c0ff",
+                "surface-container-low": "#1c1b1b",
+                "surface-variant": "#353534",
+                "on-primary-container": "#dad7ff",
+                "on-secondary-fixed-variant": "#413f82",
+                "surface-container": "#201f1f",
+                "inverse-primary": "#4d44e3",
+                "error": "#ffb4ab",
+                "background": "#131313",
+                "surface-container-highest": "#353534",
+                "primary-container": "#4f46e5",
+                "on-secondary": "#2a276a",
+                "on-secondary-container": "#b0aef9",
+                "on-surface": "#e5e2e1",
+                "primary-fixed": "#e2dfff",
+                "surface-dim": "#131313",
+                "on-primary-fixed": "#0f0069",
+                "outline": "#918fa1",
+                "on-tertiary-fixed": "#351000",
+                "secondary-fixed-dim": "#c3c0ff",
+                "tertiary-fixed": "#ffdbcc",
+                "tertiary-container": "#a44100",
+                "surface-container-lowest": "#0e0e0e",
+                "inverse-surface": "#e5e2e1",
+                "inverse-on-surface": "#313030",
+                "surface-container-high": "#2a2a2a"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- Top App Bar -->
+<header class="bg-[#131313] shadow-none w-full sticky top-0 z-50 flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-on-surface-variant active:scale-95 transition-transform">close</button>
+</div>
+<h1 class="font-['Manrope'] tracking-tight font-bold text-2xl font-black tracking-tighter text-[#4F46E5] dark:text-[#C3C0FF]">Klenzoo</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high ring-2 ring-primary/20">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a professional man with a friendly expression in clean studio lighting with dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4n1oj2vnbdKc9zwF8AFU0KLMt-tCEpYY_YD8flQzTbDmDYz_-EE65_IRqHr78JZ-JVOdwodwgY8EksguU2yhUb14OQwDHSUZwOh5F6QixeJHAGhCgEAA4cJP1znHna8i-1DfOCFY6NCeKcJi_7Wt-cXlt0P_Fsbp8GmfWsYb1ya49QnxiwZRPexiaYz_O24HoqimivflseZD1VsDTeoOeZWuHRbo7edQumh_wb11wdG_GV2v7g1_f_tZzmtvqExy5AYreNElxuJt4"/>
+</div>
+</header>
+<main class="max-w-md mx-auto px-6 pt-4 pb-32 flex flex-col min-h-[calc(100vh-80px)]">
+<!-- Expense Input Area -->
+<section class="flex flex-col items-center justify-center py-8 space-y-2">
+<span class="text-on-surface-variant font-label text-sm tracking-widest uppercase opacity-70">Amount to spent</span>
+<div class="flex items-baseline gap-1">
+<span class="text-primary font-headline text-3xl font-bold">$</span>
+<span class="text-on-surface font-headline text-6xl font-extrabold tracking-tighter">1,240.00</span>
+</div>
+<div class="bg-surface-container-low px-4 py-2 rounded-full mt-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-primary">edit_note</span>
+<span class="text-on-surface-variant text-sm font-medium">Add note...</span>
+</div>
+</section>
+<!-- Category Horizontal Select -->
+<section class="mt-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline font-bold text-lg">Category</h3>
+<span class="text-primary text-sm font-medium">View All</span>
+</div>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
+<!-- Category Item Active -->
+<div class="flex flex-col items-center gap-2 shrink-0">
+<div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-container to-primary flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<span class="text-xs font-medium text-on-surface">Dining</span>
+</div>
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 shrink-0 opacity-60">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">shopping_cart</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Grocery</span>
+</div>
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 shrink-0 opacity-60">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">directions_car</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Travel</span>
+</div>
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 shrink-0 opacity-60">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">movie</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Fun</span>
+</div>
+<!-- Category Item -->
+<div class="flex flex-col items-center gap-2 shrink-0 opacity-60">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">health_and_safety</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Health</span>
+</div>
+</div>
+</section>
+<!-- Numeric Keypad (Integrated UI) -->
+<section class="mt-auto pt-8">
+<div class="grid grid-cols-3 gap-y-4 gap-x-8 text-center">
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">1</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">2</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">3</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">4</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">5</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">6</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">7</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">8</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">9</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">.</button>
+<button class="py-4 text-2xl font-headline font-bold text-on-surface active:bg-surface-container-high rounded-xl transition-colors">0</button>
+<button class="py-4 flex items-center justify-center text-on-surface-variant active:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined text-3xl">backspace</span>
+</button>
+</div>
+</section>
+<!-- Confirm Button Container -->
+<div class="mt-8">
+<button class="w-full bg-gradient-to-br from-primary-container to-primary text-on-primary font-headline font-extrabold py-5 rounded-full shadow-2xl shadow-primary/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span>Confirm Payment</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Active: Add) -->
+<nav class="fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-4 pb-4 bg-[#1C1B1B]/80 backdrop-blur-xl rounded-t-[2rem] z-50 border-t border-[#464555]/15 shadow-[0_-20px_40px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C3C0FF] bg-gradient-to-br from-[#4F46E5]/20 to-[#C3C0FF]/10 rounded-full px-4 py-1 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Add</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Groups</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Charts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase">Settings</span>
+</a>
+</nav>
+</body></html>

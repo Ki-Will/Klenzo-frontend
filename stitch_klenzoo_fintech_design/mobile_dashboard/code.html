@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Klenzoo Finance Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#571f00",
+                    "on-error": "#690005",
+                    "primary-container": "#4f46e5",
+                    "on-surface-variant": "#c7c4d8",
+                    "primary-fixed": "#e2dfff",
+                    "on-tertiary-fixed": "#351000",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "surface-tint": "#c3c0ff",
+                    "inverse-primary": "#4d44e3",
+                    "inverse-surface": "#e5e2e1",
+                    "surface-container-highest": "#353534",
+                    "surface-container-high": "#2a2a2a",
+                    "secondary-fixed": "#e2dfff",
+                    "tertiary-container": "#a44100",
+                    "tertiary-fixed": "#ffdbcc",
+                    "error-container": "#93000a",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "on-surface": "#e5e2e1",
+                    "error": "#ffb4ab",
+                    "on-tertiary-container": "#ffd2be",
+                    "surface": "#131313",
+                    "outline": "#918fa1",
+                    "on-error-container": "#ffdad6",
+                    "primary": "#c3c0ff",
+                    "on-secondary-fixed": "#140f54",
+                    "background": "#131313",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-primary-container": "#dad7ff",
+                    "inverse-on-surface": "#313030",
+                    "on-background": "#e5e2e1",
+                    "on-primary": "#1d00a5",
+                    "surface-dim": "#131313",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "secondary-container": "#413f82",
+                    "tertiary": "#ffb695",
+                    "on-primary-fixed": "#0f0069",
+                    "on-secondary": "#2a276a",
+                    "on-secondary-fixed-variant": "#413f82",
+                    "on-secondary-container": "#b0aef9",
+                    "secondary": "#c3c0ff",
+                    "surface-container": "#201f1f",
+                    "surface-variant": "#353534",
+                    "surface-bright": "#3a3939",
+                    "outline-variant": "#464555",
+                    "on-tertiary-fixed-variant": "#7b2f00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #131313; color: #e5e2e1; -webkit-font-smoothing: antialiased; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .glass-card { background: rgba(42, 42, 42, 0.6); backdrop-filter: blur(20px); }
+        .luminous-gradient { background: linear-gradient(135deg, #4F46E5 0%, #C3C0FF 100%); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-[#131313] dark:bg-[#131313] w-full top-0 sticky z-50 flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="portrait of a confident modern business professional woman with soft studio lighting and dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQz6BgJeQuUBq0AHkdhenlQaOmBIHEk_YxG6QJtndm-pP6w7ls8YReR7w0x6VatuNDQLkCdFaDf62C0sSsh9Vtk5Eh2NbfD6o13McIXyj9ZICwOJGxWBmODyPsOqvisAea7EHjN22XJthgaLQ-mHMfsN_hMWB6CgjIqDVIFJ2lWscP2_4Bx1AV0Z3gR5eQRzkzDX0PFxvxW9kDL85-3-vqAqvTSKCPGNVPt3ehC1LaK1TvZXaDqrk7wTIF5z-wb6Dg9fAulbA8CQ6W"/>
+</div>
+<span class="text-xl font-bold tracking-tighter text-[#4F46E5] dark:text-[#C3C0FF] font-manrope">Fluid Financial</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#2A2A2A] transition-colors text-[#C7C4D8]">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="px-6 space-y-8">
+<!-- Hero Balance Section -->
+<section class="mt-4">
+<div class="flex flex-col gap-1">
+<span class="text-on-surface-variant font-medium tracking-wide text-xs uppercase opacity-80">Total Liquidity</span>
+<h1 class="text-[3.5rem] font-extrabold font-manrope leading-none tracking-tight">
+                    $142,590<span class="text-primary text-2xl">.00</span>
+</h1>
+</div>
+<div class="flex gap-3 mt-8">
+<button class="flex-1 luminous-gradient py-4 rounded-full font-bold flex items-center justify-center gap-2 text-white shadow-[0_10px_20px_rgba(79,70,229,0.3)] active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="send">send</span>
+                    Send
+                </button>
+<button class="flex-1 bg-surface-container-high/60 backdrop-blur-xl py-4 rounded-full font-bold flex items-center justify-center gap-2 text-on-surface active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+                    Request
+                </button>
+<button class="w-14 h-14 bg-surface-container-high/60 backdrop-blur-xl rounded-full flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</section>
+<!-- Bento Grid: Charts and Insights -->
+<section class="grid grid-cols-2 gap-4">
+<!-- Spending Velocity Chart -->
+<div class="col-span-2 bg-surface-container-low rounded-lg p-6 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-bold text-lg font-manrope">Spending Velocity</h3>
+<p class="text-xs text-on-surface-variant">Weekly trends +12%</p>
+</div>
+<span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+</div>
+<!-- Visual Chart Placeholder -->
+<div class="h-24 w-full flex items-end gap-2 px-2">
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[40%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[60%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[45%]"></div>
+<div class="flex-1 bg-primary rounded-t-sm h-[80%] shadow-[0_0_15px_rgba(195,192,255,0.4)]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[55%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[70%]"></div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[50%]"></div>
+</div>
+</div>
+<!-- Klenzoo Insight -->
+<div class="col-span-2 luminous-gradient rounded-lg p-1">
+<div class="bg-surface-container-lowest rounded-[1.9rem] p-6 h-full flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<span class="font-manrope font-bold text-sm tracking-wide">Klenzoo Insight</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                        Your subscriptions increased by <span class="text-primary font-bold">18%</span> this month. Consider consolidating your streaming services to save <span class="text-on-surface font-bold">$42/mo</span>.
+                    </p>
+</div>
+</div>
+<!-- Vault Assets -->
+<div class="col-span-2 bg-surface-container-low rounded-lg p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-lg font-manrope">Vault Assets</h3>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center p-3 bg-surface-container-lowest rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="token">token</span>
+</div>
+<div>
+<p class="font-bold text-sm">Digital Equity</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Tech Index</p>
+</div>
+</div>
+<p class="font-manrope font-bold">$84,000</p>
+</div>
+<div class="flex justify-between items-center p-3 bg-surface-container-lowest rounded-xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+</div>
+<div>
+<p class="font-bold text-sm">Global Bonds</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Treasury</p>
+</div>
+</div>
+<p class="font-manrope font-bold">$12,400</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="pb-10">
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-bold text-2xl font-manrope">Recent Activity</h3>
+<span class="text-primary text-sm font-medium">See All</span>
+</div>
+<div class="space-y-2">
+<!-- Transaction Item -->
+<div class="flex items-center justify-between py-4 group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="apple">ios</span>
+</div>
+<div>
+<p class="font-bold">Apple Store</p>
+<p class="text-xs text-on-surface-variant">Cloud Storage • 12:45 PM</p>
+</div>
+</div>
+<p class="font-manrope font-bold text-error">-$9.99</p>
+</div>
+<div class="flex items-center justify-between py-4 group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="local_bar">local_bar</span>
+</div>
+<div>
+<p class="font-bold">The Alchemist Bar</p>
+<p class="text-xs text-on-surface-variant">Entertainment • 10:12 PM</p>
+</div>
+</div>
+<p class="font-manrope font-bold text-error">-$124.50</p>
+</div>
+<div class="flex items-center justify-between py-4 group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<div>
+<p class="font-bold">Stripe Payout</p>
+<p class="text-xs text-on-surface-variant">Revenue • Yesterday</p>
+</div>
+</div>
+<p class="font-manrope font-bold text-tertiary">+$4,250.00</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-8 py-3 bg-[#1C1B1B]/80 dark:bg-[#1C1B1B]/80 backdrop-blur-xl rounded-t-[3rem] pb-safe shadow-[0_-20px_40px_rgba(0,0,0,0.4)]">
+<!-- Vault (Active) -->
+<a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#4F46E5] to-[#C3C0FF] text-white rounded-full p-3 mb-2 active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</a>
+<!-- Insights -->
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="font-inter text-[11px] font-medium uppercase tracking-widest mt-1">Insights</span>
+</a>
+<!-- Cards -->
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="credit_card">credit_card</span>
+<span class="font-inter text-[11px] font-medium uppercase tracking-widest mt-1">Cards</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[11px] font-medium uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

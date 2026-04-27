@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#0f0069",
+                        "surface-dim": "#d9dadb",
+                        "outline": "#777587",
+                        "on-tertiary-fixed": "#351000",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "tertiary-container": "#a44100",
+                        "inverse-surface": "#2e3132",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "surface-container-high": "#e7e8e9",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "surface-container-highest": "#e1e3e4",
+                        "primary-container": "#4f46e5",
+                        "background": "#f8f9fa",
+                        "error": "#ba1a1a",
+                        "surface-container": "#edeeef",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#e2dfff",
+                        "on-surface": "#191c1d",
+                        "on-secondary-container": "#454386",
+                        "secondary": "#58579b",
+                        "primary": "#3525cd",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-surface-variant": "#464555",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c7c4d8",
+                        "surface-bright": "#f8f9fa",
+                        "surface": "#f8f9fa",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#140f54",
+                        "on-primary-container": "#dad7ff",
+                        "surface-variant": "#e1e3e4",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-tint": "#4d44e3",
+                        "secondary-container": "#b6b4ff",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "tertiary": "#7e3000",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#e2dfff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); }
+        .whisper-shadow { box-shadow: 0 20px 40px rgba(25, 28, 29, 0.04); }
+        .primary-gradient { background: linear-gradient(135deg, #3525cd 0%, #4f46e5 100%); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-[0_20px_40px_rgba(25,28,29,0.04)]">
+<div class="flex justify-between items-center px-8 h-20 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black tracking-tighter text-indigo-600 dark:text-indigo-400 font-['Manrope'] tracking-tight">Klenzoo</span>
+<div class="hidden md:flex items-center gap-6">
+<button class="text-indigo-600 dark:text-indigo-400 font-bold border-b-2 border-indigo-600 transition-all">Overview</button>
+<button class="text-slate-500 dark:text-slate-400 font-medium hover:text-indigo-600 transition-colors duration-300">Market</button>
+<button class="text-slate-500 dark:text-slate-400 font-medium hover:text-indigo-600 transition-colors duration-300">Transfers</button>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="bg-surface-container-low border-none rounded-xl pl-10 pr-4 py-2 w-64 focus:ring-2 focus:ring-primary/20 text-sm" placeholder="Search assets..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-500 hover:text-indigo-600 cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-slate-500 hover:text-indigo-600 cursor-pointer">help_outline</span>
+<img alt="User profile" class="w-10 h-10 rounded-full object-cover ring-2 ring-surface-container-low" data-alt="Close up portrait of a professional man in a minimalist studio setting with soft natural lighting and clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCmF4qnjx75nNJjMx-BGoFtPRPeiQ8VDgy0i6euXlWgXMA2-TajVfPWqFo8ObIEaAMDQEOwgsAGfk0sazX1JK0zJQo-_e-IfklOhinRODo3GMAtR88dmKfGeo_ivkrQ0ImtoEyUUPvQ34glnM2_TbmKWDttz9S12PSBnNnfmNDn98I6PpzDXGqXjf-4cnz-8e-NW2Kh3zAdgRWsl8vtskFZHkV5e8f79gnHAbtWshvVbF0hKzDvc-QTzKLPEg8kaDSL7WN4NTb3jN3"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-white dark:bg-slate-900 flex flex-col h-full py-8 px-4 z-40 hidden xl:flex">
+<div class="mb-12 px-4 mt-20">
+<h2 class="text-xl font-black text-indigo-600 dark:text-indigo-400">Klenzoo</h2>
+<p class="text-[10px] font-bold tracking-[0.15em] uppercase text-slate-400 mt-1">Premium Fintech</p>
+</div>
+<nav class="flex-1">
+<a class="bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-lg px-4 py-3 mb-2 flex items-center gap-3 transition-all Active: translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Manrope'] text-sm font-semibold tracking-wide uppercase">Dashboard</span>
+</a>
+<a class="text-slate-500 dark:text-slate-400 px-4 py-3 mb-2 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-['Manrope'] text-sm font-semibold tracking-wide uppercase">Expenses</span>
+</a>
+<a class="text-slate-500 dark:text-slate-400 px-4 py-3 mb-2 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Manrope'] text-sm font-semibold tracking-wide uppercase">Groups</span>
+</a>
+<a class="text-slate-500 dark:text-slate-400 px-4 py-3 mb-2 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-['Manrope'] text-sm font-semibold tracking-wide uppercase">Analytics</span>
+</a>
+<a class="text-slate-500 dark:text-slate-400 px-4 py-3 mb-2 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Manrope'] text-sm font-semibold tracking-wide uppercase">Settings</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full primary-gradient text-white py-3 rounded-xl font-bold text-sm mb-8 whisper-shadow">Upgrade to Pro</button>
+<div class="border-t border-slate-100 pt-6">
+<a class="text-slate-500 px-4 py-2 flex items-center gap-3 text-xs font-bold uppercase mb-2" href="#">
+<span class="material-symbols-outlined text-sm">contact_support</span> Support
+                </a>
+<a class="text-slate-500 px-4 py-2 flex items-center gap-3 text-xs font-bold uppercase" href="#">
+<span class="material-symbols-outlined text-sm">logout</span> Logout
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="xl:pl-64 pt-28 pb-12 px-8 min-h-screen">
+<div class="max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<h1 class="text-4xl font-extrabold tracking-tight text-on-surface mb-2">Good morning, Julian.</h1>
+<p class="text-on-surface-variant font-medium">Your portfolio grew by <span class="text-emerald-600">+12.4%</span> this month.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 bg-surface-container-high text-primary font-bold rounded-xl hover:bg-surface-container-highest transition-colors">Generate Report</button>
+<button class="px-6 py-3 primary-gradient text-white font-bold rounded-xl whisper-shadow flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span> Add Asset
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Balance & Spending (Primary Area) -->
+<div class="md:col-span-8 flex flex-col gap-8">
+<!-- Hero Balance Card -->
+<div class="bg-surface-container-lowest rounded-[2rem] p-10 whisper-shadow relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[120px] text-primary">account_balance_wallet</span>
+</div>
+<div class="relative z-10">
+<span class="text-xs font-extrabold uppercase tracking-widest text-primary mb-4 block">Total Available Balance</span>
+<div class="flex items-baseline gap-1">
+<span class="text-6xl font-black tracking-tighter">$142,850</span>
+<span class="text-2xl font-bold text-slate-400">.42</span>
+</div>
+<div class="mt-12 grid grid-cols-3 gap-8">
+<div>
+<p class="text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1">Monthly Income</p>
+<p class="text-xl font-bold text-on-surface">$12,400</p>
+</div>
+<div>
+<p class="text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1">Total Savings</p>
+<p class="text-xl font-bold text-on-surface">$68,200</p>
+</div>
+<div>
+<p class="text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1">Growth Rate</p>
+<p class="text-xl font-bold text-emerald-600">+8.2%</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Spending Graph -->
+<div class="bg-surface-container-low rounded-[2rem] p-8">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-lg font-bold">Spending Activity</h3>
+<div class="flex bg-white rounded-lg p-1 whisper-shadow">
+<button class="px-4 py-1.5 text-xs font-bold bg-indigo-50 text-indigo-600 rounded-md">Week</button>
+<button class="px-4 py-1.5 text-xs font-bold text-slate-400">Month</button>
+<button class="px-4 py-1.5 text-xs font-bold text-slate-400">Year</button>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 px-4">
+<!-- Simple custom bar chart to avoid JS libraries -->
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-indigo-200 rounded-t-lg transition-all hover:bg-primary" style="height: 40%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Mon</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-indigo-200 rounded-t-lg transition-all hover:bg-primary" style="height: 65%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Tue</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-primary rounded-t-lg transition-all" style="height: 85%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Wed</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-indigo-200 rounded-t-lg transition-all hover:bg-primary" style="height: 55%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Thu</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-indigo-200 rounded-t-lg transition-all hover:bg-primary" style="height: 90%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Fri</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-indigo-200 rounded-t-lg transition-all hover:bg-primary" style="height: 45%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Sat</span>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="w-full bg-indigo-200 rounded-t-lg transition-all hover:bg-primary" style="height: 30%"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase">Sun</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Assets/Insights (Secondary Area) -->
+<div class="md:col-span-4 flex flex-col gap-8">
+<!-- AI Insights Card -->
+<div class="bg-indigo-600 text-white rounded-[2rem] p-8 whisper-shadow relative overflow-hidden">
+<div class="absolute -top-12 -right-12 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-indigo-200" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-xs font-black uppercase tracking-widest text-indigo-100">Klenzoo AI Insight</span>
+</div>
+<h4 class="text-xl font-bold leading-tight mb-4">You could save $450/mo by consolidating your subscriptions.</h4>
+<p class="text-indigo-100 text-sm mb-6 leading-relaxed opacity-80">Our engine detected 4 duplicate streaming services and 2 unused SaaS memberships.</p>
+<button class="w-full bg-white text-indigo-600 py-3 rounded-xl font-bold text-sm hover:bg-indigo-50 transition-colors">Review Details</button>
+</div>
+</div>
+<!-- Vault Assets -->
+<div class="bg-surface-container-lowest rounded-[2rem] p-8 whisper-shadow flex-1">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-lg font-bold">Vault Assets</h3>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">more_horiz</span>
+</div>
+<div class="space-y-6">
+<!-- Asset Item 1 -->
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">diamond</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">Physical Gold</p>
+<p class="text-[10px] font-black uppercase text-slate-400">Commody Asset</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">$12,450.00</p>
+<p class="text-[10px] font-bold text-emerald-600">+1.2%</p>
+</div>
+</div>
+<!-- Asset Item 2 -->
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">currency_bitcoin</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">Bitcoin Vault</p>
+<p class="text-[10px] font-black uppercase text-slate-400">Digital Asset</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">$42,102.80</p>
+<p class="text-[10px] font-bold text-error">-2.4%</p>
+</div>
+</div>
+<!-- Asset Item 3 -->
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container-low rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">apartment</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">Real Estate REIT</p>
+<p class="text-[10px] font-black uppercase text-slate-400">Property Fund</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">$18,900.00</p>
+<p class="text-[10px] font-bold text-emerald-600">+0.8%</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-10 py-3 border-2 border-dashed border-slate-200 rounded-xl text-slate-400 font-bold text-xs uppercase hover:border-primary hover:text-primary transition-all">
+                            Connect New Vault
+                        </button>
+</div>
+</div>
+</div>
+<!-- Recent Activity Table-less List -->
+<div class="mt-12">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-bold tracking-tight">Recent Transactions</h3>
+<a class="text-primary font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all" href="#">View all history <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
+</div>
+<div class="space-y-4">
+<!-- Transaction 1 -->
+<div class="bg-white rounded-2xl p-4 flex items-center justify-between group hover:bg-slate-50 transition-colors cursor-pointer">
+<div class="flex items-center gap-6">
+<div class="w-14 h-14 bg-surface-container rounded-full overflow-hidden flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]">shopping_bag</span>
+</div>
+<div>
+<p class="font-bold text-lg">Apple Store Online</p>
+<p class="text-sm text-slate-400">Technology &amp; Electronics • Oct 12, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<span class="px-4 py-1.5 bg-surface-container-low rounded-full text-[10px] font-black uppercase text-slate-500 tracking-wider">Completed</span>
+<div class="text-right min-w-[120px]">
+<p class="font-black text-xl">-$1,299.00</p>
+</div>
+</div>
+</div>
+<!-- Transaction 2 -->
+<div class="bg-white rounded-2xl p-4 flex items-center justify-between group hover:bg-slate-50 transition-colors cursor-pointer">
+<div class="flex items-center gap-6">
+<div class="w-14 h-14 bg-emerald-50 rounded-full overflow-hidden flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined text-[28px]">payments</span>
+</div>
+<div>
+<p class="font-bold text-lg">Salary Deposit</p>
+<p class="text-sm text-slate-400">Income • Oct 10, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<span class="px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-wider">Deposited</span>
+<div class="text-right min-w-[120px]">
+<p class="font-black text-xl text-emerald-600">+$8,400.00</p>
+</div>
+</div>
+</div>
+<!-- Transaction 3 -->
+<div class="bg-white rounded-2xl p-4 flex items-center justify-between group hover:bg-slate-50 transition-colors cursor-pointer">
+<div class="flex items-center gap-6">
+<div class="w-14 h-14 bg-surface-container rounded-full overflow-hidden flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]">flight_takeoff</span>
+</div>
+<div>
+<p class="font-bold text-lg">Lufthansa Airlines</p>
+<p class="text-sm text-slate-400">Travel &amp; Lifestyle • Oct 08, 2023</p>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<span class="px-4 py-1.5 bg-surface-container-low rounded-full text-[10px] font-black uppercase text-slate-500 tracking-wider">Pending</span>
+<div class="text-right min-w-[120px]">
+<p class="font-black text-xl">-$840.50</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB -->
+<button class="fixed bottom-10 right-10 w-16 h-16 primary-gradient text-white rounded-full whisper-shadow flex items-center justify-center group hover:scale-110 transition-transform z-50">
+<span class="material-symbols-outlined text-[32px]">bolt</span>
+</button>
+</body></html>

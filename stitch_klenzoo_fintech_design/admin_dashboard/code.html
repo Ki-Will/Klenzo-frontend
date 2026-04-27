@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c7c4d8",
+                        "surface-tint": "#4d44e3",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-surface-variant": "#464555",
+                        "on-secondary-fixed": "#140f54",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface": "#f8f9fa",
+                        "surface-container-high": "#e7e8e9",
+                        "background": "#f8f9fa",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-tertiary-fixed": "#351000",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "surface-dim": "#d9dadb",
+                        "on-surface": "#191c1d",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "inverse-surface": "#2e3132",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#0f0069",
+                        "secondary-fixed": "#e2dfff",
+                        "primary-fixed": "#e2dfff",
+                        "on-secondary-container": "#454386",
+                        "surface-container": "#edeeef",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f8f9fa",
+                        "surface-container-low": "#f3f4f5",
+                        "tertiary": "#7e3000",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "primary-container": "#4f46e5",
+                        "surface-variant": "#e1e3e4",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-container": "#a44100",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "on-background": "#191c1d",
+                        "primary": "#3525cd",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "inverse-primary": "#c3c0ff",
+                        "on-primary-container": "#dad7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#777587",
+                        "secondary-container": "#b6b4ff",
+                        "secondary": "#58579b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .whisper-shadow {
+            shadow: 0 20px 40px rgba(25, 28, 29, 0.04);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-slate-50 border-r-0 flex flex-col gap-y-2 p-6 z-50">
+<div class="mb-10 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">dataset</span>
+</div>
+<div>
+<h1 class="text-2xl font-black text-indigo-600 tracking-tighter">Klenzoo</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold">Admin Atelier</p>
+</div>
+</div>
+<nav class="flex flex-col gap-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-indigo-600 font-bold bg-white rounded-xl transition-all translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium tracking-wide">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-indigo-500 transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium tracking-wide">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-indigo-500 transition-all" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-sm font-medium tracking-wide">Transactions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-indigo-500 transition-all" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="text-sm font-medium tracking-wide">Security</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-indigo-500 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium tracking-wide">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6">
+<div class="p-4 bg-primary-container rounded-xl text-on-primary-container">
+<p class="text-xs font-bold mb-1 opacity-80 uppercase tracking-wider">Storage Usage</p>
+<div class="h-1.5 w-full bg-white/20 rounded-full mb-2">
+<div class="h-full w-2/3 bg-white rounded-full"></div>
+</div>
+<p class="text-[10px] font-medium">68% of 1TB capacity used</p>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 w-full glass-header flex justify-between items-center px-8 py-4 shadow-[0_20px_40px_rgba(25,28,29,0.04)]">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full pl-12 pr-4 py-2.5 bg-surface-container-low border-none rounded-full text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-slate-400 font-medium" placeholder="Search analytics, users, or logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 mx-2"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right">
+<p class="text-sm font-bold text-on-surface">Alex Chen</p>
+<p class="text-[10px] font-semibold text-slate-400 uppercase tracking-tighter">Senior Admin</p>
+</div>
+<img alt="Admin profile" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="Close-up professional portrait of a tech executive with glasses, soft studio lighting, clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh-HvHBt_dXJgs6WMNE0KWf8QYvg2n_jEcTMUAuUqkKVrcD9CeO67QMCCHGQAUzDEqnVHaPIP3jXfziuwebzV4dNWke0ENOPetVngLyLiFtPhZxE_IeoKzTgXKpbZ6yGjaWFGZoYEN56_zU5Y9yvyOaxcK6G1_uYigjvn-NWui_f4T2uMd9XTBV4mu44wj5vkDzciMDL9N2ROtGXf3K-Lgl14EIPgSwO0NYp-9s5anuR3fV9hod4dixrjD010qyvd4s4YesoCDN-12"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-10 max-w-[1400px] mx-auto">
+<div class="mb-10">
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface mb-1">Executive Overview</h2>
+<p class="text-slate-500 font-medium">Monitoring Klenzoo platform health and growth metrics.</p>
+</div>
+<!-- KPI Cards - Bento Grid Style -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.02)] flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-indigo-50 rounded-lg text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<span class="text-[10px] font-bold text-success flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded-full text-emerald-600">
+<span class="material-symbols-outlined text-xs">trending_up</span> +5%
+                        </span>
+</div>
+<div>
+<p class="text-3xl font-extrabold tracking-tight text-on-surface">12,482</p>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Total Users</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.02)] flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="w-2 h-2 rounded-full bg-blue-600 animate-pulse mt-3 mr-1"></div>
+</div>
+<div>
+<p class="text-3xl font-extrabold tracking-tight text-on-surface">1,204</p>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Active Sessions</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.02)] flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-purple-50 rounded-lg text-purple-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+</div>
+<div>
+<p class="text-3xl font-extrabold tracking-tight text-on-surface">$248.5k</p>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Total Volume</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.02)] flex flex-col justify-between h-40">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">health_and_safety</span>
+</div>
+<span class="text-[10px] font-bold text-emerald-600 uppercase tracking-tighter">Operational</span>
+</div>
+<div>
+<p class="text-3xl font-extrabold tracking-tight text-on-surface">99.9%</p>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">System Health</p>
+</div>
+</div>
+</div>
+<!-- Revenue Area Chart Section -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.02)] mb-10">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="text-xl font-bold tracking-tight mb-1">Revenue &amp; Growth</h3>
+<p class="text-sm text-slate-400 font-medium">Platform performance over the last 30 days</p>
+</div>
+<div class="flex gap-2 bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1.5 text-xs font-bold text-on-surface bg-white rounded-md shadow-sm">30 Days</button>
+<button class="px-4 py-1.5 text-xs font-bold text-slate-400 hover:text-on-surface transition-colors">90 Days</button>
+<button class="px-4 py-1.5 text-xs font-bold text-slate-400 hover:text-on-surface transition-colors">All Time</button>
+</div>
+</div>
+<div class="relative h-72 w-full mt-4 flex items-end gap-2">
+<!-- Abstract Visualization of Area Chart -->
+<div class="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent rounded-lg"></div>
+<div class="flex-1 bg-primary/20 h-[30%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/30 h-[45%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/30 h-[55%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/50 h-[65%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/60 h-[75%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/70 h-[85%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/65 h-[80%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/80 h-[95%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/70 h-[90%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/85 h-[100%] rounded-t-sm"></div>
+<div class="absolute bottom-0 left-0 w-full h-[2px] bg-slate-100"></div>
+</div>
+<div class="flex justify-between mt-4">
+<span class="text-[10px] font-bold text-slate-400">MAY 01</span>
+<span class="text-[10px] font-bold text-slate-400">MAY 15</span>
+<span class="text-[10px] font-bold text-slate-400">MAY 30</span>
+</div>
+</div>
+<!-- Secondary Two-Column Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left: Recent User Activity -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.02)]">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-xl font-bold tracking-tight">Recent User Activity</h3>
+<button class="text-xs font-bold text-primary px-3 py-1 bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">View Logs</button>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="Sarah Miller" class="w-10 h-10 rounded-full" data-alt="Portrait of a young professional woman with a bright smile, soft daylight background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU3q2KJNuzYHfPuvUbhZRpJAoSUsfl6ZztH607RTX__56cMI8oIDtC410Zb3MmMbVeOjiPRzXEO4gZlGyYYRjP3cU64I7kGqo9u5BvHJVBPNMwN9-ldj1JD2-KAk1laLmu-TTdzVHd5OnDwnP2NLUjyLtkT_2iOFiPdToP1hYNsYM8Xj4Fv7_-cffeoteY2yA1sRUbSO1Je-CsZrS98luMfnrIVKmloIr69Is-uD0KgAyBlp9gnm5_r2TUeqmGFhFVGZPGrLOYRV75"/>
+<div>
+<p class="text-sm font-bold text-on-surface">Sarah Miller</p>
+<p class="text-xs text-slate-500 font-medium">Upgraded to Premium Plan</p>
+</div>
+</div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">2 mins ago</p>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">James Wilson</p>
+<p class="text-xs text-slate-500 font-medium">Failed login attempt (3x)</p>
+</div>
+</div>
+<p class="text-[10px] font-bold text-error uppercase">14 mins ago</p>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="David Chen" class="w-10 h-10 rounded-full" data-alt="Portrait of a man in casual attire looking thoughtful, blurred office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzlDKiWPJ2f4eqqNXga6KBrs3yrtOx0pZ_Oc0R5A4ZhvD6JSP_ZdnOKIHnoDi8e6nYi6wCzesiz7_DdWyH54MGQDA2dvLZDyIgc5lfPFi_lPwV3tEpTEMUrhoU2pqRuZhj0HtAj3vo6M_Hf43hPidQdMhVOC6WwooHIbka-6-7ky4zM_rREowBakifHAs4Nw8LmJhGhaWy1AOb1g57nFwjGb8CxCw1D9F_tFym5YZ550eMamLFALuS-PVgVkqZm0kIDZYSXSYJOF-Z"/>
+<div>
+<p class="text-sm font-bold text-on-surface">David Chen</p>
+<p class="text-xs text-slate-500 font-medium">Completed transaction #TX-8821</p>
+</div>
+</div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">45 mins ago</p>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<img alt="Elena Rodriguez" class="w-10 h-10 rounded-full" data-alt="Professional profile picture of a woman with curly hair, warm lighting, architectural background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRKp2C3lNS0CbNbbo9BZaLJhcho9pemWoZZXsFsk7BkVM3o_Ax6hVXbzPlIiWslBDf9HPqRv-BMRlgxevWzHVZVDl0lIO2RJLtgjVGR8bWta2xVSdGlQMusxJR-TQN-fJ3ul8wv_zPySrCRQ31hmcF18VaCYGka5ZUKm-0-0PZ2kGEZ2gCxWxII0sFwlMJyXN7S-9Ksi2mvGYo93lJd0WnSzPsb9FnexeLTACkzf7XwEBD_67ZTNXIbb2QkHnPUmCxqT6eAqWApDUy"/>
+<div>
+<p class="text-sm font-bold text-on-surface">Elena Rodriguez</p>
+<p class="text-xs text-slate-500 font-medium">Created new organization 'Atelier Corp'</p>
+</div>
+</div>
+<p class="text-[10px] font-bold text-slate-400 uppercase">1 hour ago</p>
+</div>
+</div>
+</div>
+<!-- Right: System Status -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.02)]">
+<h3 class="text-xl font-bold tracking-tight mb-8">System Status</h3>
+<div class="space-y-8">
+<div>
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-on-surface">Core API</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+</div>
+<span class="text-[10px] font-bold text-emerald-600">Operational</span>
+</div>
+<div class="flex gap-[2px]">
+<div class="h-8 flex-1 bg-emerald-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/40 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-emerald-400/60 rounded-sm"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-on-surface">Database Cluster</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+</div>
+<span class="text-[10px] font-bold text-emerald-600">99.99%</span>
+</div>
+<div class="flex gap-[2px]">
+<div class="h-8 flex-1 bg-indigo-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-indigo-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-indigo-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-indigo-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-indigo-400/30 rounded-sm"></div>
+<div class="h-8 flex-1 bg-indigo-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-indigo-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-amber-400 rounded-sm"></div>
+<div class="h-8 flex-1 bg-indigo-400/20 rounded-sm"></div>
+<div class="h-8 flex-1 bg-indigo-400/20 rounded-sm"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-on-surface">SMS Gateway</span>
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+</div>
+<span class="text-[10px] font-bold text-amber-600">Degraded</span>
+</div>
+<div class="flex gap-[2px]">
+<div class="h-8 flex-1 bg-slate-200 rounded-sm"></div>
+<div class="h-8 flex-1 bg-slate-200 rounded-sm"></div>
+<div class="h-8 flex-1 bg-amber-200 rounded-sm"></div>
+<div class="h-8 flex-1 bg-amber-300 rounded-sm"></div>
+<div class="h-8 flex-1 bg-amber-400 rounded-sm"></div>
+<div class="h-8 flex-1 bg-amber-500 rounded-sm"></div>
+<div class="h-8 flex-1 bg-amber-400 rounded-sm"></div>
+<div class="h-8 flex-1 bg-amber-300 rounded-sm"></div>
+<div class="h-8 flex-1 bg-slate-200 rounded-sm"></div>
+<div class="h-8 flex-1 bg-slate-200 rounded-sm"></div>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-100">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400 text-sm">refresh</span>
+</div>
+<p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Auto-refreshing every 30s</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

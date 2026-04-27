@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Klenzoo - Expense Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#a44100",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "outline-variant": "#464555",
+                        "inverse-on-surface": "#313030",
+                        "surface-container": "#201f1f",
+                        "surface": "#131313",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "error-container": "#93000a",
+                        "surface-tint": "#c3c0ff",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-fixed": "#e2dfff",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "on-surface": "#e5e2e1",
+                        "tertiary": "#ffb695",
+                        "inverse-primary": "#4d44e3",
+                        "on-primary": "#1d00a5",
+                        "tertiary-fixed": "#ffdbcc",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "secondary-container": "#413f82",
+                        "on-background": "#e5e2e1",
+                        "on-secondary": "#2a276a",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed": "#e2dfff",
+                        "on-surface-variant": "#c7c4d8",
+                        "surface-container-highest": "#353534",
+                        "surface-container-high": "#2a2a2a",
+                        "on-error": "#690005",
+                        "surface-dim": "#131313",
+                        "background": "#131313",
+                        "on-tertiary": "#571f00",
+                        "surface-container-lowest": "#0e0e0e",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#140f54",
+                        "primary": "#c3c0ff",
+                        "surface-bright": "#3a3939",
+                        "secondary": "#c3c0ff",
+                        "surface-variant": "#353534",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed": "#0f0069",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#b0aef9",
+                        "outline": "#918fa1",
+                        "on-primary-container": "#dad7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(42, 42, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #c3c0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-[#131313] dark:bg-[#131313] flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="text-[#C7C4D8] hover:bg-[#2A2A2A] p-2 rounded-full transition-colors duration-300">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#4F46E5] to-[#C3C0FF]">Klenzoo</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-[#C7C4D8] hover:bg-[#2A2A2A] p-2 rounded-full transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-[#C7C4D8] hover:bg-[#2A2A2A] p-2 rounded-full transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-6 pt-12 space-y-8">
+<!-- Transaction Header (Asymmetric Layout) -->
+<section class="relative">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant/60 mb-2 block">Transaction Amount</span>
+<h2 class="font-headline text-6xl md:text-7xl font-extrabold tracking-tighter text-on-surface">$1,299.00</h2>
+</div>
+<div class="text-left md:text-right">
+<p class="font-headline text-2xl font-bold text-on-surface">Apple Store</p>
+<p class="text-on-surface-variant text-sm">Infinite Loop, Cupertino</p>
+</div>
+</div>
+</section>
+<!-- Bento Grid Details -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Category Chip -->
+<div class="md:col-span-1 bg-surface-container-low rounded-lg p-6 flex flex-col justify-between aspect-square md:aspect-auto">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">laptop_mac</span>
+<div>
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest mb-1">Category</p>
+<p class="text-on-surface font-headline text-xl font-bold">Tech</p>
+</div>
+</div>
+<!-- Date Chip -->
+<div class="md:col-span-1 bg-surface-container-high rounded-lg p-6 flex flex-col justify-between aspect-square md:aspect-auto">
+<span class="material-symbols-outlined text-primary text-3xl">calendar_today</span>
+<div>
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest mb-1">Date</p>
+<p class="text-on-surface font-headline text-xl font-bold">Oct 24, 2023</p>
+</div>
+</div>
+<!-- Source Chip -->
+<div class="md:col-span-1 bg-surface-container-low rounded-lg p-6 flex flex-col justify-between aspect-square md:aspect-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">sms</span>
+<span class="bg-primary/20 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Auto</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-xs font-bold uppercase tracking-widest mb-1">Source</p>
+<p class="text-on-surface font-headline text-xl font-bold">SMS Detected</p>
+</div>
+</div>
+</div>
+<!-- Receipt Image / Visualization Card -->
+<section class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/10">
+<div class="h-48 w-full bg-cover bg-center opacity-80" data-alt="clean minimal receipt from apple store on a dark granite surface with soft lighting and professional look" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD4NStGxlLAy8yrB9hohSZEH7q5G8wnQUNytrgDRL5j_AsVlDrMZKNmh16Ju0kXXsdUs2agl4UqV0Wj87-0Kk4ze3knfhdhb-BWYEu6eHxqO_VGtaVUVTGKJrK7q3zXp7YhgXRG3oHGvhpkutofQlhT7bWU_cA-iiGWVmkCOKzCEpF8n93YbWtBx16dXJ5rgWrATEOFmu4uNZIm17IsVYCzLm0hitzFeDUBCCXg8e_lzBXo_ippIDyJDnkNXlQhiwnvZnhpUTBGpq5e')"></div>
+<div class="p-6 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">receipt_long</span>
+<span class="text-on-surface-variant text-sm font-medium">Digital Receipt Attached</span>
+</div>
+<button class="text-primary text-sm font-bold hover:underline">View File</button>
+</div>
+</section>
+<!-- Insights Summary (Editorial) -->
+<section class="space-y-4">
+<h3 class="font-headline text-lg font-bold text-on-surface flex items-center gap-2">
+<span class="w-1 h-6 bg-primary rounded-full"></span>
+                Spend Insight
+            </h3>
+<div class="bg-gradient-to-br from-surface-container-low to-surface-container p-6 rounded-lg">
+<p class="text-on-surface-variant leading-relaxed italic">
+                    "This purchase represents <span class="text-primary font-bold">12%</span> of your monthly tech budget. You have <span class="text-on-surface font-bold">$420.00</span> remaining for the quarter."
+                </p>
+</div>
+</section>
+<!-- Actions -->
+<section class="grid grid-cols-2 gap-4 pt-4">
+<button class="flex items-center justify-center gap-2 bg-surface-container-high hover:bg-surface-bright text-on-surface py-4 rounded-full font-bold transition-all active:scale-95 duration-150">
+<span class="material-symbols-outlined">edit</span>
+                Edit
+            </button>
+<button class="flex items-center justify-center gap-2 bg-error-container/20 hover:bg-error-container/40 text-error py-4 rounded-full font-bold transition-all active:scale-95 duration-150 border border-error/20">
+<span class="material-symbols-outlined">delete</span>
+                Delete
+            </button>
+</section>
+</main>
+<!-- BottomNavBar (Only shown on top-level but included here for shell integrity per rules) -->
+<!-- Note: Following the 'Destination Rule' - usually hidden for detail views, but if required as shell, here is the implementation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-6 pb-8 pt-4 bg-[#131313]/80 backdrop-blur-2xl shadow-[0_-20px_40px_rgba(0,0,0,0.4)] rounded-t-[3rem]">
+<div class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Groups</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-gradient-to-br from-[#4F46E5] to-[#C3C0FF] text-white rounded-full p-3 shadow-[0_0_20px_rgba(79,70,229,0.3)] kinetic fluid motion on press">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Insights</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#C7C4D8] p-3 hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-inter text-[10px] uppercase tracking-widest font-bold mt-1">Settings</span>
+</div>
+</nav>
+</body></html>

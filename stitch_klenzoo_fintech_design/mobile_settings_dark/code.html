@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#c3c0ff",
+                        "secondary-container": "#413f82",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "tertiary": "#ffb695",
+                        "on-tertiary": "#571f00",
+                        "secondary-fixed": "#e2dfff",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-error-container": "#ffdad6",
+                        "on-surface-variant": "#c7c4d8",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "secondary": "#c3c0ff",
+                        "primary": "#c3c0ff",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface": "#131313",
+                        "error-container": "#93000a",
+                        "surface-bright": "#3a3939",
+                        "outline-variant": "#464555",
+                        "on-primary": "#1d00a5",
+                        "on-secondary-fixed": "#140f54",
+                        "on-error": "#690005",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-variant": "#353534",
+                        "on-primary-container": "#dad7ff",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "surface-container": "#201f1f",
+                        "inverse-primary": "#4d44e3",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "surface-container-highest": "#353534",
+                        "primary-container": "#4f46e5",
+                        "on-secondary": "#2a276a",
+                        "on-secondary-container": "#b0aef9",
+                        "on-surface": "#e5e2e1",
+                        "primary-fixed": "#e2dfff",
+                        "surface-dim": "#131313",
+                        "on-primary-fixed": "#0f0069",
+                        "outline": "#918fa1",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "tertiary-container": "#a44100",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-high": "#2a2a2a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="dark selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-[#131313] shadow-none">
+<div class="flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/20">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="close up portrait of a young man with a slight smile in dramatic studio lighting with dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXm4_tqoQ0NEQoPAKHEwAAd9encoKdy_Zx1zd00cGIKSFIfUUJrDrcjq1DJDbuOndWlW1JlkcqepWDsnqWrjXxW3m2KmBbgI9E2pSpsBAio_QTO0cT7SCuAPPWNnzZtZnR8W3_jlCJOkE97vAuXmmVdePZT6rCd_8dQXN-WQopzjBpr8QxU3dUDrevsHa8Idz1AgumdkMEucALMpT5X5e380Js9J5oEImT58g8zvsR7mLu0sCAnRW08-eou4pMUBfa-NyE4lmSZ-WO"/>
+</div>
+</div>
+<h1 class="font-['Manrope'] tracking-tight font-bold text-2xl font-black tracking-tighter text-[#4F46E5] dark:text-[#C3C0FF]">Klenzoo</h1>
+<button class="text-[#C7C4D8] hover:bg-[#1C1B1B] transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="pb-32 pt-4 px-6 max-w-lg mx-auto">
+<!-- Profile Section -->
+<section class="mb-10">
+<div class="flex flex-col items-center mb-8">
+<div class="relative mb-4">
+<div class="w-24 h-24 rounded-xl overflow-hidden shadow-2xl">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="profile shot of a stylish man against a dark gray background looking confident" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-l7NrguaNxh8svhUnfD-Od6oMCTVUL8hdZ6VSw36652fyr7zxTczG4BaOaYcl1Lr2XRe6kc5k8RnIlXGEdiW6R2IM95VyN7JqCDrGdh0Av8cAhvwRAAnqouiKtpyVws1FHSdgYx4_-IbyD87GCS4NZMc-p35_jkH5-2L1zpeqT60sqHKhPZPFV7DlOyrX7Vrm6TDpyArFZ8IX8PNUGUXMOTzvxfRbgNreMdKlG92X9TKpU-oaf9kXXkjqJkgdxSM7PC_IcfhheGBT"/>
+</div>
+<button class="absolute -bottom-2 -right-2 bg-primary-container text-on-primary-container p-2 rounded-full shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+<h2 class="text-2xl font-['Manrope'] font-extrabold tracking-tight text-on-surface">Julian Thorne</h2>
+<p class="text-on-surface-variant font-['Inter'] text-sm">julian.thorne@klenzoo.io</p>
+</div>
+<!-- Bento Settings Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="col-span-2 p-6 bg-surface-container-low rounded-lg flex items-center justify-between group transition-all duration-300 active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<p class="font-headline font-bold text-on-surface">Pro Account</p>
+<p class="text-xs text-on-surface-variant">Membership active until 2025</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="p-5 bg-surface-container-lowest rounded-lg flex flex-col justify-between h-36 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-tertiary" data-icon="account_balance_wallet">account_balance_wallet</span>
+<div>
+<p class="text-sm font-bold text-on-surface">Linked Banks</p>
+<p class="text-[10px] text-on-surface-variant">3 Accounts active</p>
+</div>
+</div>
+<div class="p-5 bg-surface-container-low rounded-lg flex flex-col justify-between h-36 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-secondary" data-icon="security">security</span>
+<div>
+<p class="text-sm font-bold text-on-surface">Security</p>
+<p class="text-[10px] text-on-surface-variant">2FA Enabled</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Preference Toggles -->
+<section class="space-y-4 mb-10">
+<h3 class="font-['Manrope'] text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant ml-2 mb-6">Preferences</h3>
+<div class="bg-surface-container-low rounded-lg px-6 py-2">
+<div class="flex items-center justify-between py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications_active">notifications_active</span>
+<p class="font-medium text-on-surface">Push Notifications</p>
+</div>
+<button class="w-10 h-5 bg-primary rounded-full relative transition-colors">
+<div class="absolute right-0.5 top-0.5 w-4 h-4 bg-on-primary rounded-full"></div>
+</button>
+</div>
+<div class="flex items-center justify-between py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="fingerprint">fingerprint</span>
+<p class="font-medium text-on-surface">Biometric Login</p>
+</div>
+<button class="w-10 h-5 bg-primary rounded-full relative transition-colors">
+<div class="absolute right-0.5 top-0.5 w-4 h-4 bg-on-primary rounded-full"></div>
+</button>
+</div>
+<div class="flex items-center justify-between py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="visibility">visibility</span>
+<p class="font-medium text-on-surface">Private Profile</p>
+</div>
+<button class="w-10 h-5 bg-outline-variant/30 rounded-full relative transition-colors">
+<div class="absolute left-0.5 top-0.5 w-4 h-4 bg-on-surface-variant rounded-full"></div>
+</button>
+</div>
+</div>
+</section>
+<!-- Danger Zone -->
+<section class="mb-10">
+<h3 class="font-['Manrope'] text-xs font-bold uppercase tracking-[0.2em] text-error/60 ml-2 mb-6">System</h3>
+<div class="bg-surface-container-low/30 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-between px-6 py-5 hover:bg-error-container/10 transition-colors">
+<div class="flex items-center gap-4 text-error">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<p class="font-bold">Log Out</p>
+</div>
+<span class="material-symbols-outlined text-error/50" data-icon="navigate_next">navigate_next</span>
+</button>
+</div>
+<p class="text-center text-[10px] text-on-surface-variant/40 mt-8 font-['Inter']">Klenzoo Version 4.12.0 (Build 882)</p>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-4 pb-4 bg-[#1C1B1B]/80 dark:bg-[#1C1B1B]/80 backdrop-blur-xl fixed bottom-0 w-full rounded-t-[2rem] z-50 border-t border-[#464555]/15 shadow-[0_-20px_40px_rgba(0,0,0,0.4)]">
+<button class="flex flex-col items-center justify-center text-[#C7C4D8] opacity-60 hover:opacity-100 transition-opacity active:scale-90 transition-transform duration-300">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Feed</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#C7C4D8] opacity-60 hover:opacity-100 transition-opacity active:scale-90 transition-transform duration-300">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Add</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#C7C4D8] opacity-60 hover:opacity-100 transition-opacity active:scale-90 transition-transform duration-300">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Groups</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#C7C4D8] opacity-60 hover:opacity-100 transition-opacity active:scale-90 transition-transform duration-300">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Charts</span>
+</button>
+<!-- Active State: Settings -->
+<button class="flex flex-col items-center justify-center text-[#C3C0FF] bg-gradient-to-br from-[#4F46E5]/20 to-[#C3C0FF]/10 rounded-full px-4 py-1 active:scale-90 transition-transform duration-300">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-['Inter'] text-[10px] font-medium tracking-wide uppercase mt-1">Settings</span>
+</button>
+</nav>
+</body></html>

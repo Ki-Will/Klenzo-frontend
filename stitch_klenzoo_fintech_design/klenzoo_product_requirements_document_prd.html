@@ -1,0 +1,67 @@
+🧭 0. ENTRY FLOW (AUTH)
+1. Splash Screen
+   - Purpose: branding + loading
+   - Contains: logo (Klenzoo), subtle animation, dark background
+2. Onboarding
+   - Purpose: explain value quickly (2-3 slides)
+   - Features: Track expenses automatically (SMS), Split bills with friends, Get AI insights
+   - Contains: illustration, short text, “Next / Skip”
+3. Auth Screen (Login / Signup)
+   - Contains: login form, signup form, role selection, error + success states
+
+🏠 1. MAIN APP (CORE NAVIGATION)
+4. Dashboard (HOME) ⭐
+   - Top: greeting, total balance
+   - Middle: spending chart (line graph), monthly summary
+   - Cards: total expenses, income, group balance
+   - Bottom: recent transactions list
+5. Expenses Screen
+   - Contains: search bar, filters, list of expenses (amount, category icon, description, date, source)
+6. Add Expense Screen (Modal/Page)
+   - Contains: amount input (BIG), category selector, description, date, personal/group toggle
+7. Expense Detail Screen
+   - Contains: full details, edit button, delete button
+
+👥 2. GROUP SYSTEM
+8. Groups List Screen
+   - Contains: list of groups (group name, members count, balance), “Create Group” button
+9. Create Group Screen
+   - Contains: group name, add members (search or invite), create button
+10. Group Detail Screen ⭐
+    - Top: group name, members
+    - Middle: balance summary (who owes who)
+    - Bottom: list of shared expenses, “Add Group Expense” button
+11. Add Group Expense Screen
+    - Contains: amount, description, split method (equal, custom, member selection)
+12. Group Balance Screen
+    - Contains: Detailed debt graph (A owes B, B owes C)
+
+📊 3. ANALYTICS
+13. Analytics Dashboard
+    - Contains: spending over time (line chart), category breakdown (pie chart), top categories
+14. Insights Screen (AI) 🤖
+    - Contains: AI messages (e.g. "You spent 30% more on transport this week"), suggestions, budgeting tips
+
+📩 4. AUTOMATION (SMS)
+15. SMS Transactions Screen
+    - Contains: auto-detected transactions, parsed messages (raw SMS, extracted amount, status)
+16. SMS Detail Screen
+    - Contains: original message, parsed data, confirm / edit expense
+
+🔔 5. NOTIFICATIONS
+17. Notifications Screen
+    - Contains: alerts list (group updates, unusual spending, reminders)
+
+⚙️ 6. SETTINGS
+18. Settings Screen
+    - Contains: profile info, preferences, theme (dark default), logout
+19. Profile Screen
+    - Contains: username, email, phone number
+20. Security Screen
+    - Contains: change password, session management
+
+🧑‍💼 7. ADMIN
+21. Admin Dashboard
+    - Contains: system stats, user count, transactions volume
+22. Top-up Screen
+    - Contains: card management, balance updates

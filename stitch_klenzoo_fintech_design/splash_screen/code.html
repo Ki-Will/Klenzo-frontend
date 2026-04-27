@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Klenzoo | Intelligent Void</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;700;800&amp;family=Inter:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#a44100",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "outline-variant": "#464555",
+                    "inverse-on-surface": "#313030",
+                    "surface-container": "#201f1f",
+                    "surface": "#131313",
+                    "on-tertiary-container": "#ffd2be",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "error-container": "#93000a",
+                    "surface-tint": "#c3c0ff",
+                    "on-secondary-fixed-variant": "#413f82",
+                    "surface-container-low": "#1c1b1b",
+                    "on-tertiary-fixed": "#351000",
+                    "secondary-fixed": "#e2dfff",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "on-surface": "#e5e2e1",
+                    "tertiary": "#ffb695",
+                    "inverse-primary": "#4d44e3",
+                    "on-primary": "#1d00a5",
+                    "tertiary-fixed": "#ffdbcc",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "secondary-container": "#413f82",
+                    "on-background": "#e5e2e1",
+                    "on-secondary": "#2a276a",
+                    "inverse-surface": "#e5e2e1",
+                    "primary-fixed": "#e2dfff",
+                    "on-surface-variant": "#c7c4d8",
+                    "surface-container-highest": "#353534",
+                    "surface-container-high": "#2a2a2a",
+                    "on-error": "#690005",
+                    "surface-dim": "#131313",
+                    "background": "#131313",
+                    "on-tertiary": "#571f00",
+                    "surface-container-lowest": "#0e0e0e",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed": "#140f54",
+                    "primary": "#c3c0ff",
+                    "surface-bright": "#3a3939",
+                    "secondary": "#c3c0ff",
+                    "surface-variant": "#353534",
+                    "primary-container": "#4f46e5",
+                    "on-primary-fixed": "#0f0069",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-container": "#b0aef9",
+                    "outline": "#918fa1",
+                    "on-primary-container": "#dad7ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": [
+                            "Manrope"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label": [
+                            "Inter"
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0D0D0D;
+            overflow: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Glowing Aura Effect */
+        .glow-aura {
+            filter: blur(120px);
+            opacity: 0.15;
+            background: #4F46E5;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body text-on-surface antialiased flex flex-col justify-center items-center min-h-screen">
+<!-- Intelligent Void Background Layer -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full glow-aura"></div>
+</div>
+<!-- Main Splash Content -->
+<main class="relative z-10 flex flex-col items-center justify-center space-y-12">
+<!-- Logo Section -->
+<div class="flex flex-col items-center">
+<!-- Brand Anchor Casing & Logic applied -->
+<h1 class="text-6xl md:text-8xl font-headline font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#4F46E5] to-[#C3C0FF]">
+                Klenzoo
+            </h1>
+<p class="mt-4 font-body text-on-surface-variant/60 tracking-[0.4em] uppercase text-[10px] font-bold">
+                Intelligent Cleansing Protocol
+            </p>
+</div>
+<!-- Decorative Branding Detail -->
+<div class="relative w-32 h-[1px] bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent"></div>
+</main>
+<!-- Footer Area / Loading Indicator -->
+<footer class="fixed bottom-16 left-0 w-full flex flex-col items-center space-y-6">
+<!-- Minimal Loading Indicator -->
+<div class="flex items-center space-y-2 flex-col">
+<div class="w-48 h-[2px] bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-1/3 animate-pulse"></div>
+</div>
+<span class="text-[9px] font-label font-bold text-on-surface-variant/40 tracking-widest uppercase">
+                Initializing core modules
+            </span>
+</div>
+<!-- Subtle Copyright/Context -->
+<div class="pt-8">
+<p class="text-[10px] font-label text-on-surface-variant/20 tracking-tighter italic">
+                Secure digital concierge • v.2.4.0
+            </p>
+</div>
+</footer>
+<!-- Abstract Glass Background Elements -->
+<div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-surface-container-lowest/20 backdrop-blur-3xl border border-outline-variant/5"></div>
+<div class="absolute -bottom-48 -right-48 w-[500px] h-[500px] rounded-full bg-primary-container/5 backdrop-blur-2xl"></div>
+<!-- Hidden Images for Design System Integrity (Decorative Backgrounds) -->
+<div class="hidden">
+<img alt="Design Aesthetic Anchor" data-alt="abstract 3d crystalline structure in deep indigo and dark charcoal with soft refraction and moody lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAg5xiTOpcTt-GsxLNi0yEFK5vhjOpz5LCNMT92XL2Aiu0OqCwlZO_4w2udOq0QD9i1DUY5rV9x3_kWBHuTVzB-wvMFTJb_wfK7OK2zoQVDz_onlijYGqlbPPxIOT2hx5_yRz_ZgioTlKEDO64jasHbtHeWSrK6X8mjv0r4CqAOXXzlVgk2voVwOOSbUtt9ohvClbAbjz3JTWwdl6ro8rsW_-XWiGzz_GFmzVplbJCV0vY49XfVrjT29VVToepgyBHmJfpNxigEvLDQ"/>
+</div>
+</body></html>

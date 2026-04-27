@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding - AI Insights</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#351000",
+                        "primary": "#c3c0ff",
+                        "on-primary-container": "#dad7ff",
+                        "on-secondary-fixed": "#140f54",
+                        "on-primary-fixed": "#0f0069",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#b0aef9",
+                        "error-container": "#93000a",
+                        "surface-variant": "#353534",
+                        "on-background": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "on-error": "#690005",
+                        "on-secondary": "#2a276a",
+                        "secondary-container": "#413f82",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "primary-fixed": "#e2dfff",
+                        "surface-container-low": "#1c1b1b",
+                        "secondary": "#c3c0ff",
+                        "tertiary": "#ffb695",
+                        "inverse-primary": "#4d44e3",
+                        "surface-container": "#201f1f",
+                        "on-tertiary": "#571f00",
+                        "surface": "#131313",
+                        "tertiary-fixed": "#ffdbcc",
+                        "background": "#131313",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary": "#1d00a5",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-surface": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "inverse-on-surface": "#313030",
+                        "inverse-surface": "#e5e2e1",
+                        "outline": "#918fa1",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#464555",
+                        "secondary-fixed": "#e2dfff",
+                        "surface-tint": "#c3c0ff",
+                        "on-surface-variant": "#c7c4d8",
+                        "surface-container-highest": "#353534",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "tertiary-container": "#a44100",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-bright": "#3a3939",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-tertiary-container": "#ffd2be"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(42, 42, 42, 0.6);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        .luminous-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #c3c0ff 100%);
+        }
+        .glow-effect {
+            box-shadow: 0 0 40px rgba(79, 70, 229, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-white">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-6 bg-transparent">
+<button class="w-10 h-10 flex items-center justify-center rounded-full surface-container-high text-on-surface hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="font-manrope font-bold text-lg tracking-tight text-indigo-600 dark:text-indigo-400 hover:opacity-80 transition-opacity active:scale-95 duration-200">
+            Skip
+        </button>
+</header>
+<main class="min-h-screen flex flex-col pt-24 pb-32">
+<!-- Hero Section with Asymmetric Layout -->
+<div class="flex-grow px-8 flex flex-col justify-center gap-12 max-w-lg mx-auto">
+<!-- 3D Visualization Placeholder -->
+<div class="relative w-full aspect-square max-w-[320px] mx-auto">
+<!-- Abstract Glow Foundation -->
+<div class="absolute inset-0 bg-primary-container/20 rounded-full blur-[80px]"></div>
+<!-- Main Illustration Container -->
+<div class="relative z-10 w-full h-full rounded-xl overflow-hidden glass-panel border border-outline-variant/15 flex items-center justify-center p-4">
+<img alt="AI Visualization" class="w-full h-full object-contain mix-blend-lighten" data-alt="3D abstract rendering of a glowing neural network or stylized digital brain in vibrant indigo and violet neon lighting on black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeqYMpEQLWHEyBW98HSxpWI_S2Wvkp6rbFx9Rsp3-3WZ55ge94s0a6MoPnQjH4gHWBR_f485tiFUfAS2lKCPxPFsihsuZwLKhIEw2VHXgveaPP8MJC4IrsPfcbwMmFZwkF3Twfaw1gyFnD0Mdlmb_APdByAxiHZ6lI-GH-IT95Nl7MaU65EMsuunV6pN2i4MX5soFtsv806cHb4G2m7YRY4tsruFxJSlO_YPe5zf0di7_mJNEqoh4SWfi40sVH9mQdwQx7XXugUKyw"/>
+</div>
+<!-- Floating Decorative Element -->
+<div class="absolute -top-4 -right-4 w-24 h-24 glass-panel rounded-lg border border-outline-variant/15 flex items-center justify-center p-3 animate-pulse">
+<div class="w-full h-1 bg-primary/40 rounded-full mb-1"></div>
+<div class="w-2/3 h-1 bg-primary/20 rounded-full mb-1"></div>
+<div class="w-full h-1 bg-primary/40 rounded-full"></div>
+</div>
+</div>
+<!-- Content -->
+<div class="space-y-6">
+<h1 class="font-headline font-extrabold text-5xl md:text-6xl text-white leading-tight tracking-tight">
+                    Get <span class="text-primary italic">AI</span> insights
+                </h1>
+<p class="font-body text-lg text-on-surface-variant leading-relaxed opacity-90 max-w-[90%]">
+                    Receive personalized financial advice and spending analysis driven by smart AI protocols.
+                </p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex flex-col items-center px-10 pb-12 gap-8">
+<!-- Progress Indicators -->
+<div class="flex gap-3">
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<div class="w-8 h-2 rounded-full bg-primary glow-effect"></div>
+</div>
+<!-- Call to Action Container -->
+<div class="w-full flex justify-between items-center max-w-lg">
+<div class="flex items-center gap-2">
+<!-- Spacing placeholder for symmetry -->
+<div class="w-12 h-12"></div>
+</div>
+<button class="luminous-gradient text-on-primary-fixed font-headline font-bold text-lg px-10 py-5 rounded-full shadow-lg shadow-primary-container/20 hover:scale-105 transition-transform active:scale-95 duration-150 flex items-center gap-3">
+                Get Started
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+</button>
+</div>
+</footer>
+<!-- Background Decoration -->
+<div class="fixed top-1/4 -right-24 w-64 h-64 bg-primary-container/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="fixed bottom-0 -left-24 w-80 h-80 bg-indigo-900/10 rounded-full blur-[140px] pointer-events-none"></div>
+</body></html>

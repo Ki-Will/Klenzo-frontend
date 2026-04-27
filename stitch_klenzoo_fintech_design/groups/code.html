@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#3a3939",
+                        "primary": "#c3c0ff",
+                        "on-secondary-fixed": "#140f54",
+                        "on-primary-fixed": "#0f0069",
+                        "primary-container": "#4f46e5",
+                        "surface-variant": "#353534",
+                        "secondary": "#c3c0ff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-primary-container": "#dad7ff",
+                        "outline": "#918fa1",
+                        "on-secondary-container": "#b0aef9",
+                        "primary-fixed": "#e2dfff",
+                        "on-surface-variant": "#c7c4d8",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "background": "#131313",
+                        "surface-dim": "#131313",
+                        "on-error": "#690005",
+                        "surface-container-high": "#2a2a2a",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary": "#571f00",
+                        "secondary-fixed": "#e2dfff",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary-fixed": "#351000",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "on-primary": "#1d00a5",
+                        "inverse-primary": "#4d44e3",
+                        "tertiary": "#ffb695",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary": "#2a276a",
+                        "secondary-container": "#413f82",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-background": "#e5e2e1",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-container": "#201f1f",
+                        "outline-variant": "#464555",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "tertiary-container": "#a44100",
+                        "on-tertiary-container": "#ffd2be",
+                        "surface": "#131313",
+                        "surface-tint": "#c3c0ff",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#7b2f00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift { background: linear-gradient(180deg, rgba(28,27,27,0.5) 0%, rgba(14,14,14,0.5) 100%); }
+        .glass-card { backdrop-filter: blur(20px); background: rgba(42, 42, 42, 0.4); border: 1px solid rgba(70, 69, 85, 0.15); }
+        .luminous-gradient { background: linear-gradient(135deg, #4f46e5 0%, #c3c0ff 100%); }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-white">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-neutral-950/80 backdrop-blur-xl flex justify-between items-center px-8 h-20 w-full max-w-full">
+<div class="text-2xl font-black text-indigo-500 tracking-tighter font-headline">Klenzoo</div>
+<div class="hidden md:flex items-center space-x-8">
+<nav class="flex space-x-6 text-sm font-manrope tracking-tight">
+<a class="text-neutral-400 hover:bg-neutral-800/50 transition-colors px-3 py-1 rounded-md" href="#">Dashboard</a>
+<a class="text-neutral-400 hover:bg-neutral-800/50 transition-colors px-3 py-1 rounded-md" href="#">Expenses</a>
+<a class="text-indigo-400 font-bold hover:bg-neutral-800/50 transition-colors px-3 py-1 rounded-md" href="#">Groups</a>
+<a class="text-neutral-400 hover:bg-neutral-800/50 transition-colors px-3 py-1 rounded-md" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 text-on-surface-variant hover:bg-neutral-800/50 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-neutral-800/50 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="fixed left-0 h-full w-64 border-r border-neutral-800/20 bg-neutral-950 hidden lg:flex flex-col p-6 space-y-4 pt-28">
+<div class="mb-8">
+<h2 class="text-white text-xl font-bold font-headline">Klenzoo</h2>
+<p class="font-manrope uppercase tracking-widest text-[10px] text-neutral-500">Premium Finance</p>
+</div>
+<nav class="space-y-2">
+<a class="flex items-center space-x-3 p-3 text-neutral-500 hover:text-indigo-300 hover:bg-neutral-900 transition-all ease-in-out duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Dashboard</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-neutral-500 hover:text-indigo-300 hover:bg-neutral-900 transition-all ease-in-out duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Expenses</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-white bg-indigo-600/10 transition-all ease-in-out duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-manrope uppercase tracking-widest text-[10px] font-bold">Groups</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-neutral-500 hover:text-indigo-300 hover:bg-neutral-900 transition-all ease-in-out duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Analytics</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-neutral-500 hover:text-indigo-300 hover:bg-neutral-900 transition-all ease-in-out duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-manrope uppercase tracking-widest text-[10px]">Settings</span>
+</a>
+</nav>
+<div class="pt-8">
+<button class="w-full py-4 rounded-full luminous-gradient text-on-primary-fixed font-bold text-sm tracking-tight active:scale-95 transition-transform">
+                Add Expense
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="min-h-screen pt-28 pb-32 px-6 lg:ml-64 lg:px-12">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<h1 class="text-5xl md:text-6xl font-extrabold font-headline tracking-tighter text-on-surface mb-2">
+                    Social <span class="text-primary">Circles</span>
+</h1>
+<p class="text-on-surface-variant text-lg max-w-md">Coordinate shared expenses with friends and family seamlessly.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 rounded-full bg-surface-container-high/60 backdrop-blur text-primary border border-outline-variant/15 font-semibold text-sm flex items-center gap-2 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-xl">payments</span>
+                    Settle Up
+                </button>
+<button class="px-6 py-3 rounded-full luminous-gradient text-on-primary-fixed font-bold text-sm shadow-[0_0_20px_rgba(79,70,229,0.3)] active:scale-95 transition-transform flex items-center gap-2">
+<span class="material-symbols-outlined text-xl">add_circle</span>
+                    Create New Group
+                </button>
+</div>
+</section>
+<!-- Bento Grid: Summary & Groups -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Overall Debt Card -->
+<div class="lg:col-span-4 bg-surface-container-low p-8 rounded-lg flex flex-col justify-between">
+<div>
+<p class="text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-8">Net Balance</p>
+<h3 class="text-5xl font-black font-headline tracking-tighter text-tertiary">-$420.50</h3>
+<p class="text-on-surface-variant text-sm mt-2">You owe more than you are owed across 4 groups.</p>
+</div>
+<div class="mt-12 space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">arrow_downward</span>
+<span class="text-sm font-medium">You owe</span>
+</div>
+<span class="font-bold text-error">$650.00</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">arrow_upward</span>
+<span class="text-sm font-medium">You are owed</span>
+</div>
+<span class="font-bold text-primary">$229.50</span>
+</div>
+</div>
+</div>
+<!-- Group Cards Grid -->
+<div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Group 1 -->
+<div class="bg-surface-container rounded-lg overflow-hidden flex flex-col border border-outline-variant/10 group hover:border-primary/30 transition-all duration-300">
+<div class="h-32 relative">
+<img class="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" data-alt="a bright modern living room with large windows, minimalist furniture, and plants, soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDusutapIPyqnc00PKOnWTvjlaUcSe-7TPoGPUWwtO4C1XoPueilUewqoVub27fBWlxZIwhkIER_ourvoTTDFJPYw4rGsnwrac95WUll6Bg0uOP1ueNM9rHT5HLez5dDCpl6FqrQdzWQdb-eVNt3OFr6JGPD9x56quRd-Dz5O_XXU-wjUeBodd48T6zUDQwj2C1L7EA6IGY0FEk6n1ejC8pGIqCNI7rVxHEejjiqs9xauMlNQdkV7jfImbbjkJ3VtPas4QOrFgYDSEr"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
+<div class="absolute bottom-4 left-6">
+<h3 class="text-2xl font-bold font-headline">Flatmates</h3>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col justify-between">
+<div class="flex items-center -space-x-3 mb-6">
+<img alt="Member 1" class="w-10 h-10 rounded-full border-2 border-surface shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGBB_XKHuepUOMWl9nrRqUP3sIVmVB16ZF6hX4WKujOkpIIbFhGpq8BXe-kJfaykfOzs3eARQ1_CxE1YbVy-whHEnjvDlQPokV32XTPvKd5iAlFCZDPPVB-MrYan7IMaPtfGhQV6kyeT_CCtldZburULaJ2-XkqtHOms7qIO13jN8vgwSivowmGE5N6nBfhuyrtkyof9r6yckHlKJCcMV53rPHC6zlp0o__OwPEgLCkEv2knqNIj9WH1sI_uaKYLmt132qct1mtDFN"/>
+<img alt="Member 2" class="w-10 h-10 rounded-full border-2 border-surface shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRNmk7Cwdh9WXzt_alWJOKQ3e_vOMvCv2TJ3jGsbg82FSWLJUj9D1lmNKxMXw0a5wTzE_44nmLzr0aWHwZiPlWWdODkpBkOKUSJxTqDD9roA_LEgS_vm8yIrR1DVSzgR8ayAmh9L_2PIV4Ntd39Ku9Kvz1j-9bzy0GQCqc9qPjySxu9VwqZG30dm8w96tqqThZE0S5_LdycBXbGU_j_gYGTuc-pYQhTLDFL2qQTSW6ejE0HI7QsaBtLWJnY-G0aUkDizMCntlQBawU"/>
+<img alt="Member 3" class="w-10 h-10 rounded-full border-2 border-surface shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMHk030EZUJNQafq21CBngkgCWBHxXyxjYgS6ckaGJbGW7qLUYbn_kYuKKUoUIjpgNi0ilb_XJ47kwqk6nbkR4XVl-jeMO8Ga9uBups_nBw9gScK0C6SnMayUHiD_CrznLR0HVgHhtDrengdwrgapYDi7mW_rmUjuqtizDYi_Cjg7IAH_l9peZqUyR-rgH6RTReL7v0jTCi_N55O070ogEASOjqnJde28iBAOI9CzInRov5ppP_-hMmgp6YoB2kFH6kN3frYcgcgYc"/>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center text-xs font-bold">+2</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Status</p>
+<p class="text-error font-semibold">You owe $125.00</p>
+</div>
+<button class="p-3 bg-surface-container-high rounded-full hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Group 2 -->
+<div class="bg-surface-container rounded-lg overflow-hidden flex flex-col border border-outline-variant/10 group hover:border-primary/30 transition-all duration-300">
+<div class="h-32 relative">
+<img class="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" data-alt="mediterranean coastal view with turquoise water and white stone architecture at sunset, cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjARWHlQY6cfNtdZGi0rJLYXnmPSPe2BuE4Bk8r6pcVBbzuMI22bMsqefVwhfQMeZQoHIcVh7paO70HNnIuCczvGESJyTtXz1sNdKgSMH46VF73equG5EsdtYVyE7xK4NmEu2vpEnUYwLsQb5mmBRmVdaIyw5bswe4ma7L5uoocR5obcuc95H3_Ce2ebDgCmEZkTBO2eCz0Jef_q8ZtPcWmIYjwEw4gDOOQO4luizgLlAABRjH6uzoXRVIdLs1xtVsjVBgwRlrCSQu"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
+<div class="absolute bottom-4 left-6">
+<h3 class="text-2xl font-bold font-headline">Vacation 2024</h3>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col justify-between">
+<div class="flex items-center -space-x-3 mb-6">
+<img alt="Member 4" class="w-10 h-10 rounded-full border-2 border-surface shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWevdERpGl3i2w6b4BR9wM2MfJqbXALDScJ5cp5H4mDexoNa0WTtK8kiUK0xYYYxNP7nVVi2wLPR6bAX-9agaLBFhn_pCsSbLblVQYTHYAW0WyQeb4DidbwIHuWM6t_c_j5EknxU3pXiA0Wyfesp4At5wecua1soss8GfwWqMLJQ00dhR77niMGcxhjXrsTdp0J5slvlbHJyhtP7mXwZgptkkk3brTaRMH8hAW5_-YvVqOGc8u1VgvUtUprccT11401oeBL6LUxTW-"/>
+<img alt="Member 5" class="w-10 h-10 rounded-full border-2 border-surface shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcToWFFpp-g9cFKmY8cRTy2mB2zzOTifnYgB4E7WurZFnYRiPBnW_Q1Nt_OFUGrhXFZlDEPi83aXVcY66oW00UTfGdzVTXPWSIuZjcj6rkcK4YVLP41pQSAyjAgOtDKRRabaOSbKhDqiFXH6ZPcLLoz4lWq6rsKMsHuliqSy2z4BD7t2O54YQFNy7i1wq2x5JovQLTLQ7H4KqoRYQfUzreAQJp32MqU_CESPcf9mVX0XaVXPUgY4DEtbTNKwLM_jUdCB70nQNCtaF4"/>
+<img alt="Member 6" class="w-10 h-10 rounded-full border-2 border-surface shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUV1fpUkuFE9ny33ihjlb73oNiL5Vyee9ktYRkRc_DUn9fUMztkB-4TKWTa2r5JBLNLs8BZlg8uRYplccgj0z4FPCclRBh-CpvtoMtaLUQhYRGa0VcDLPsQRnJw9_kqBBu_-v4hZEuTb4H6FbXgFJT7lxYUi4LGIGM93FWL7qR0Fxf3dE-4IiLoNdPpAyKpTaC4Y2A-goPpOVP8uFuOe8Fa-DOC1hF8pFogHqS_Qtai-HUckSqJgY8C2cABVY8vZ0kLJM_o4bjcGGH"/>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Status</p>
+<p class="text-primary font-semibold">Owed $340.20</p>
+</div>
+<button class="p-3 bg-surface-container-high rounded-full hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Group 3 -->
+<div class="bg-surface-container rounded-lg overflow-hidden flex flex-col border border-outline-variant/10 group hover:border-primary/30 transition-all duration-300">
+<div class="h-32 relative">
+<img class="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" data-alt="modern minimalist gym with sleek black equipment and neon blue lighting accents, moody athletic atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp2441xb2oPK3isLdVAH-PdfVqdikUnYeX7iO1PjkFgXk7jKUcferE2VNDyEaVmsIvh2zkQO-nlyPaTfTJsiKLoWaNaat8xONERwmssa6tSZlzuXR7_Bdnr8IPyegS7orz6hQQA2FwChAV7OsZfdEbazf6Zz9DQpbWIvzgELwxuJSbREMRJpVbXjnrzHNw7tMw2cHJOgAGt81-1boExnX47cmoRr90k8G3NLiV5iApfFNJe0j8uYbxFaq-hbQfT0JXQG-GGgm-g24G"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
+<div class="absolute bottom-4 left-6">
+<h3 class="text-2xl font-bold font-headline">Gym Squad</h3>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col justify-between">
+<div class="flex items-center -space-x-3 mb-6">
+<img alt="Member 7" class="w-10 h-10 rounded-full border-2 border-surface shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpLaKBSnk_9Ccbag-qdysVkGzmRzavB0fO4hzZWyEPZkzPHYNHL1gFEXNRi_Z1p9qFl4_qmkIFg_5dVvzkYGLdAac8t12Vw4a8BtojK6tNGl6rCoeQUqiBDLa5hFDNbwSpsEKUNv5nVT41MCprz1SqYAETlGrbwnwBSSkH_8jn84fPwQvZytYG3TQ5kKAu-aDXeVqFZ6IlsAtW-EmEltSVnRwgmqnNq2U0hdQ4bQKAyqKAjrytKHKxkBEVuPI-GZ7PY7JYXYulWRu5"/>
+<img alt="Member 8" class="w-10 h-10 rounded-full border-2 border-surface shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUPAxUgqCHd0ynYxbyFwmSg0PVI61bdDhunrA87u5_HqZRON8o8npC56GbAzSKl4GSj9Mw48hXbnTnFCgv2EAbDxwDirXoyJ2gczegbgEjOifHzi5Jg5Xdk9dMaVGVeZjC_vLMIplT6FypR11A6pML0J1xFF9rVt-8PQ5ktiZgJBMJ3D7tgmIniqQCT1eI0R1is2L-LbHY0eO1Xcgw4sAe7lt4iG_8gX5PBBFj98rKd3ZmzI4DWlnSxA0TB_qcib8H-qb24_Qqi69W"/>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Status</p>
+<p class="text-on-surface-variant font-semibold">Settled Up</p>
+</div>
+<button class="p-3 bg-surface-container-high rounded-full hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Action Card -->
+<div class="bg-surface-container-low rounded-lg border-2 border-dashed border-outline-variant/20 flex items-center justify-center p-12 hover:bg-surface-container-high hover:border-primary/50 transition-all cursor-pointer group">
+<div class="text-center">
+<div class="w-16 h-16 bg-surface-container-highest rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">add</span>
+</div>
+<p class="font-headline font-bold text-on-surface">Start New Circle</p>
+<p class="text-xs text-on-surface-variant mt-1">Split rent, bills, or dinner</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Asymmetric List -->
+<section class="mt-20">
+<h2 class="text-3xl font-bold font-headline mb-8">Recent Activity</h2>
+<div class="space-y-4 max-w-4xl">
+<div class="flex items-center gap-6 p-6 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors">
+<div class="w-12 h-12 bg-primary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white">shopping_bag</span>
+</div>
+<div class="flex-grow">
+<p class="text-on-surface font-semibold">Weekly Groceries</p>
+<p class="text-on-surface-variant text-sm">Paid by Sarah in <span class="text-on-surface">Flatmates</span></p>
+</div>
+<div class="text-right">
+<p class="font-bold text-error">-$45.00</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Yesterday</p>
+</div>
+</div>
+<div class="flex items-center gap-6 p-6 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors">
+<div class="w-12 h-12 bg-tertiary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white">flight</span>
+</div>
+<div class="flex-grow">
+<p class="text-on-surface font-semibold">Flight Tickets (Rome)</p>
+<p class="text-on-surface-variant text-sm">You paid in <span class="text-on-surface">Vacation 2024</span></p>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary">+$340.20</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest">3 days ago</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full flex justify-around items-end px-6 pb-8 pt-4 bg-neutral-950/90 backdrop-blur-2xl z-50 rounded-t-[2.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center text-neutral-500 p-2 hover:text-indigo-400 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-inter text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-2 hover:text-indigo-400 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-inter text-[10px] font-medium">Costs</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-indigo-600 text-white rounded-full p-3 mb-2 transform -translate-y-2 shadow-[0_0_20px_rgba(79,70,229,0.4)] active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-inter text-[10px] font-medium">Add</span>
+</a>
+<a class="flex flex-col items-center justify-center text-indigo-400 p-2 hover:text-indigo-400 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-inter text-[10px] font-medium">Social</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-500 p-2 hover:text-indigo-400 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-inter text-[10px] font-medium">Insights</span>
+</a>
+</nav>
+</body></html>
