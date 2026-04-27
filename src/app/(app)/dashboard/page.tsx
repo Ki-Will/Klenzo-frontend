@@ -20,7 +20,7 @@ function txIcon(tx: Transaction) {
 }
 
 function formatAmount(tx: Transaction) {
-  const n = parseFloat(tx.amount);
+  const n = tx.amount;
   return tx.transactionType === "income" ? `+$${n.toFixed(2)}` : `-$${Math.abs(n).toFixed(2)}`;
 }
 
@@ -35,9 +35,9 @@ function timeAgo(dateStr: string) {
 }
 
 const SEED_TXS: Transaction[] = [
-  { id: 1, userId: 0, amount: "1299.00", description: "Apple Store", category: "shopping", transactionType: "expense", date: new Date(Date.now() - 7200000).toISOString(), createdAt: "" },
-  { id: 2, userId: 0, amount: "84.20", description: "The Alchemist Bar", category: "dining", transactionType: "expense", date: new Date(Date.now() - 86400000).toISOString(), createdAt: "" },
-  { id: 3, userId: 0, amount: "4250.00", description: "Stripe Payout", category: "income", transactionType: "income", date: new Date(Date.now() - 172800000).toISOString(), createdAt: "" },
+  { id: 1, userId: 0, amount: 1299.00, description: "Apple Store", category: "shopping", transactionType: "expense", date: new Date(Date.now() - 7200000).toISOString(), createdAt: "" },
+  { id: 2, userId: 0, amount: 84.20, description: "The Alchemist Bar", category: "dining", transactionType: "expense", date: new Date(Date.now() - 86400000).toISOString(), createdAt: "" },
+  { id: 3, userId: 0, amount: 4250.00, description: "Stripe Payout", category: "income", transactionType: "income", date: new Date(Date.now() - 172800000).toISOString(), createdAt: "" },
 ];
 
 export default function DashboardPage() {
@@ -56,10 +56,10 @@ export default function DashboardPage() {
 
   const totalIncome = transactions
     .filter((t) => t.transactionType === "income")
-    .reduce((s, t) => s + parseFloat(t.amount), 0);
+    .reduce((s, t) => s + t.amount, 0);
   const totalExpense = transactions
     .filter((t) => t.transactionType === "expense")
-    .reduce((s, t) => s + parseFloat(t.amount), 0);
+    .reduce((s, t) => s + t.amount, 0);
   const balance = totalIncome - totalExpense;
   const recent = [...transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
 
