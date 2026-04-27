@@ -6,6 +6,11 @@ const PUBLIC_ROUTES = ["/", "/splash", "/login", "/sign-up", "/onboarding"];
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Allow API proxy requests to pass through (they are forwarded to the backend)
+  if (pathname.startsWith("/backend/")) {
+    return NextResponse.next();
+  }
+
   // Allow public routes and static assets
   if (PUBLIC_ROUTES.some((r) => pathname === r || pathname.startsWith(r + "/"))) {
     return NextResponse.next();
