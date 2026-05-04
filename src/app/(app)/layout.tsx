@@ -1,10 +1,12 @@
 import SideNav from "@/components/SideNav";
 import TopBar from "@/components/TopBar";
 import BottomNav from "@/components/BottomNav";
+import NotificationBanner from "@/components/NotificationBanner";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#131313]">
+      <NotificationBanner />
       <TopBar />
       <SideNav />
       {/* Offset: pt-16 on mobile (64px header), pt-20 on md+, lg:ml-72 for sidebar */}
