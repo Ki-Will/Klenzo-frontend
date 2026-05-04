@@ -3,12 +3,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { finance, type Group } from "@/lib/api";
 
-const SEED_GROUPS: Group[] = [
-  { id: "flatmates", name: "Flatmates", members: [], netBalance: -125, createdAt: "" },
-  { id: "vacation-2024", name: "Vacation 2024", members: [], netBalance: 340.20, createdAt: "" },
-  { id: "gym-squad", name: "Gym Squad", members: [], netBalance: 0, createdAt: "" },
-];
-
 const GROUP_BG = [
   "from-indigo-900/40 to-slate-900/40",
   "from-teal-900/40 to-slate-900/40",
@@ -17,14 +11,14 @@ const GROUP_BG = [
 ];
 
 export default function GroupsPage() {
-  const [groups, setGroups] = useState<Group[]>(SEED_GROUPS);
-  const [loading, setLoading] = useState(false);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     finance.getGroups()
-      .then((data) => { if (data.length > 0) setGroups(data); })
-      .catch(() => {})
+      .then((data) => setGroups(data))
+      .catch(() => setGroups([]))
       .finally(() => setLoading(false));
   }, []);
 
