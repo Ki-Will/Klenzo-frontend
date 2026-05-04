@@ -22,23 +22,15 @@ function timeAgo(dateStr: string) {
   return d === 1 ? "Yesterday" : `${d} days ago`;
 }
 
-const SEED: Notification[] = [
-  { id: 1, title: "Sarah added an expense", body: "Weekly Groceries — $180.00 in Flatmates", type: "group", read: false, createdAt: new Date(Date.now() - 120000).toISOString() },
-  { id: 2, title: "AI Insight Ready", body: "Your spending velocity is 14% lower this week.", type: "ai", read: false, createdAt: new Date(Date.now() - 3600000).toISOString() },
-  { id: 3, title: "Unusual Spending Detected", body: "A $1,299 charge at Apple Store was flagged.", type: "warning", read: false, createdAt: new Date(Date.now() - 10800000).toISOString() },
-  { id: 4, title: "Settlement Received", body: "Mike R. paid you $80.00 in Gym Squad.", type: "group", read: true, createdAt: new Date(Date.now() - 86400000).toISOString() },
-  { id: 5, title: "New Login Detected", body: "Sign-in from Chrome on macOS.", type: "security", read: true, createdAt: new Date(Date.now() - 172800000).toISOString() },
-];
-
 export default function NotificationsPage() {
-  const [notifs, setNotifs] = useState<Notification[]>(SEED);
-  const [loading, setLoading] = useState(false);
+  const [notifs, setNotifs] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     notifApi.getAll()
-      .then((data) => { if (data.length > 0) setNotifs(data); })
-      .catch(() => {})
+      .then((data) => setNotifs(data))
+      .catch(() => setNotifs([]))
       .finally(() => setLoading(false));
   }, []);
 
