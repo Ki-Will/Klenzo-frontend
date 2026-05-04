@@ -31,27 +31,19 @@ function formatTime(dateStr: string) {
   return new Date(dateStr).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 }
 
-const SEED: Transaction[] = [
-  { id: 1, userId: 0, amount: 124.50, description: "The Gilded Fork", category: "dining", transactionType: "expense", date: new Date(Date.now() - 3600000).toISOString(), createdAt: "" },
-  { id: 2, userId: 0, amount: 4200.00, description: "Salary Deposit", category: "income", transactionType: "income", date: new Date(Date.now() - 86400000).toISOString(), createdAt: "" },
-  { id: 3, userId: 0, amount: 89.30, description: "City Power & Light", category: "utilities", transactionType: "expense", date: new Date(Date.now() - 172800000).toISOString(), createdAt: "" },
-  { id: 4, userId: 0, amount: 212.05, description: "Whole Foods Market", category: "food", transactionType: "expense", date: new Date(Date.now() - 259200000).toISOString(), createdAt: "" },
-  { id: 5, userId: 0, amount: 24.99, description: "Uber Technologies", category: "travel", transactionType: "expense", date: new Date(Date.now() - 345600000).toISOString(), createdAt: "" },
-];
-
 export default function ExpensesPage() {
   const { user } = useAuth();
-  const [transactions, setTransactions] = useState<Transaction[]>(SEED);
-  const [loading, setLoading] = useState(false);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
   useEffect(() => {
     if (!user?.id) return;
     setLoading(true);
-    finance.getTransactions(user.id)
-      .then((data) => { if (data.length > 0) setTransactions(data); })
-      .catch(() => {})
+    finance.getTransactions()
+      .then((data) => setTransactions(data))
+      .catch(() => setTransactions([]))
       .finally(() => setLoading(false));
   }, [user?.id]);
 
