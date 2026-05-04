@@ -18,7 +18,7 @@ export default function AnalyticsPage() {
     if (!user?.id) return;
     setLoading(true);
     Promise.all([
-      finance.getTransactions(user.id),
+      finance.getTransactions(),
       finance.getAnalyticsCategories().catch(() => [] as CategorySplit[]),
     ]).then(([txs, cats]) => {
       setTransactions(txs);

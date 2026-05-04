@@ -34,23 +34,17 @@ function timeAgo(dateStr: string) {
   return `${d} days ago`;
 }
 
-const SEED_TXS: Transaction[] = [
-  { id: 1, userId: 0, amount: 1299.00, description: "Apple Store", category: "shopping", transactionType: "expense", date: new Date(Date.now() - 7200000).toISOString(), createdAt: "" },
-  { id: 2, userId: 0, amount: 84.20, description: "The Alchemist Bar", category: "dining", transactionType: "expense", date: new Date(Date.now() - 86400000).toISOString(), createdAt: "" },
-  { id: 3, userId: 0, amount: 4250.00, description: "Stripe Payout", category: "income", transactionType: "income", date: new Date(Date.now() - 172800000).toISOString(), createdAt: "" },
-];
-
 export default function DashboardPage() {
   const { user } = useAuth();
-  const [transactions, setTransactions] = useState<Transaction[]>(SEED_TXS);
-  const [loadingTx, setLoadingTx] = useState(false);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [loadingTx, setLoadingTx] = useState(true);
 
   useEffect(() => {
     if (!user?.id) return;
     setLoadingTx(true);
-    finance.getTransactions(user.id)
-      .then((data) => { if (data.length > 0) setTransactions(data); })
-      .catch(() => {})
+    finance.getTransactions()
+      .then((data) => setTransactions(data))
+      .catch(() => setTransactions([]))
       .finally(() => setLoadingTx(false));
   }, [user?.id]);
 
@@ -119,17 +113,15 @@ export default function DashboardPage() {
                 <button className="px-4 py-1 text-xs rounded-full text-[#c7c4d8] hover:bg-[#2a2a2a] transition-colors">Monthly</button>
               </div>
             </div>
-            <div className="h-48 w-full relative pt-4">
-              <svg className="absolute inset-0 w-full h-full neon-line" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="gc" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#c3c0ff" />
-                    <stop offset="100%" stopColor="transparent" />
-                  </linearGradient>
-                </defs>
-                <path d="M0,80 Q10,75 20,40 T40,50 T60,20 T80,35 T100,10" fill="none" stroke="#c3c0ff" strokeWidth="2" />
-                <path d="M0,80 Q10,75 20,40 T40,50 T60,20 T80,35 T100,10 V100 H0 Z" fill="url(#gc)" fillOpacity="0.1" />
-              </svg>
+            <div className="h-48 w-full relative pt-4 flex items-end gap-1">
+              {[0.35, 0.55, 0.2, 0.8, 0.45, 0.65, 0.3].map((ratio, i) => (
+                <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                  <div
+                    className="w-full rounded-t-lg bg-primary-fixed-dim/30"
+                    style={{ height: `${Math.max(4, ratio * 100)}%` }}
+                  />
+                </div>
+              ))}
               <div className="absolute bottom-[-20px] left-0 w-full flex justify-between text-[10px] text-[#c7c4d8]">
                 {["MON","TUE","WED","THU","FRI","SAT","SUN"].map((d) => <span key={d}>{d}</span>)}
               </div>
