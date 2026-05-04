@@ -2,53 +2,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { productivity as productivityApi, type Task, type TaskStatus } from "@/lib/api";
 
-// ─── Seed data ────────────────────────────────────────────────────────────────
-const SEED_TASKS: Task[] = [
-  {
-    id: 1,
-    title: "Design System Overhaul: Tokenization Phase",
-    description: "Integrate new semantic tokens for dark mode transitions and glass textures.",
-    status: "todo",
-    dueDate: "2024-03-12T00:00:00Z",
-    priority: 3,
-    createdAt: "",
-  },
-  {
-    id: 2,
-    title: "Stakeholder Review: Q1 Analytics",
-    description: "Prepare summary deck for the productivity growth metrics.",
-    status: "todo",
-    dueDate: new Date(Date.now() + 86400000).toISOString(),
-    priority: 1,
-    createdAt: "",
-  },
-  {
-    id: 3,
-    title: "API Integration: Habit Tracker Sync",
-    description: "Connect the habits endpoint to the frontend state layer.",
-    status: "in_progress",
-    dueDate: "2024-03-15T00:00:00Z",
-    priority: 4,
-    createdAt: "",
-  },
-  {
-    id: 4,
-    title: "User Interview Documentation",
-    description: "Completed 5 sessions with early adopters for the productivity suite.",
-    status: "done",
-    priority: 2,
-    createdAt: "",
-  },
-  {
-    id: 5,
-    title: "Onboarding Flow Redesign",
-    description: "Revamp the 3-step onboarding with new copy and illustrations.",
-    status: "done",
-    priority: 2,
-    createdAt: "",
-  },
-];
-
 const PRIORITY_LABELS: Record<number, { label: string; color: string; bg: string }> = {
   4: { label: "Critical",  color: "text-[#dad7ff]",  bg: "bg-[#4f46e5]" },
   3: { label: "High",      color: "text-[#c3c0ff]",  bg: "bg-[#4f46e5]/20" },
@@ -311,14 +264,17 @@ function TaskCard({
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function ProductivityPage() {
-  const [tasks, setTasks] = useState<Task[]>(SEED_TASKS);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     productivityApi
       .getTasks()
-      .then((data) => { if (data.length > 0) setTasks(data); })
-      .catch(() => {/* keep seed */});
+      .then((data) => setTasks(data))
+      .catch(() => setTasks([]))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleStatusChange = useCallback(async (id: number, newStatus: TaskStatus) => {
