@@ -3,70 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import { habits as habitsApi, type Habit } from "@/lib/api";
 import Link from "next/link";
 
-// ─── Mock seed data (shown while API loads / unauthenticated) ─────────────────
-const SEED_HABITS: Habit[] = [
-  {
-    id: 1,
-    name: "Deep Meditation",
-    description: "20 Minutes / Session",
-    frequency: "daily",
-    currentStreak: 12,
-    longestStreak: 21,
-    lastCompletedDate: new Date(Date.now() - 86400000).toISOString(),
-    createdAt: "",
-  },
-  {
-    id: 2,
-    name: "Hydration Goal",
-    description: "Drink 3L of ionized water",
-    frequency: "daily",
-    currentStreak: 8,
-    longestStreak: 14,
-    lastCompletedDate: new Date().toISOString(),
-    createdAt: "",
-  },
-  {
-    id: 3,
-    name: "Read Philosophy",
-    description: "30 pages minimum",
-    frequency: "daily",
-    currentStreak: 5,
-    longestStreak: 10,
-    lastCompletedDate: undefined,
-    createdAt: "",
-  },
-  {
-    id: 4,
-    name: "Strength Training",
-    description: "4 Days / Week",
-    frequency: "weekly",
-    currentStreak: 3,
-    longestStreak: 8,
-    lastCompletedDate: new Date(Date.now() - 172800000).toISOString(),
-    createdAt: "",
-  },
-  {
-    id: 5,
-    name: "Logic Drills",
-    description: "Daily • 45m",
-    frequency: "daily",
-    currentStreak: 0,
-    longestStreak: 6,
-    lastCompletedDate: undefined,
-    createdAt: "",
-  },
-  {
-    id: 6,
-    name: "Deep Work",
-    description: "Mon–Fri • 4h Block",
-    frequency: "daily",
-    currentStreak: 7,
-    longestStreak: 15,
-    lastCompletedDate: new Date().toISOString(),
-    createdAt: "",
-  },
-];
-
 const HABIT_ICONS: Record<string, string> = {
   "Deep Meditation": "mindfulness",
   "Hydration Goal": "water_drop",
@@ -206,16 +142,19 @@ function AddHabitModal({
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HabitsPage() {
-  const [habitList, setHabitList] = useState<Habit[]>(SEED_HABITS);
+  const [habitList, setHabitList] = useState<Habit[]>([]);
+  const [loadingHabits, setLoadingHabits] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [completing, setCompleting] = useState<number | null>(null);
 
   // Fetch from API on mount
   useEffect(() => {
+    setLoadingHabits(true);
     habitsApi
       .getHabits()
-      .then((data) => { if (data.length > 0) setHabitList(data); })
-      .catch(() => {/* keep seed data */});
+      .then((data) => setHabitList(data))
+      .catch(() => setHabitList([]))
+      .finally(() => setLoadingHabits(false));
   }, []);
 
   const handleComplete = useCallback(async (id: number) => {
