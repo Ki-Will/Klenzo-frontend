@@ -32,7 +32,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     error: null,
   });
 
-  // 🔥 Always try to get user (cookie decides auth, not localStorage)
+  /**
+   * Try to load the current user from the backend.
+   * If the cookie is valid the backend returns the profile.
+   * If not (401) we just set user = null — no redirect here.
+   */
   const refreshUser = useCallback(async () => {
     try {
       const user = await auth.profile();
@@ -49,18 +53,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // ─── LOGIN ────────────────────────────────────────────────────────────────
   const login = useCallback(async (email: string, password: string) => {
     setState((s) => ({ ...s, loading: true, error: null }));
-
     try {
-      await auth.login(email, password); // 🍪 cookies set by backend
+      // Backend sets httpOnly cookies on successful login
+      await auth.login(email, password);
       const user = await auth.profile();
-
       setState({ user, loading: false, error: null });
-    } catch (err: any) {
-      setState({
-        user: null,
-        loading: false,
-        error: err?.message || "Login failed",
-      });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Login failed";
+      setState({ user: null, loading: false, error: msg });
       throw err;
     }
   }, []);
@@ -68,19 +68,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // ─── REGISTER ─────────────────────────────────────────────────────────────
   const register = useCallback(async (email: string, password: string) => {
     setState((s) => ({ ...s, loading: true, error: null }));
-
     try {
       await auth.register(email, password);
-      await auth.login(email, password); // auto login after register
+      // Auto-login after registration
+      await auth.login(email, password);
       const user = await auth.profile();
-
       setState({ user, loading: false, error: null });
-    } catch (err: any) {
-      setState({
-        user: null,
-        loading: false,
-        error: err?.message || "Registration failed",
-      });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Registration failed";
+      setState({ user: null, loading: false, error: msg });
       throw err;
     }
   }, []);
@@ -88,27 +84,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // ─── LOGOUT ───────────────────────────────────────────────────────────────
   const logout = useCallback(async () => {
     try {
-      await auth.logout(); // 🔥 backend clears cookies
+      await auth.logout(); // backend clears httpOnly cookies
     } catch {
-      // ignore errors, still clear state
+      // Ignore — still clear local state
     }
-
     setState({ user: null, loading: false, error: null });
-
-    // 🔥 force refresh to clear SSR state
     window.location.href = "/login";
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ ...state, login, register, logout, refreshUser }}
-    >
+    <AuthContext.Provider value={{ ...state, login, register, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
-// ─── Hook ────────────────────────────────────────────────────────────────────
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
