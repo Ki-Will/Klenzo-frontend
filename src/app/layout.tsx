@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
 import { AuthProvider } from "@/lib/auth-context";
+import { BannerProvider } from "@/lib/banner-context";
+import { NotificationWebSocketProvider } from "@/lib/ws-notification-context";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -44,7 +46,11 @@ export default function RootLayout({
       </head>
       <body className={`${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
         <AuthProvider>
-          {children}
+          <NotificationWebSocketProvider>
+            <BannerProvider>
+              {children}
+            </BannerProvider>
+          </NotificationWebSocketProvider>
         </AuthProvider>
       </body>
     </html>
