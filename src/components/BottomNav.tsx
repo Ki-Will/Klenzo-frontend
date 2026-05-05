@@ -18,7 +18,7 @@ export default function BottomNav() {
       className="lg:hidden fixed bottom-0 left-0 right-0 z-50
                  flex items-end justify-around
                  px-2 pt-3 pb-safe
-                 bg-[#0a0a0a]/95 backdrop-blur-2xl
+                 bg-surface-dim/95 backdrop-blur-2xl
                  rounded-t-[2rem]
                  shadow-[0_-8px_32px_rgba(0,0,0,0.5)]
                  border-t border-white/5"
