@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useNotificationWebSocket } from "@/lib/ws-notification-context";
 
 interface TopBarProps {
   showClose?: boolean;
@@ -27,6 +28,7 @@ const PAGE_TITLES: Record<string, string> = {
 export default function TopBar({ showClose = false }: TopBarProps) {
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
+  const { unreadCount } = useNotificationWebSocket();
 
   // Find the best matching title
   const title =
@@ -113,12 +115,19 @@ export default function TopBar({ showClose = false }: TopBarProps) {
 
         <Link
           href="/notifications"
-          className="w-9 h-9 flex items-center justify-center rounded-full
+          className="w-9 h-9 flex items-center justify-center rounded-full relative
                      text-[#c7c4d8] hover:text-[#c3c0ff]
                      hover:bg-[#2a2a2a] transition-colors active:scale-95"
           aria-label="Notifications"
         >
           <span className="material-symbols-outlined text-[20px]">notifications</span>
+          {unreadCount > 0 && (
+            <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center
+                             bg-[#ffb4ab] text-[#2b0002] text-[10px] font-bold rounded-full
+                             shadow-[0_0_8px_rgba(255,138,128,0.5)] animate-pulse">
+              {unreadCount > 99 ? "99+" : unreadCount}
+            </span>
+          )}
         </Link>
 
         <Link
