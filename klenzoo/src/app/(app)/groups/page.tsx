@@ -22,8 +22,8 @@ export default function GroupsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const totalOwed = groups.reduce((s, g) => s + Math.max(0, -(g.netBalance ?? 0)), 0);
-  const totalOwing = groups.reduce((s, g) => s + Math.max(0, g.netBalance ?? 0), 0);
+  const totalOwed = groups.reduce((s, g) => s + Math.max(0, -(Number(g.netBalance) ?? 0)), 0);
+  const totalOwing = groups.reduce((s, g) => s + Math.max(0, Number(g.netBalance) ?? 0), 0);
   const netBalance = totalOwing - totalOwed;
 
   return (
@@ -37,10 +37,6 @@ export default function GroupsPage() {
           <p className="text-[#c7c4d8] text-lg max-w-md">Coordinate shared expenses seamlessly.</p>
         </div>
         <div className="flex gap-3 flex-wrap">
-          <button className="px-5 py-3 rounded-full bg-[#2a2a2a]/60 text-[#c3c0ff] border border-[#464555]/15 font-semibold text-sm flex items-center gap-2 hover:bg-[#353534] transition-colors">
-            <span className="material-symbols-outlined text-lg">payments</span>
-            Settle Up
-          </button>
           <Link href="/groups/new" className="px-5 py-3 rounded-full luminous-gradient text-white font-bold text-sm shadow-[0_0_20px_rgba(79,70,229,0.3)] active:scale-95 transition-transform flex items-center gap-2">
             <span className="material-symbols-outlined text-lg">add_circle</span>
             New Group
@@ -85,7 +81,7 @@ export default function GroupsPage() {
           ) : (
             <>
               {groups.map((group, idx) => {
-                const balance = group.netBalance ?? 0;
+                const balance = Number(group.netBalance ?? 0);
                 return (
                   <Link key={group.id} href={`/groups/${group.id}`}
                     className="bg-[#201f1f] rounded-2xl overflow-hidden flex flex-col border border-[#464555]/10 group hover:border-[#c3c0ff]/30 transition-all duration-300">

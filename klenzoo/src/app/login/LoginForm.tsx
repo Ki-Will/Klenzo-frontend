@@ -8,7 +8,9 @@ export default function LoginForm() {
   const { login, user, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") ?? "/dashboard";
+  // Validate redirect param — only allow relative paths starting with /
+  const rawRedirect = searchParams.get("redirect") ?? "/dashboard";
+  const redirect = rawRedirect.startsWith("/") ? rawRedirect : "/dashboard";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

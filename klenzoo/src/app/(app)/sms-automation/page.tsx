@@ -1,39 +1,41 @@
-export default function SmsAutomationPage() {
-  const steps = [
-    {
-      step: "01",
-      icon: "sms",
-      title: "SMS Received",
-      description: "Your bank sends a transaction SMS to your registered number.",
-      color: "text-[#c3c0ff]",
-      bg: "bg-[#4f46e5]/10",
-    },
-    {
-      step: "02",
-      icon: "auto_awesome",
-      title: "AI Parsing",
-      description: "Klenzoo's AI engine reads and extracts merchant, amount, and date.",
-      color: "text-[#ffb695]",
-      bg: "bg-[#a44100]/10",
-    },
-    {
-      step: "03",
-      icon: "category",
-      title: "Auto-Categorization",
-      description: "The transaction is automatically assigned to the right spending category.",
-      color: "text-[#c3c0ff]",
-      bg: "bg-[#4f46e5]/10",
-    },
-    {
-      step: "04",
-      icon: "receipt_long",
-      title: "Logged to Ledger",
-      description: "The expense appears instantly in your Klenzoo dashboard.",
-      color: "text-[#ffb695]",
-      bg: "bg-[#a44100]/10",
-    },
-  ];
+"use client";
 
+const steps = [
+  {
+    step: "01",
+    icon: "sms",
+    title: "SMS Received",
+    description: "Your bank sends a transaction SMS to your registered number.",
+    color: "text-[#c3c0ff]",
+    bg: "bg-[#4f46e5]/10",
+  },
+  {
+    step: "02",
+    icon: "auto_awesome",
+    title: "AI Parsing",
+    description: "Klenzoo's AI engine reads and extracts merchant, amount, and date.",
+    color: "text-[#ffb695]",
+    bg: "bg-[#a44100]/10",
+  },
+  {
+    step: "03",
+    icon: "category",
+    title: "Auto-Categorization",
+    description: "The transaction is automatically assigned to the right spending category.",
+    color: "text-[#c3c0ff]",
+    bg: "bg-[#4f46e5]/10",
+  },
+  {
+    step: "04",
+    icon: "receipt_long",
+    title: "Logged to Ledger",
+    description: "The expense appears instantly in your Klenzoo dashboard.",
+    color: "text-[#ffb695]",
+    bg: "bg-[#a44100]/10",
+  },
+];
+
+export default function SmsAutomationPage() {
   return (
     <main className="px-6 lg:px-12 py-6 min-h-screen">
       <div className="max-w-3xl mx-auto space-y-12">
@@ -88,7 +90,10 @@ export default function SmsAutomationPage() {
               Grant permission to read bank SMS notifications.
             </p>
           </div>
-          <button className="px-8 py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap">
+          <button
+            onClick={() => alert("SMS tracking requires a native mobile app. This feature is coming soon.")}
+            className="px-8 py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap"
+          >
             Enable Now
           </button>
         </div>
@@ -96,4 +101,3 @@ export default function SmsAutomationPage() {
     </main>
   );
 }
-

@@ -17,8 +17,16 @@ export default function SettingsPage() {
           {/* Profile Card */}
           <section className="md:col-span-8 bg-[#1c1b1b] rounded-2xl p-8 relative overflow-hidden">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-              <div className="w-24 h-24 rounded-full bg-[#353534] flex items-center justify-center ring-4 ring-[#4f46e5]/20 flex-shrink-0">
-                <span className="material-symbols-outlined text-5xl text-[#c7c4d8]">account_circle</span>
+              <div className="w-24 h-24 rounded-full bg-[#353534] flex items-center justify-center ring-4 ring-[#4f46e5]/20 flex-shrink-0 overflow-hidden">
+                {user?.avatar ? (
+                  <img src={user.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                ) : (
+                  <img 
+                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || user?.email?.split("@")[0] || "User")}&background=353534&color=c7c4d8&size=256`} 
+                    alt="Default Avatar" 
+                    className="w-full h-full object-cover" 
+                  />
+                )}
               </div>
               <div className="text-center md:text-left flex-1">
                 <h2 className="text-2xl font-bold font-headline mb-1">

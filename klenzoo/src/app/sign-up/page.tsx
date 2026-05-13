@@ -14,10 +14,14 @@ export default function SignUpPage() {
   const [agreed, setAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [didRegister, setDidRegister] = useState(false);
 
+  // Only auto-redirect if user was already logged in on mount (not after registration)
   useEffect(() => {
-    if (!loading && user) router.replace("/dashboard");
-  }, [user, loading, router]);
+    if (!loading && user && !didRegister) {
+      router.replace("/dashboard");
+    }
+  }, [user, loading, router, didRegister]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -25,10 +29,12 @@ export default function SignUpPage() {
     if (password.length < 8) { setError("Password must be at least 8 characters."); return; }
     setSubmitting(true);
     setError("");
+    setDidRegister(true); // Prevent auto-redirect useEffect from interfering
     try {
       await register(email, password);
       router.replace("/onboarding");
     } catch (err: unknown) {
+      setDidRegister(false);
       setError(err instanceof Error ? err.message : "Registration failed");
     } finally {
       setSubmitting(false);

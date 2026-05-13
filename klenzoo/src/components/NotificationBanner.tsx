@@ -2,75 +2,93 @@
 
 import Link from "next/link";
 import { useBanners } from "@/lib/banner-context";
-import type { BannerColor } from "@/lib/api";
+import { notifications as notifApi } from "@/lib/api";
 
-const COLOR_MAP: Record<
-  BannerColor,
-  { bg: string; text: string; icon: string; border: string }
-> = {
-  info: {
-    bg: "bg-primary-container/20",
-    text: "text-primary-fixed-dim",
-    icon: "info",
-    border: "border-primary/30",
-  },
-  success: {
-    bg: "bg-emerald-900/20",
-    text: "text-emerald-300",
-    icon: "check_circle",
-    border: "border-emerald-500/30",
-  },
-  warning: {
-    bg: "bg-amber-900/20",
-    text: "text-amber-300",
-    icon: "warning",
-    border: "border-amber-500/30",
-  },
-  error: {
-    bg: "bg-error-container/40",
-    text: "text-error",
-    icon: "error",
-    border: "border-error/30",
-  },
-};
-
+/**
+ * Announcement / Hello Bar
+ *
+ * Sits in the document flow (not fixed/absolute) so it naturally pushes
+ * page content down — no overlap. Sticky so it stays visible on scroll.
+ * Uses the hex color from the backend for both the accent border and text.
+ */
 export default function NotificationBanner() {
   const { banners, dismissBanner } = useBanners();
 
   if (banners.length === 0) return null;
 
+  function handleDismiss(id: number | string) {
+    notifApi.markRead(id).catch(() => {});
+    dismissBanner(id);
+  }
+
   return (
-    <div className="fixed top-16 md:top-20 left-0 right-0 z-40 flex flex-col gap-2 px-4 pt-3 lg:pl-80 pointer-events-none">
+    <div className="sticky top-16 md:top-20 z-30 flex flex-col">
       {banners.map((banner) => {
-        const colors = COLOR_MAP[banner.color] ?? COLOR_MAP.info;
+        const hex = banner.color ?? "#6366f1";
+
         return (
           <div
             key={banner.id}
-            className={`pointer-events-auto flex items-center gap-3 px-5 py-3 rounded-2xl border ${colors.bg} ${colors.border} backdrop-blur-xl shadow-lg animate-slide-down`}
+            className="relative w-full flex items-center gap-3 px-4 md:px-6 py-2.5 overflow-hidden"
+            style={{
+              backgroundColor: `${hex}18`,   // 10% opacity fill
+              borderBottom: `1px solid ${hex}30`,
+              borderLeft: `3px solid ${hex}`,
+            }}
           >
+            {/* Subtle radial glow from left */}
+            <div
+              className="absolute inset-y-0 left-0 w-40 pointer-events-none"
+              style={{
+                background: `linear-gradient(to right, ${hex}20, transparent)`,
+              }}
+            />
+
+            {/* Pulsing dot */}
             <span
-              className={`material-symbols-outlined ${colors.text} text-lg flex-shrink-0`}
-            >
-              {colors.icon}
-            </span>
+              className="relative flex-shrink-0 w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: hex }}
+            />
 
-            <p className={`flex-1 text-sm font-medium ${colors.text} min-w-0`}>
-              {banner.message}
-            </p>
+            {/* Title + message — both use the hex color for title, muted for body */}
+            <div className="relative flex-1 min-w-0 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              {banner.title && (
+                <span
+                  className="text-[11px] font-bold uppercase tracking-widest whitespace-nowrap flex-shrink-0"
+                  style={{ color: hex }}
+                >
+                  {banner.title}
+                </span>
+              )}
+              <p
+                className="text-sm leading-snug min-w-0"
+                style={{ color: `${hex}cc` }}   // 80% opacity of the same hex
+              >
+                {banner.message}
+              </p>
+            </div>
 
+            {/* Optional CTA */}
             {banner.link && (
               <Link
                 href={banner.link}
-                className={`flex-shrink-0 text-xs font-bold ${colors.text} opacity-80 hover:opacity-100 hover:underline underline-offset-2 transition-opacity`}
+                className="relative flex-shrink-0 text-[11px] font-bold px-3 py-1 rounded-full whitespace-nowrap transition-opacity hover:opacity-80"
+                style={{
+                  color: hex,
+                  border: `1px solid ${hex}50`,
+                  backgroundColor: `${hex}15`,
+                }}
               >
-                {banner.linkText ?? "View"}
+                {banner.linkText ?? "Learn more"}
               </Link>
             )}
 
+            {/* Dismiss */}
             {banner.dismissible && (
               <button
-                onClick={() => dismissBanner(banner.id)}
-                className={`flex-shrink-0 p-1 rounded-full hover:bg-white/10 transition-colors ${colors.text}`}
+                onClick={() => handleDismiss(banner.id)}
+                className="relative flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full transition-all hover:bg-white/10"
+                style={{ color: `${hex}99` }}
                 aria-label="Dismiss"
               >
                 <span className="material-symbols-outlined text-sm">close</span>

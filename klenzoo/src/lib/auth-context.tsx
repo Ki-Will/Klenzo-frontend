@@ -32,11 +32,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     error: null,
   });
 
-  /**
-   * Try to load the current user from the backend.
-   * If the cookie is valid the backend returns the profile.
-   * If not (401) we just set user = null — no redirect here.
-   */
   const refreshUser = useCallback(async () => {
     setState((s) => ({ ...s, loading: true }));
     try {
@@ -51,50 +46,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refreshUser();
   }, [refreshUser]);
 
-  // ─── LOGIN ────────────────────────────────────────────────────────────────
   const login = useCallback(async (email: string, password: string) => {
     setState((s) => ({ ...s, loading: true, error: null }));
+
     try {
-      // Backend sets httpOnly cookies on successful login
-      await auth.login(email, password);
-      let user: UserProfile | null = null;
-      try {
-        user = await auth.profile();
-      } catch {
-        // Profile fetch failed but login succeeded — proceed anyway
-      }
-      setState({ user, loading: false, error: null });
+      const result = await auth.login(email, password);
+      setState({
+        user: result.user,
+        loading: false,
+        error: null,
+      });
     } catch (err: unknown) {
-      const msg =
-        err instanceof Error && err.message !== "Session expired"
-          ? err.message
-          : "Invalid credentials";
-      setState({ user: null, loading: false, error: msg });
+      const msg = err instanceof Error ? err.message : "Invalid credentials";
+
+      setState({
+        user: null,
+        loading: false,
+        error: msg,
+      });
+
       throw new Error(msg);
     }
   }, []);
 
-  // ─── REGISTER ─────────────────────────────────────────────────────────────
   const register = useCallback(async (email: string, password: string) => {
     setState((s) => ({ ...s, loading: true, error: null }));
+
     try {
       await auth.register(email, password);
-      // Auto-login after registration
-      await auth.login(email, password);
-      // Fetch profile — retry once if the first attempt fails (cookie timing)
-      let user: UserProfile | null = null;
-      try {
-        user = await auth.profile();
-      } catch {
-        // Wait briefly for the cookie to propagate, then retry
-        await new Promise((r) => setTimeout(r, 300));
-        try {
-          user = await auth.profile();
-        } catch {
-          // Still failed — proceed with null; refreshUser will fix it on next render
-        }
-      }
-      setState({ user, loading: false, error: null });
+      const result = await auth.login(email, password);
+      setState({ user: result.user, loading: false, error: null });
     } catch (err: unknown) {
       const msg =
         err instanceof Error && err.message !== "Session expired"
@@ -105,19 +86,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // ─── LOGOUT ───────────────────────────────────────────────────────────────
   const logout = useCallback(async () => {
     try {
-      await auth.logout(); // backend clears httpOnly cookies
+      await auth.logout();
     } catch {
-      // Ignore — still clear local state
+      // Still clear local state if the backend logout endpoint is unavailable.
     }
     setState({ user: null, loading: false, error: null });
     window.location.href = "/login";
   }, []);
 
   return (
-    <AuthContext.Provider value={{ ...state, login, register, logout, refreshUser }}>
+    <AuthContext.Provider
+      value={{ ...state, login, register, logout, refreshUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

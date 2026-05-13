@@ -20,7 +20,7 @@ function txIcon(tx: Transaction) {
 }
 
 function formatAmount(tx: Transaction) {
-  const n = tx.amount;
+  const n = Number(tx.amount);
   return tx.transactionType === "income" ? `+$${n.toFixed(2)}` : `-$${Math.abs(n).toFixed(2)}`;
 }
 
@@ -40,7 +40,10 @@ export default function DashboardPage() {
   const [loadingTx, setLoadingTx] = useState(true);
 
   useEffect(() => {
-    if (!user?.id) return;
+    if (!user?.id) {
+      setLoadingTx(false);
+      return;
+    }
     setLoadingTx(true);
     finance.getTransactions()
       .then((data) => setTransactions(data))
@@ -50,15 +53,24 @@ export default function DashboardPage() {
 
   const totalIncome = transactions
     .filter((t) => t.transactionType === "income")
-    .reduce((s, t) => s + t.amount, 0);
+    .reduce((s, t) => s + Number(t.amount), 0);
   const totalExpense = transactions
     .filter((t) => t.transactionType === "expense")
-    .reduce((s, t) => s + t.amount, 0);
+    .reduce((s, t) => s + Number(t.amount), 0);
   const balance = totalIncome - totalExpense;
   const recent = [...transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
 
   return (
     <main className="px-6 md:px-12 min-h-screen">
+      {!user ? (
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="flex space-x-2">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+            ))}
+          </div>
+        </div>
+      ) : (
       <div className="max-w-7xl mx-auto space-y-12 py-8">
         {/* Hero */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
@@ -225,6 +237,7 @@ export default function DashboardPage() {
           </div>
         </section>
       </div>
+      )}
     </main>
   );
 }

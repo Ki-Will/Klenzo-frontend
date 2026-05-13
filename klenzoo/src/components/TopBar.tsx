@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useNotificationWebSocket } from "@/lib/ws-notification-context";
+import { useAuth } from "@/lib/auth-context";
 
 interface TopBarProps {
   showClose?: boolean;
@@ -29,6 +30,11 @@ export default function TopBar({ showClose = false }: TopBarProps) {
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const { unreadCount } = useNotificationWebSocket();
+  const { user } = useAuth();
+
+  // Show close (X) on the add expense page — it's a focused flow
+  const isAddExpense = pathname === "/expenses/add";
+  const useClose = showClose || isAddExpense;
 
   // Find the best matching title
   const title =
@@ -46,7 +52,7 @@ export default function TopBar({ showClose = false }: TopBarProps) {
     >
       {/* ── Left ── */}
       <div className="flex items-center gap-3 min-w-0">
-        {showClose ? (
+        {useClose ? (
           <Link
             href="/dashboard"
             className="flex-shrink-0 w-9 h-9 flex items-center justify-center
@@ -137,9 +143,15 @@ export default function TopBar({ showClose = false }: TopBarProps) {
                      hover:border-[#4f46e5]/60 transition-colors active:scale-95"
           aria-label="Profile"
         >
-          <span className="material-symbols-outlined text-[#c7c4d8] text-[20px]">
-            account_circle
-          </span>
+          {user?.avatar ? (
+            <img src={user.avatar} alt="Profile" className="w-full h-full object-cover" />
+          ) : (
+            <img 
+              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || user?.email?.split("@")[0] || "User")}&background=353534&color=c7c4d8&size=128`} 
+              alt="Default Avatar" 
+              className="w-full h-full object-cover" 
+            />
+          )}
         </Link>
       </div>
 

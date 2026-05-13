@@ -10,6 +10,7 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -35,6 +36,28 @@ export default function ProfilePage() {
     }
   }
 
+  async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingAvatar(true);
+    setError("");
+    
+    try {
+      console.log("Frontend: starting file upload via multipart/form-data...");
+      const res = await authApi.uploadAvatar(file);
+      console.log("Frontend: uploadAvatar response:", res);
+      await refreshUser();
+      console.log("Frontend: refreshUser done, user state should be updated.");
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
+    } catch (err: unknown) {
+      console.error("Frontend: Error updating profile avatar", err);
+      setError(err instanceof Error ? err.message : "Failed to upload avatar");
+    } finally {
+      setUploadingAvatar(false);
+    }
+  }
+
   return (
     <main className="px-6 lg:px-12 py-6 min-h-screen">
       <div className="max-w-2xl mx-auto space-y-8">
@@ -46,12 +69,23 @@ export default function ProfilePage() {
         {/* Avatar */}
         <div className="flex flex-col items-center py-8 bg-[#1c1b1b] rounded-2xl">
           <div className="relative mb-4">
-            <div className="w-24 h-24 rounded-full bg-[#353534] flex items-center justify-center ring-4 ring-[#4f46e5]/20">
-              <span className="material-symbols-outlined text-5xl text-[#c7c4d8]">account_circle</span>
+            <div className="w-24 h-24 rounded-full bg-[#353534] flex items-center justify-center ring-4 ring-[#4f46e5]/20 overflow-hidden">
+              {user?.avatar ? (
+                <img src={user.avatar} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                <img 
+                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || user?.email?.split("@")[0] || "User")}&background=353534&color=c7c4d8&size=256`} 
+                  alt="Default Avatar" 
+                  className="w-full h-full object-cover" 
+                />
+              )}
             </div>
-            <button className="absolute bottom-0 right-0 w-8 h-8 bg-[#4f46e5] rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-white text-sm">edit</span>
-            </button>
+            <label className={`absolute bottom-0 right-0 w-8 h-8 bg-[#4f46e5] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform ${uploadingAvatar ? 'opacity-50 pointer-events-none' : ''}`}>
+              <span className="material-symbols-outlined text-white text-sm">
+                {uploadingAvatar ? 'hourglass_empty' : 'edit'}
+              </span>
+              <input type="file" className="hidden" accept="image/*" onChange={handleAvatarChange} disabled={uploadingAvatar} />
+            </label>
           </div>
           <h2 className="text-2xl font-headline font-bold">{user?.name ?? user?.email?.split("@")[0] ?? "User"}</h2>
           <p className="text-[#c3c0ff] text-sm">{user?.email}</p>

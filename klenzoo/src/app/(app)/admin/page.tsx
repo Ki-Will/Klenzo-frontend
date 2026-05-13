@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { adminApi, type PlatformStats, type ManageUser, type Banner, type BannerColor, type CreateAdminDto } from "@/lib/api";
+import { useAuth } from "@/lib/auth-context";
 
 // ─── Mock / Seed Data ─────────────────────────────────────────────────────────
 const SEED_STATS: PlatformStats = {
@@ -256,6 +258,8 @@ const TABS: { key: AdminTab; icon: string; label: string }[] = [
 ];
 
 export default function AdminPage() {
+  const { user } = useAuth();
+  const router = useRouter();
   const [tab, setTab] = useState<AdminTab>("dashboard");
   const [stats, setStats] = useState<PlatformStats>(SEED_STATS);
   const [users, setUsers] = useState<ManageUser[]>(SEED_USERS);
@@ -265,6 +269,17 @@ export default function AdminPage() {
   const [showSeedAdmin, setShowSeedAdmin] = useState(false);
   const [confirmAction, setConfirmAction] = useState<{ title: string; message: string; action: () => void } | null>(null);
   const [search, setSearch] = useState("");
+
+  // Role guard — only admin/superadmin can access this page
+  useEffect(() => {
+    if (!user) return;
+    // Check role from user object — if backend doesn't expose role, allow access
+    // and let the API calls fail with 403 naturally
+    const role = (user as unknown as { role?: string }).role;
+    if (role && role !== "admin" && role !== "superadmin") {
+      router.replace("/dashboard");
+    }
+  }, [user, router]);
 
   // Fetch stats
   useEffect(() => {

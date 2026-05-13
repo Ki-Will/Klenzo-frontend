@@ -80,7 +80,17 @@ export default function ExpensesPage() {
       <section className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <span className="text-[#c3c0ff] uppercase tracking-[0.3em] text-[10px] mb-2 block">Monthly Oversight</span>
-          <h2 className="text-5xl lg:text-7xl font-headline font-extrabold tracking-tighter text-[#e5e2e1]">Expenses</h2>
+          <h2 className="text-5xl lg:text-7xl font-black tracking-[-0.04em] leading-none text-[#f5f5f5] flex items-center gap-6">
+            <span className="drop-shadow-[0_0_25px_rgba(255,255,255,0.08)]">
+              Expenses
+            </span>
+            <span className="h-3 w-3 rounded-full bg-primary shadow-[0_0_18px_rgba(139,127,255,0.9)]"></span>
+
+
+            <span className="drop-shadow-[0_0_25px_rgba(255,255,255,0.08)]">
+              Incomes
+            </span>
+          </h2>
         </div>
         <div className="bg-[#1c1b1b] p-6 rounded-2xl border-l-4 border-[#c3c0ff]">
           <p className="text-[#c7c4d8] text-xs uppercase tracking-widest mb-1">Total Outflow</p>
@@ -110,11 +120,10 @@ export default function ExpensesPage() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm whitespace-nowrap transition-all flex-shrink-0 ${
-                activeCategory === cat
-                  ? "bg-[#c3c0ff] text-[#0f0069] font-semibold shadow-[0_0_20px_rgba(195,192,255,0.2)]"
-                  : "bg-[#2a2a2a] text-[#c7c4d8] hover:bg-[#3a3939]"
-              }`}
+              className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm whitespace-nowrap transition-all flex-shrink-0 ${activeCategory === cat
+                ? "bg-[#c3c0ff] text-[#0f0069] font-semibold shadow-[0_0_20px_rgba(195,192,255,0.2)]"
+                : "bg-[#2a2a2a] text-[#c7c4d8] hover:bg-[#3a3939]"
+                }`}
             >
               <span className="material-symbols-outlined text-sm">{CAT_ICONS[cat]}</span>
               {cat}
@@ -126,7 +135,7 @@ export default function ExpensesPage() {
       {/* List */}
       {loading ? (
         <div className="space-y-3">
-          {[1,2,3,4].map((i) => <div key={i} className="h-20 bg-[#1c1b1b] rounded-2xl animate-pulse" />)}
+          {[1, 2, 3, 4].map((i) => <div key={i} className="h-20 bg-[#1c1b1b] rounded-2xl animate-pulse" />)}
         </div>
       ) : grouped.length === 0 ? (
         <div className="text-center py-20 text-[#c7c4d8]">

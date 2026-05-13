@@ -36,11 +36,38 @@ export default function AnalyticsPage() {
     [transactions]
   );
 
+  // Filter transactions by selected period
+  const filteredTransactions = useMemo(() => {
+    const now = new Date();
+    return transactions.filter((t) => {
+      const d = new Date(t.date);
+      if (period === "Monthly") {
+        return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+      }
+      if (period === "Quarterly") {
+        const q = Math.floor(now.getMonth() / 3);
+        return Math.floor(d.getMonth() / 3) === q && d.getFullYear() === now.getFullYear();
+      }
+      // Yearly
+      return d.getFullYear() === now.getFullYear();
+    });
+  }, [transactions, period]);
+
+  const periodSpend = useMemo(() =>
+    filteredTransactions.filter((t) => t.transactionType === "expense").reduce((s, t) => s + t.amount, 0),
+    [filteredTransactions]
+  );
+
+  const periodIncome = useMemo(() =>
+    filteredTransactions.filter((t) => t.transactionType === "income").reduce((s, t) => s + t.amount, 0),
+    [filteredTransactions]
+  );
+
   // Build category breakdown from transactions if API didn't return it
   const catBreakdown = useMemo(() => {
     if (categories.length > 0) return categories;
     const map = new Map<string, number>();
-    transactions.filter((t) => t.transactionType === "expense").forEach((t) => {
+    filteredTransactions.filter((t) => t.transactionType === "expense").forEach((t) => {
       const cat = t.category ?? "other";
       map.set(cat, (map.get(cat) ?? 0) + t.amount);
     });
@@ -49,29 +76,54 @@ export default function AnalyticsPage() {
       category,
       amount,
       percentage: Math.round((amount / total) * 100),
-      count: transactions.filter((t) => (t.category ?? "other") === category).length,
+      count: filteredTransactions.filter((t) => (t.category ?? "other") === category).length,
     })).sort((a, b) => b.amount - a.amount).slice(0, 5);
-  }, [categories, transactions]);
+  }, [categories, filteredTransactions]);
 
   // Monthly bar data (last 7 months)
   const barData = useMemo(() => {
-    const months: { label: string; amount: number }[] = [];
-    for (let i = 6; i >= 0; i--) {
+    const periods: { label: string; expense: number; income: number }[] = [];
+    const count = period === "Monthly" ? 7 : period === "Quarterly" ? 4 : 12;
+    for (let i = count - 1; i >= 0; i--) {
       const d = new Date();
-      d.setMonth(d.getMonth() - i);
-      const label = d.toLocaleString("en-US", { month: "short" });
-      const amount = transactions
+      if (period === "Quarterly") {
+        d.setMonth(d.getMonth() - i * 3);
+      } else if (period === "Yearly") {
+        d.setFullYear(d.getFullYear() - i);
+      } else {
+        d.setMonth(d.getMonth() - i);
+      }
+      
+      const label = period === "Yearly" ? d.getFullYear().toString() :
+        period === "Quarterly" ? `Q${Math.floor(d.getMonth() / 3) + 1} ${d.getFullYear()}` :
+        d.toLocaleString("en-US", { month: "short" });
+        
+      const expense = transactions
         .filter((t) => {
           const td = new Date(t.date);
-          return td.getMonth() === d.getMonth() && td.getFullYear() === d.getFullYear() && t.transactionType === "expense";
+          if (t.transactionType !== "expense") return false;
+          if (period === "Yearly") return td.getFullYear() === d.getFullYear();
+          if (period === "Quarterly") return Math.floor(td.getMonth() / 3) === Math.floor(d.getMonth() / 3) && td.getFullYear() === d.getFullYear();
+          return td.getMonth() === d.getMonth() && td.getFullYear() === d.getFullYear();
         })
         .reduce((s, t) => s + t.amount, 0);
-      months.push({ label, amount });
+        
+      const income = transactions
+        .filter((t) => {
+          const td = new Date(t.date);
+          if (t.transactionType !== "income") return false;
+          if (period === "Yearly") return td.getFullYear() === d.getFullYear();
+          if (period === "Quarterly") return Math.floor(td.getMonth() / 3) === Math.floor(d.getMonth() / 3) && td.getFullYear() === d.getFullYear();
+          return td.getMonth() === d.getMonth() && td.getFullYear() === d.getFullYear();
+        })
+        .reduce((s, t) => s + t.amount, 0);
+        
+      periods.push({ label, expense, income });
     }
-    return months;
-  }, [transactions]);
+    return periods;
+  }, [transactions, period]);
 
-  const maxBar = Math.max(...barData.map((b) => b.amount), 1);
+  const maxBar = Math.max(...barData.map((b) => Math.max(b.expense, b.income)), 1);
 
   return (
     <main className="px-6 lg:px-12 py-6 min-h-screen">
@@ -105,20 +157,36 @@ export default function AnalyticsPage() {
             <div className="md:col-span-8 bg-[#1c1b1b] rounded-2xl p-8 flex flex-col gap-6 relative overflow-hidden">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-[#c7c4d8] text-sm font-medium mb-1">Total Spending</h3>
-                  <p className="text-3xl font-headline font-bold text-white">${totalSpend.toFixed(2)}</p>
+                  <h3 className="text-[#c7c4d8] text-sm font-medium mb-1">Cash Flow ({period})</h3>
+                  <div className="flex items-baseline gap-4 mt-2">
+                    <p className="text-3xl font-headline font-bold text-white">${(periodIncome - periodSpend).toFixed(2)} <span className="text-sm font-normal text-[#918fa1]">Net</span></p>
+                  </div>
                 </div>
-                <span className="flex items-center gap-1 text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full text-xs font-bold">
-                  <span className="material-symbols-outlined text-sm">trending_up</span>
-                  vs last period
-                </span>
+                <div className="flex flex-col gap-2 text-xs font-bold text-right">
+                  <span className="flex items-center gap-1 text-[#c3c0ff] justify-end">
+                    <div className="w-2 h-2 rounded-full bg-[#c3c0ff]"></div> Income
+                  </span>
+                  <span className="flex items-center gap-1 text-[#ffb4ab] justify-end">
+                    <div className="w-2 h-2 rounded-full bg-[#ffb4ab]"></div> Expense
+                  </span>
+                </div>
               </div>
-              <div className="h-48 w-full flex items-end gap-2">
+              <div className="h-48 w-full flex items-end gap-2 sm:gap-4 mt-4">
                 {barData.map((b, i) => (
-                  <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                  <div key={i} className="flex-1 flex justify-center items-end gap-1 group relative h-full">
+                    <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-[#1c1b1b] p-2 rounded-xl text-[10px] whitespace-nowrap z-10 border border-[#464555]/20 shadow-xl pointer-events-none">
+                      <p className="text-[#c3c0ff] font-bold">In: ${b.income.toFixed(0)}</p>
+                      <p className="text-[#ffb4ab] font-bold">Out: ${b.expense.toFixed(0)}</p>
+                    </div>
+                    {/* Income bar */}
                     <div
-                      className={`w-full rounded-t-xl transition-all duration-500 ${i === barData.length - 2 ? "luminous-gradient glow-line" : "bg-[#2a2a2a] hover:bg-[#4f46e5]/30"}`}
-                      style={{ height: `${Math.max(4, (b.amount / maxBar) * 100)}%` }}
+                      className={`w-full max-w-[20px] rounded-t-sm transition-all duration-500 bg-[#c3c0ff] hover:bg-[#c3c0ff]/80`}
+                      style={{ height: `${Math.max(2, (b.income / maxBar) * 100)}%` }}
+                    />
+                    {/* Expense bar */}
+                    <div
+                      className={`w-full max-w-[20px] rounded-t-sm transition-all duration-500 bg-[#ffb4ab] hover:bg-[#ffb4ab]/80`}
+                      style={{ height: `${Math.max(2, (b.expense / maxBar) * 100)}%` }}
                     />
                   </div>
                 ))}
@@ -140,9 +208,9 @@ export default function AnalyticsPage() {
                   <li className="flex gap-3">
                     <div className="w-1 bg-white/30 rounded-full flex-shrink-0" />
                     <p className="text-sm leading-relaxed">
-                      Total income: <span className="font-bold text-white">${totalIncome.toFixed(2)}</span>. Savings rate:{" "}
+                      {period} income: <span className="font-bold text-white">${periodIncome.toFixed(2)}</span>. Savings rate:{" "}
                       <span className="font-bold text-white">
-                        {totalIncome > 0 ? `${Math.round(((totalIncome - totalSpend) / totalIncome) * 100)}%` : "N/A"}
+                        {periodIncome > 0 ? `${Math.round(((periodIncome - periodSpend) / periodIncome) * 100)}%` : "N/A"}
                       </span>
                     </p>
                   </li>
@@ -184,7 +252,7 @@ export default function AnalyticsPage() {
                   ).els}
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-xl font-bold text-white">${totalSpend.toFixed(0)}</span>
+                  <span className="text-xl font-bold text-white">${periodSpend.toFixed(0)}</span>
                   <span className="text-[10px] text-[#c7c4d8] uppercase tracking-widest">Spent</span>
                 </div>
               </div>

@@ -1,0 +1,4 @@
+.next/dev/types/routes.d.ts(80,3): error TS1128: Declaration or statement expected.
+.next/dev/types/routes.d.ts(80,5): error TS1109: Expression expected.
+.next/dev/types/routes.d.ts(83,1): error TS1128: Declaration or statement expected.
+.next/dev/types/validator.ts(263,1): error TS1128: Declaration or statement expected.

@@ -33,12 +33,6 @@ export default function SplashPage() {
           >
             Enter the Void
           </Link>
-          <Link
-            href="/dashboard"
-            className="text-[#c7c4d8] text-sm hover:text-[#c3c0ff] transition-colors"
-          >
-            Skip to Dashboard →
-          </Link>
         </div>
       </div>
 
