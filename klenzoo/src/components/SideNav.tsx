@@ -1,15 +1,16 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import KlenzooLogo from "@/components/KlenzooLogo";
 
 const navItems = [
-  { href: "/dashboard",    icon: "space_dashboard", label: "Dashboard" },
-  { href: "/habits",       icon: "auto_awesome",    label: "Habits" },
-  { href: "/productivity", icon: "task_alt",         label: "Productivity" },
-  { href: "/expenses",     icon: "account_balance_wallet", label: "Finance" },
-  { href: "/analytics",    icon: "insights",         label: "Analytics" },
-  { href: "/groups",       icon: "group",            label: "Groups" },
-  { href: "/settings",     icon: "settings",         label: "Settings" },
+  { href: "/dashboard", icon: "space_dashboard", label: "Dashboard" },
+  { href: "/habits", icon: "auto_awesome", label: "Habits" },
+  { href: "/productivity", icon: "task_alt", label: "Productivity" },
+  { href: "/expenses", icon: "account_balance_wallet", label: "Finance" },
+  { href: "/analytics", icon: "query_stats", label: "Analytics" },
+  { href: "/groups", icon: "group", label: "Groups" },
+  { href: "/settings", icon: "settings", label: "Settings" },
 ];
 
 export default function SideNav() {
@@ -19,24 +20,12 @@ export default function SideNav() {
     <aside className="fixed left-0 top-0 h-full w-72 bg-[#131313] hidden lg:flex flex-col p-8 z-40 rounded-r-[3rem]">
       {/* Brand */}
       <div className="mb-12">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#4f46e5] flex items-center justify-center">
-            <span
-              className="material-symbols-outlined text-white text-lg"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            >
-              auto_awesome
-            </span>
-          </div>
-          <div>
-            <div className="text-2xl font-black tracking-tighter text-[#4f46e5] font-headline">
-              Klenzoo
-            </div>
-            <div className="text-[10px] uppercase tracking-[0.2em] text-[#c7c4d8] opacity-50">
-              Intelligent Void
-            </div>
-          </div>
-        </div>
+        <Link
+          href="/dashboard"
+          className="block w-32 h-auto hover:opacity-80 transition-opacity"
+        >
+          <KlenzooLogo variant="full" className="w-48" />
+        </Link>
       </div>
 
       {/* Nav links */}
