@@ -77,8 +77,7 @@ async function apiFetch<T>(
     ) as Record<string, string>;
 
     if (!(options.body instanceof FormData)) {
-      headers["Content-Type"] =
-        headers["Content-Type"] ?? "application/json";
+      headers["Content-Type"] = headers["Content-Type"] ?? "application/json";
     }
 
     const res = await fetch(url, {
@@ -115,11 +114,7 @@ async function apiFetch<T>(
 
         console.error("AUTH ERROR:", body);
 
-        throw new ApiError(
-          401,
-          body?.message || "Invalid credentials",
-          body,
-        );
+        throw new ApiError(401, body?.message || "Invalid credentials", body);
       }
 
       // ─────────────────────────────────────────────────────
@@ -155,7 +150,7 @@ async function apiFetch<T>(
         }
       }
 
-      console.error("API ERROR:", body);
+      console.log("API ERROR:", body);
 
       const msg = Array.isArray(body?.message)
         ? body.message.join(", ")
@@ -611,8 +606,16 @@ export const finance = {
         if (!me) return [];
 
         return [
-          { userId: me.id, name: me.name ?? me.email, balance: group.netBalance },
-          { userId: other.id, name: other.name ?? other.email, balance: -group.netBalance },
+          {
+            userId: me.id,
+            name: me.name ?? me.email,
+            balance: group.netBalance,
+          },
+          {
+            userId: other.id,
+            name: other.name ?? other.email,
+            balance: -group.netBalance,
+          },
         ];
       }),
 
@@ -632,6 +635,13 @@ export const finance = {
         g.netBalance = 0;
       }
       return { success: true };
+    }),
+
+  /** PATCH /finance/groups/:id */
+  updateGroup: (id: string, name: string) =>
+    apiFetch<Group>(`/finance/groups/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ name }),
     }),
 
   /** GET /finance/accounts */

@@ -17,15 +17,16 @@ export default function middleware(request: NextRequest) {
 
   // Public routes — no auth needed
   const isPublic = PUBLIC_ROUTES.some((r) =>
-    r === "/" ? pathname === "/" : pathname === r || pathname.startsWith(r + "/")
+    r === "/"
+      ? pathname === "/"
+      : pathname === r || pathname.startsWith(r + "/"),
   );
   if (isPublic) return NextResponse.next();
 
   // Auth check — backend sets httpOnly cookie named "access_token"
   // We also check our fallback "kz_at" cookie
   const hasToken =
-    request.cookies.has("access_token") ||
-    request.cookies.has("kz_at");
+    request.cookies.has("access_token") || request.cookies.has("kz_at");
 
   if (!hasToken) {
     const url = request.nextUrl.clone();
