@@ -3,11 +3,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: "/dashboard",    icon: "home",         label: "Home" },
-  { href: "/habits",       icon: "auto_awesome", label: "Habits" },
-  { href: "/expenses/add", icon: "add_circle",   label: "Add",   isFab: true },
-  { href: "/productivity", icon: "task_alt",     label: "Tasks" },
-  { href: "/analytics",    icon: "query_stats",  label: "Insights" },
+  { href: "/dashboard", icon: "home", label: "Home" },
+  { href: "/habits", icon: "auto_awesome", label: "Habits" },
+  {
+    href: "/expenses",
+    icon: "account_balance_wallet",
+    label: "Finance",
+    isFab: true,
+  },
+  { href: "/productivity", icon: "task_alt", label: "Tasks" },
+  { href: "/analytics", icon: "query_stats", label: "Analytics" },
 ];
 
 export default function BottomNav() {
@@ -27,7 +32,8 @@ export default function BottomNav() {
       {navItems.map((item) => {
         const isActive =
           pathname === item.href ||
-          (item.href !== "/expenses/add" && pathname.startsWith(item.href + "/"));
+          (item.href !== "/expenses/add" &&
+            pathname.startsWith(item.href + "/"));
 
         if (item.isFab) {
           return (
