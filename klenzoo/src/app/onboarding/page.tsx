@@ -1,4 +1,5 @@
 import Link from "next/link";
+import KlenzooLogo from "@/components/KlenzooLogo";
 
 const slides = [
   {
@@ -35,10 +36,8 @@ export default function OnboardingPage() {
 
       <div className="relative z-10 w-full max-w-2xl">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-black tracking-tighter text-[#c3c0ff] font-headline mb-2">
-            KLENZOO
-          </h1>
+        <div className="text-center mb-16 flex flex-col items-center">
+          <KlenzooLogo className="w-32 md:w-48 h-auto mb-2" />
           <p className="text-[#918fa1] text-xs uppercase tracking-[0.3em]">
             Premium Finance
           </p>
@@ -54,13 +53,19 @@ export default function OnboardingPage() {
               <div
                 className={`w-14 h-14 ${slide.bg} rounded-2xl flex items-center justify-center flex-shrink-0`}
               >
-                <span className={`material-symbols-outlined text-2xl ${slide.color}`}>
+                <span
+                  className={`material-symbols-outlined text-2xl ${slide.color}`}
+                >
                   {slide.icon}
                 </span>
               </div>
               <div>
-                <h3 className="font-headline font-bold text-lg mb-2">{slide.title}</h3>
-                <p className="text-[#c7c4d8] text-sm leading-relaxed">{slide.description}</p>
+                <h3 className="font-headline font-bold text-lg mb-2">
+                  {slide.title}
+                </h3>
+                <p className="text-[#c7c4d8] text-sm leading-relaxed">
+                  {slide.description}
+                </p>
               </div>
             </div>
           ))}
@@ -74,7 +79,10 @@ export default function OnboardingPage() {
           >
             Get Started
           </Link>
-          <Link href="/dashboard" className="text-[#c7c4d8] text-sm hover:text-[#c3c0ff] transition-colors">
+          <Link
+            href="/dashboard"
+            className="text-[#c7c4d8] text-sm hover:text-[#c3c0ff] transition-colors"
+          >
             Skip for now
           </Link>
         </div>

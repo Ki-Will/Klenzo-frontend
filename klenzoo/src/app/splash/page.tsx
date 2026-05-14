@@ -1,4 +1,5 @@
 import Link from "next/link";
+import KlenzooLogo from "@/components/KlenzooLogo";
 
 export default function SplashPage() {
   return (
@@ -10,9 +11,7 @@ export default function SplashPage() {
       <div className="relative z-10 flex flex-col items-center space-y-8">
         {/* Logo */}
         <div className="text-center">
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-[#c3c0ff] font-headline">
-            KLENZOO
-          </h1>
+          <KlenzooLogo className="w-48 md:w-64 h-auto mx-auto mb-2" />
           <p className="text-[#918fa1] font-label text-xs uppercase tracking-[0.4em] mt-3">
             The Intelligent Void
           </p>
