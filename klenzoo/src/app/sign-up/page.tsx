@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import KlenzooLogo from "@/components/KlenzooLogo";
 
 export default function SignUpPage() {
   const { register, user, loading } = useAuth();
@@ -25,8 +26,14 @@ export default function SignUpPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!agreed) { setError("Please accept the terms to continue."); return; }
-    if (password.length < 8) { setError("Password must be at least 8 characters."); return; }
+    if (!agreed) {
+      setError("Please accept the terms to continue.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
     setSubmitting(true);
     setError("");
     setDidRegister(true); // Prevent auto-redirect useEffect from interfering
@@ -49,13 +56,14 @@ export default function SignUpPage() {
       <div className="relative w-full max-w-7xl px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-12 z-10">
         {/* Left: Branding */}
         <div className="w-full md:w-1/2 flex flex-col space-y-8">
-          <span className="text-4xl font-black tracking-tighter text-[#c3c0ff] font-headline">KLENZOO</span>
+          <KlenzooLogo className="w-40 md:w-56 h-auto" />
           <h1 className="text-5xl md:text-7xl font-extrabold font-headline leading-tight tracking-tighter text-[#e5e2e1]">
             Access the <br />
             <span className="text-[#c3c0ff]">intelligent</span> void.
           </h1>
           <p className="text-[#c7c4d8] text-lg max-w-md leading-relaxed">
-            Step into a premium financial ecosystem designed for the modern curator.
+            Step into a premium financial ecosystem designed for the modern
+            curator.
           </p>
           <div className="hidden md:flex flex-col space-y-4 pt-4">
             {[
@@ -63,8 +71,13 @@ export default function SignUpPage() {
               { icon: "language", text: "Borderless assets management" },
               { icon: "auto_awesome", text: "AI-powered spending insights" },
             ].map((f) => (
-              <div key={f.icon} className="flex items-center space-x-3 text-[#c7c4d8]">
-                <span className="material-symbols-outlined text-[#c3c0ff]">{f.icon}</span>
+              <div
+                key={f.icon}
+                className="flex items-center space-x-3 text-[#c7c4d8]"
+              >
+                <span className="material-symbols-outlined text-[#c3c0ff]">
+                  {f.icon}
+                </span>
                 <span className="text-sm font-medium">{f.text}</span>
               </div>
             ))}
@@ -75,8 +88,12 @@ export default function SignUpPage() {
         <div className="w-full md:w-5/12 z-10">
           <div className="glass-panel p-8 md:p-12 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-[#464555]/15">
             <div className="mb-8">
-              <h2 className="text-2xl font-bold font-headline mb-2">Create Account</h2>
-              <p className="text-[#c7c4d8] text-sm">Welcome to the future of digital asset management.</p>
+              <h2 className="text-2xl font-bold font-headline mb-2">
+                Create Account
+              </h2>
+              <p className="text-[#c7c4d8] text-sm">
+                Welcome to the future of digital asset management.
+              </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -86,7 +103,9 @@ export default function SignUpPage() {
                   Email Address
                 </label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-4 text-[#918fa1]">alternate_email</span>
+                  <span className="material-symbols-outlined absolute left-4 text-[#918fa1]">
+                    alternate_email
+                  </span>
                   <input
                     type="email"
                     value={email}
@@ -105,7 +124,9 @@ export default function SignUpPage() {
                   Password
                 </label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-4 text-[#918fa1]">lock</span>
+                  <span className="material-symbols-outlined absolute left-4 text-[#918fa1]">
+                    lock
+                  </span>
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -132,7 +153,9 @@ export default function SignUpPage() {
                       <div
                         key={len}
                         className={`h-1 flex-1 rounded-full transition-all ${
-                          password.length >= len ? "bg-[#c3c0ff]" : "bg-[#353534]"
+                          password.length >= len
+                            ? "bg-[#c3c0ff]"
+                            : "bg-[#353534]"
                         }`}
                       />
                     ))}
@@ -149,17 +172,27 @@ export default function SignUpPage() {
                   onChange={(e) => setAgreed(e.target.checked)}
                   className="w-5 h-5 rounded bg-[#1c1b1b] border-[#464555]/30 text-[#4f46e5] focus:ring-[#c3c0ff] mt-0.5 flex-shrink-0"
                 />
-                <label htmlFor="terms" className="text-xs text-[#c7c4d8] leading-relaxed">
+                <label
+                  htmlFor="terms"
+                  className="text-xs text-[#c7c4d8] leading-relaxed"
+                >
                   I agree to the{" "}
-                  <a href="#" className="text-[#c3c0ff] hover:underline">Terms and conditions</a>{" "}
+                  <a href="#" className="text-[#c3c0ff] hover:underline">
+                    Terms and conditions
+                  </a>{" "}
                   and{" "}
-                  <a href="#" className="text-[#c3c0ff] hover:underline">Privacy Policy</a>.
+                  <a href="#" className="text-[#c3c0ff] hover:underline">
+                    Privacy Policy
+                  </a>
+                  .
                 </label>
               </div>
 
               {error && (
                 <div className="flex items-center gap-2 bg-[#93000a]/20 border border-[#ffb4ab]/20 rounded-2xl px-4 py-3">
-                  <span className="material-symbols-outlined text-[#ffb4ab] text-sm">error</span>
+                  <span className="material-symbols-outlined text-[#ffb4ab] text-sm">
+                    error
+                  </span>
                   <p className="text-[#ffb4ab] text-sm">{error}</p>
                 </div>
               )}
@@ -175,7 +208,10 @@ export default function SignUpPage() {
               <div className="pt-4 text-center">
                 <p className="text-sm text-[#c7c4d8]">
                   Already have an account?{" "}
-                  <Link href="/login" className="text-[#c3c0ff] font-bold hover:text-[#dad7ff] transition-colors ml-1">
+                  <Link
+                    href="/login"
+                    className="text-[#c3c0ff] font-bold hover:text-[#dad7ff] transition-colors ml-1"
+                  >
                     Login
                   </Link>
                 </p>
