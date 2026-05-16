@@ -64,7 +64,7 @@ export default function LoginForm() {
   }
 
   return (
-    <main className="min-h-screen bg-[#131313] text-[#e5e2e1] flex flex-col items-center justify-center overflow-hidden relative">
+    <main className="min-h-screen bg-background text-on-surface flex flex-col items-center justify-center overflow-hidden relative">
       <div className="absolute -top-40 -left-40 w-80 h-80 bg-[#c3c0ff]/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-[#c3c0ff]/10 rounded-full blur-[100px] pointer-events-none" />
 
@@ -72,7 +72,7 @@ export default function LoginForm() {
         <div className="flex flex-col items-center">
           <div className="mb-12 text-center w-full flex flex-col items-center">
             <KlenzooLogo className="w-40 md:w-56 h-auto mb-2" />
-            <p className="text-[#c7c4d8] text-[10px] uppercase tracking-wide">
+            <p className="text-on-surface-variant text-[10px] uppercase tracking-wide">
               {forgotMode ? "Password Recovery" : "Secure Gateway to the Void"}
             </p>
           </div>
@@ -84,7 +84,7 @@ export default function LoginForm() {
                   mark_email_read
                 </span>
               </div>
-              <p className="text-[#c7c4d8]">
+              <p className="text-on-surface-variant">
                 Reset link sent to{" "}
                 <span className="text-[#c3c0ff] font-bold">{email}</span>.
               </p>
@@ -101,7 +101,7 @@ export default function LoginForm() {
           ) : forgotMode ? (
             <form onSubmit={handleForgot} className="w-full space-y-6">
               <div>
-                <label className="block text-[#c7c4d8] text-[11px] font-semibold mb-2 ml-4 uppercase tracking-widest">
+                <label className="block text-on-surface-variant text-[11px] font-semibold mb-2 ml-4 uppercase tracking-widest">
                   Email
                 </label>
                 <div className="relative">
@@ -114,7 +114,7 @@ export default function LoginForm() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
                     required
-                    className="w-full bg-[#1c1b1b] border-none rounded-2xl py-4 pl-12 pr-4 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
+                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
                   />
                 </div>
               </div>
@@ -131,7 +131,7 @@ export default function LoginForm() {
               <button
                 type="button"
                 onClick={() => setForgotMode(false)}
-                className="w-full text-center text-[#c7c4d8] text-sm hover:text-[#c3c0ff] transition-colors"
+                className="w-full text-center text-on-surface-variant text-sm hover:text-[#c3c0ff] transition-colors"
               >
                 Back to login
               </button>
@@ -140,7 +140,7 @@ export default function LoginForm() {
             <form onSubmit={handleLogin} className="w-full space-y-8">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-[#c7c4d8] text-[11px] font-semibold mb-2 ml-4 uppercase tracking-widest">
+                  <label className="block text-on-surface-variant text-[11px] font-semibold mb-2 ml-4 uppercase tracking-widest">
                     Identifier
                   </label>
                   <div className="relative">
@@ -154,13 +154,13 @@ export default function LoginForm() {
                       placeholder="email or username"
                       required
                       autoComplete="email"
-                      className="w-full bg-[#1c1b1b] border-none rounded-2xl py-4 pl-12 pr-4 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
+                      className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
                     />
                   </div>
                 </div>
                 <div>
                   <div className="flex justify-between items-center mb-2 px-4">
-                    <label className="text-[#c7c4d8] text-[11px] font-semibold uppercase tracking-widest">
+                    <label className="text-on-surface-variant text-[11px] font-semibold uppercase tracking-widest">
                       Secret
                     </label>
                     <button
@@ -182,7 +182,7 @@ export default function LoginForm() {
                       placeholder="••••••••"
                       required
                       autoComplete="current-password"
-                      className="w-full bg-[#1c1b1b] border-none rounded-2xl py-4 pl-12 pr-12 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
+                      className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-12 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
                     />
                     <button
                       type="button"
@@ -216,7 +216,7 @@ export default function LoginForm() {
 
               <div className="relative flex items-center py-2">
                 <div className="flex-grow border-t border-[#464555]/10" />
-                <span className="flex-shrink mx-4 text-[#c7c4d8] text-[10px] tracking-[0.2em] uppercase">
+                <span className="flex-shrink mx-4 text-on-surface-variant text-[10px] tracking-[0.2em] uppercase">
                   Auth Sync
                 </span>
                 <div className="flex-grow border-t border-[#464555]/10" />
@@ -245,7 +245,7 @@ export default function LoginForm() {
               </div>
 
               <div className="text-center">
-                <p className="text-[#c7c4d8] text-sm">
+                <p className="text-on-surface-variant text-sm">
                   New to the void?{" "}
                   <Link
                     href="/sign-up"
@@ -260,7 +260,7 @@ export default function LoginForm() {
         </div>
 
         <div className="mt-16 text-center opacity-20 select-none">
-          <span className="text-[8px] tracking-[1em] text-[#e5e2e1] uppercase">
+          <span className="text-[8px] tracking-[1em] text-on-surface uppercase">
             Encrypted 256-bit Environment
           </span>
         </div>
@@ -268,3 +268,4 @@ export default function LoginForm() {
     </main>
   );
 }
+

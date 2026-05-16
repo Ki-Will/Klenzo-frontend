@@ -30,7 +30,7 @@ const slides = [
 
 export default function OnboardingPage() {
   return (
-    <main className="min-h-screen bg-[#131313] text-[#e5e2e1] flex flex-col items-center justify-center px-6 relative overflow-hidden">
+    <main className="min-h-screen bg-background text-on-surface flex flex-col items-center justify-center px-6 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
 
@@ -48,7 +48,7 @@ export default function OnboardingPage() {
           {slides.map((slide, i) => (
             <div
               key={i}
-              className="flex items-start gap-6 p-6 bg-[#1c1b1b] rounded-2xl border border-[#464555]/10 hover:bg-[#2a2a2a] transition-all"
+              className="flex items-start gap-6 p-6 bg-surface rounded-2xl border border-[#464555]/10 hover:bg-[#2a2a2a] transition-all"
             >
               <div
                 className={`w-14 h-14 ${slide.bg} rounded-2xl flex items-center justify-center flex-shrink-0`}
@@ -63,7 +63,7 @@ export default function OnboardingPage() {
                 <h3 className="font-headline font-bold text-lg mb-2">
                   {slide.title}
                 </h3>
-                <p className="text-[#c7c4d8] text-sm leading-relaxed">
+                <p className="text-on-surface-variant text-sm leading-relaxed">
                   {slide.description}
                 </p>
               </div>
@@ -81,7 +81,7 @@ export default function OnboardingPage() {
           </Link>
           <Link
             href="/dashboard"
-            className="text-[#c7c4d8] text-sm hover:text-[#c3c0ff] transition-colors"
+            className="text-on-surface-variant text-sm hover:text-[#c3c0ff] transition-colors"
           >
             Skip for now
           </Link>
@@ -90,3 +90,4 @@ export default function OnboardingPage() {
     </main>
   );
 }
+
