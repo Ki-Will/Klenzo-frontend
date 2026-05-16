@@ -1,8 +1,9 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
-import { finance, type Transaction } from "@/lib/api";
+import { finance, type Transaction, type Budget } from "@/lib/api";
+import FinanceInsights from "@/components/FinanceInsights";
 
 const CATEGORIES = ["All", "Food", "Travel", "Bills", "Shopping", "Other"];
 const CAT_ICONS: Record<string, string> = {
@@ -34,18 +35,31 @@ function formatTime(dateStr: string) {
 export default function ExpensesPage() {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     if (!user?.id) return;
     setLoading(true);
-    finance.getTransactions()
-      .then((data) => setTransactions(data))
-      .catch(() => setTransactions([]))
+    Promise.all([
+      finance.getTransactions(),
+      finance.getBudgets(),
+    ]).then(([txs, bgs]) => {
+      setTransactions(txs);
+      setBudgets(bgs);
+    })
+      .catch(() => {
+        setTransactions([]);
+        setBudgets([]);
+      })
       .finally(() => setLoading(false));
   }, [user?.id]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const filtered = useMemo(() => {
     return transactions.filter((tx) => {
@@ -74,40 +88,41 @@ export default function ExpensesPage() {
     .filter((t) => t.transactionType === "expense")
     .reduce((s, t) => s + t.amount, 0);
 
+
   return (
     <main className="px-6 lg:px-12 py-6 min-h-screen">
       {/* Hero */}
       <section className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <span className="text-[#c3c0ff] uppercase tracking-[0.3em] text-[10px] mb-2 block">Monthly Oversight</span>
-          <h2 className="text-5xl lg:text-7xl font-black tracking-[-0.04em] leading-none text-[#f5f5f5] flex items-center gap-6">
-            <span className="drop-shadow-[0_0_25px_rgba(255,255,255,0.08)]">
-              Expenses
-            </span>
-            <span className="h-3 w-3 rounded-full bg-primary shadow-[0_0_18px_rgba(139,127,255,0.9)]"></span>
-
-
-            <span className="drop-shadow-[0_0_25px_rgba(255,255,255,0.08)]">
-              Incomes
-            </span>
-          </h2>
-        </div>
-        <div className="bg-[#1c1b1b] p-6 rounded-2xl border-l-4 border-[#c3c0ff]">
-          <p className="text-[#c7c4d8] text-xs uppercase tracking-widest mb-1">Total Outflow</p>
-          <p className="text-2xl font-headline font-bold">${totalOutflow.toFixed(2)}</p>
+        <div className="flex items-end justify-between">
+          <div>
+            <span className="text-[#c3c0ff] uppercase tracking-[0.3em] text-[10px] mb-2 block">Monthly Oversight</span>
+            <h2 className="text-5xl lg:text-7xl font-black tracking-[-0.04em] leading-none text-[#f5f5f5] flex items-center gap-6">
+              <span className="drop-shadow-[0_0_25px_rgba(255,255,255,0.08)]">
+                Activity
+              </span>
+              <span className="h-3 w-3 rounded-full bg-primary shadow-[0_0_18px_rgba(139,127,255,0.9)]"></span>
+            </h2>
+          </div>
+          <div className="bg-surface p-6 rounded-2xl border-l-4 border-[#c3c0ff]">
+            <p className="text-on-surface-variant text-xs uppercase tracking-widest mb-1">Total Outflow</p>
+            <p className="text-2xl font-headline font-bold">${totalOutflow.toFixed(2)}</p>
+          </div>
         </div>
       </section>
 
+      {/* Budget Summary Table */}
+      <FinanceInsights transactions={transactions} budgets={budgets} onRefresh={loadData} />
+
       {/* Search + Filters */}
       <section className="mb-8 space-y-4">
-        <div className="bg-[#1c1b1b] px-4 py-3 rounded-2xl flex items-center border border-[#464555]/10">
+        <div className="bg-surface px-4 py-3 rounded-2xl flex items-center border border-[#464555]/10">
           <span className="material-symbols-outlined text-[#918fa1] mr-3">search</span>
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search merchants, categories..."
-            className="bg-transparent border-none focus:outline-none text-sm text-[#e5e2e1] w-full placeholder:text-[#918fa1]/60"
+            className="bg-transparent border-none focus:outline-none text-sm text-on-surface w-full placeholder:text-[#918fa1]/60"
           />
           {search && (
             <button onClick={() => setSearch("")} className="text-[#918fa1] hover:text-[#c3c0ff] transition-colors">
@@ -122,7 +137,7 @@ export default function ExpensesPage() {
               onClick={() => setActiveCategory(cat)}
               className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm whitespace-nowrap transition-all flex-shrink-0 ${activeCategory === cat
                 ? "bg-[#c3c0ff] text-[#0f0069] font-semibold shadow-[0_0_20px_rgba(195,192,255,0.2)]"
-                : "bg-[#2a2a2a] text-[#c7c4d8] hover:bg-[#3a3939]"
+                : "bg-[#2a2a2a] text-on-surface-variant hover:bg-[#3a3939]"
                 }`}
             >
               <span className="material-symbols-outlined text-sm">{CAT_ICONS[cat]}</span>
@@ -135,10 +150,10 @@ export default function ExpensesPage() {
       {/* List */}
       {loading ? (
         <div className="space-y-3">
-          {[1, 2, 3, 4].map((i) => <div key={i} className="h-20 bg-[#1c1b1b] rounded-2xl animate-pulse" />)}
+          {[1, 2, 3, 4].map((i) => <div key={i} className="h-20 bg-surface rounded-2xl animate-pulse" />)}
         </div>
       ) : grouped.length === 0 ? (
-        <div className="text-center py-20 text-[#c7c4d8]">
+        <div className="text-center py-20 text-on-surface-variant">
           <span className="material-symbols-outlined text-5xl mb-4 block opacity-30">receipt_long</span>
           <p className="text-lg font-headline font-bold mb-2">No transactions found</p>
           <p className="text-sm mb-6">
@@ -159,15 +174,26 @@ export default function ExpensesPage() {
               <div className="space-y-2">
                 {txs.map((tx) => (
                   <Link key={tx.id} href={`/expenses/${tx.id}`}
-                    className="group bg-[#1c1b1b] hover:bg-[#2a2a2a] p-4 lg:p-5 rounded-2xl transition-all flex items-center justify-between"
+                    className="group bg-surface hover:bg-[#2a2a2a] p-4 lg:p-5 rounded-2xl transition-all flex items-center justify-between"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-[#353534] flex items-center justify-center text-[#c3c0ff] group-hover:scale-110 transition-transform flex-shrink-0">
                         <span className="material-symbols-outlined">{txIcon(tx)}</span>
                       </div>
                       <div className="min-w-0">
-                        <h4 className="font-semibold text-[#e5e2e1] truncate">{tx.description ?? "Transaction"}</h4>
-                        <p className="text-xs text-[#c7c4d8] uppercase tracking-wider">{tx.category ?? tx.transactionType}</p>
+                        <h4 className="font-semibold text-on-surface truncate">{tx.description ?? "Transaction"}</h4>
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs text-on-surface-variant uppercase tracking-wider">{tx.category ?? tx.transactionType}</p>
+                          {tx.budgetId && budgets.find(b => b.id === tx.budgetId) && (
+                            <>
+                              <span className="w-1 h-1 rounded-full bg-[#464555]" />
+                              <div className="flex items-center gap-1 bg-[#4f46e5]/10 px-1.5 py-0.5 rounded text-[9px] font-bold text-primary border border-primary/20">
+                                <span className="material-symbols-outlined text-[10px]">account_balance_wallet</span>
+                                {budgets.find(b => b.id === tx.budgetId)?.name}
+                              </div>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
                     <div className="text-right flex-shrink-0 ml-4">
@@ -191,3 +217,4 @@ export default function ExpensesPage() {
     </main>
   );
 }
+

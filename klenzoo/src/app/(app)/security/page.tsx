@@ -100,7 +100,7 @@ export default function SecurityPage() {
           <span className="text-[#c3c0ff] uppercase tracking-[0.3em] text-[10px] mb-2 block">
             Protection
           </span>
-          <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-[#e5e2e1]">
+          <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-on-surface">
             Security
           </h1>
         </div>
@@ -108,7 +108,7 @@ export default function SecurityPage() {
         {/* Change Password */}
         <form
           onSubmit={handlePasswordUpdate}
-          className="bg-[#1c1b1b] rounded-2xl p-8 space-y-5"
+          className="bg-surface rounded-2xl p-8 space-y-5"
         >
           <div className="flex items-center gap-3 mb-2">
             <span className="material-symbols-outlined text-[#c3c0ff]">
@@ -137,7 +137,7 @@ export default function SecurityPage() {
             },
           ].map((f) => (
             <div key={f.label} className="space-y-2">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+              <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
                 {f.label}
               </label>
               <input
@@ -147,7 +147,7 @@ export default function SecurityPage() {
                 placeholder="••••••••"
                 autoComplete={f.auto}
                 required
-                className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-6 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-6 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
               />
             </div>
           ))}
@@ -179,7 +179,7 @@ export default function SecurityPage() {
         </form>
 
         {/* Forgot Password */}
-        <div className="bg-[#1c1b1b] rounded-2xl p-8">
+        <div className="bg-surface rounded-2xl p-8">
           <div className="flex items-center gap-3 mb-6">
             <span className="material-symbols-outlined text-[#c3c0ff]">
               mail
@@ -202,7 +202,7 @@ export default function SecurityPage() {
                 onChange={(e) => setForgotEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="flex-1 bg-[#0e0e0e] border-none rounded-2xl py-3 px-5 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                className="flex-1 bg-[#0e0e0e] border-none rounded-2xl py-3 px-5 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
               />
               <button
                 type="submit"
@@ -216,7 +216,7 @@ export default function SecurityPage() {
         </div>
 
         {/* Active Sessions */}
-        <div className="bg-[#1c1b1b] rounded-2xl p-8">
+        <div className="bg-surface rounded-2xl p-8">
           <div className="flex items-center gap-3 mb-6">
             <span className="material-symbols-outlined text-[#c3c0ff]">
               devices
@@ -240,12 +240,12 @@ export default function SecurityPage() {
                   className="flex justify-between items-center p-4 bg-[#0e0e0e] rounded-2xl"
                 >
                   <div className="flex items-center gap-4">
-                    <span className="material-symbols-outlined text-[#c7c4d8]">
+                    <span className="material-symbols-outlined text-on-surface-variant">
                       {s.isCurrent ? "laptop" : "phone_iphone"}
                     </span>
                     <div>
                       <p className="font-semibold text-sm">{s.device}</p>
-                      <p className="text-xs text-[#c7c4d8]">
+                      <p className="text-xs text-on-surface-variant">
                         {s.location && `${s.location} · `}
                         {s.isCurrent
                           ? "Current session"
@@ -273,26 +273,21 @@ export default function SecurityPage() {
         </div>
 
         {/* Biometric toggles (UI only — no backend endpoint) */}
-        <div className="bg-[#1c1b1b] rounded-2xl p-8">
+        <div className="bg-surface rounded-2xl p-8">
           <div className="flex items-center gap-3 mb-6">
             <span className="material-symbols-outlined text-[#c3c0ff]">
               fingerprint
             </span>
             <h3 className="font-headline font-bold text-lg">
-              Biometric Authentication
+              Passkeys
             </h3>
           </div>
           <div className="space-y-4">
             {[
               {
-                label: "Face ID",
-                sub: "Use facial recognition to unlock",
+                label: "Passkey Authentication",
+                sub: "Use your device's screen lock (PIN, face, or fingerprint) to sign in securely",
                 on: true,
-              },
-              {
-                label: "Fingerprint",
-                sub: "Use fingerprint to authenticate",
-                on: false,
               },
             ].map((item) => (
               <div
@@ -301,7 +296,7 @@ export default function SecurityPage() {
               >
                 <div>
                   <p className="font-semibold text-sm">{item.label}</p>
-                  <p className="text-xs text-[#c7c4d8]">{item.sub}</p>
+                  <p className="text-xs text-on-surface-variant">{item.sub}</p>
                 </div>
                 <div
                   className={`w-12 h-6 rounded-full relative cursor-pointer ${item.on ? "bg-[#4f46e5]" : "bg-[#353534]"}`}
@@ -318,3 +313,4 @@ export default function SecurityPage() {
     </main>
   );
 }
+

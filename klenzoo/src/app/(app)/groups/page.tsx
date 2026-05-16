@@ -31,10 +31,10 @@ export default function GroupsPage() {
       {/* Header */}
       <section className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
-          <h1 className="text-5xl md:text-6xl font-extrabold font-headline tracking-tighter text-[#e5e2e1] mb-2">
+          <h1 className="text-5xl md:text-6xl font-extrabold font-headline tracking-tighter text-on-surface mb-2">
             Social <span className="text-[#c3c0ff]">Circles</span>
           </h1>
-          <p className="text-[#c7c4d8] text-lg max-w-md">Coordinate shared expenses seamlessly.</p>
+          <p className="text-on-surface-variant text-lg max-w-md">Coordinate shared expenses seamlessly.</p>
         </div>
         <div className="flex gap-3 flex-wrap">
           <Link href="/groups/new" className="px-5 py-3 rounded-full luminous-gradient text-white font-bold text-sm shadow-[0_0_20px_rgba(79,70,229,0.3)] active:scale-95 transition-transform flex items-center gap-2">
@@ -46,13 +46,13 @@ export default function GroupsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Net Balance */}
-        <div className="lg:col-span-4 bg-[#1c1b1b] p-8 rounded-2xl flex flex-col justify-between">
+        <div className="lg:col-span-4 bg-surface p-8 rounded-2xl flex flex-col justify-between">
           <div>
-            <p className="text-[#c7c4d8] uppercase tracking-widest text-xs font-bold mb-6">Net Balance</p>
+            <p className="text-on-surface-variant uppercase tracking-widest text-xs font-bold mb-6">Net Balance</p>
             <h3 className={`text-5xl font-black font-headline tracking-tighter ${netBalance >= 0 ? "text-[#c3c0ff]" : "text-[#ffb695]"}`}>
               {netBalance >= 0 ? "+" : ""}${Math.abs(netBalance).toFixed(2)}
             </h3>
-            <p className="text-[#c7c4d8] text-sm mt-2">
+            <p className="text-on-surface-variant text-sm mt-2">
               {netBalance < 0 ? "You owe more than you are owed." : "You are owed more than you owe."}
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function GroupsPage() {
         {/* Group Cards */}
         <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
           {loading ? (
-            [1,2,3].map((i) => <div key={i} className="h-56 bg-[#1c1b1b] rounded-2xl animate-pulse" />)
+            [1,2,3].map((i) => <div key={i} className="h-56 bg-surface rounded-2xl animate-pulse" />)
           ) : (
             <>
               {groups.map((group, idx) => {
@@ -89,13 +89,13 @@ export default function GroupsPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-[#201f1f] to-transparent" />
                       <div className="absolute bottom-4 left-5">
                         <h3 className="text-xl font-bold font-headline">{group.name}</h3>
-                        <p className="text-xs text-[#c7c4d8]">{group.members.length} member{group.members.length !== 1 ? "s" : ""}</p>
+                        <p className="text-xs text-on-surface-variant">{group.members.length} member{group.members.length !== 1 ? "s" : ""}</p>
                       </div>
                     </div>
                     <div className="p-5 flex items-center justify-between">
                       <div>
-                        <p className="text-[10px] uppercase tracking-widest text-[#c7c4d8] font-bold">Status</p>
-                        <p className={`font-semibold text-sm ${balance < 0 ? "text-[#ffb4ab]" : balance > 0 ? "text-[#c3c0ff]" : "text-[#c7c4d8]"}`}>
+                        <p className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Status</p>
+                        <p className={`font-semibold text-sm ${balance < 0 ? "text-[#ffb4ab]" : balance > 0 ? "text-[#c3c0ff]" : "text-on-surface-variant"}`}>
                           {balance === 0 ? "Settled Up" : balance > 0 ? `Owed $${balance.toFixed(2)}` : `You owe $${Math.abs(balance).toFixed(2)}`}
                         </p>
                       </div>
@@ -107,13 +107,13 @@ export default function GroupsPage() {
                 );
               })}
               <Link href="/groups/new"
-                className="bg-[#1c1b1b] rounded-2xl border-2 border-dashed border-[#464555]/20 flex items-center justify-center p-10 hover:bg-[#2a2a2a] hover:border-[#c3c0ff]/50 transition-all group">
+                className="bg-surface rounded-2xl border-2 border-dashed border-[#464555]/20 flex items-center justify-center p-10 hover:bg-[#2a2a2a] hover:border-[#c3c0ff]/50 transition-all group">
                 <div className="text-center">
                   <div className="w-14 h-14 bg-[#353534] rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
                     <span className="material-symbols-outlined text-[#c3c0ff] text-2xl">add</span>
                   </div>
-                  <p className="font-headline font-bold text-[#e5e2e1]">New Circle</p>
-                  <p className="text-xs text-[#c7c4d8] mt-1">Split rent, bills, or dinner</p>
+                  <p className="font-headline font-bold text-on-surface">New Circle</p>
+                  <p className="text-xs text-on-surface-variant mt-1">Split rent, bills, or dinner</p>
                 </div>
               </Link>
             </>
@@ -123,3 +123,4 @@ export default function GroupsPage() {
     </main>
   );
 }
+

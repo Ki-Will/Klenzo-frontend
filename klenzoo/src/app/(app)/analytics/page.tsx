@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
-import { finance, type Transaction, type CategorySplit } from "@/lib/api";
+import { finance, type Transaction, type CategorySplit, type Budget } from "@/lib/api";
 
 type Period = "Monthly" | "Quarterly" | "Yearly";
 
@@ -12,6 +13,7 @@ export default function AnalyticsPage() {
   const [period, setPeriod] = useState<Period>("Monthly");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<CategorySplit[]>([]);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -20,9 +22,11 @@ export default function AnalyticsPage() {
     Promise.all([
       finance.getTransactions(),
       finance.getAnalyticsCategories().catch(() => [] as CategorySplit[]),
-    ]).then(([txs, cats]) => {
+      finance.getBudgets().catch(() => []),
+    ]).then(([txs, cats, bgs]) => {
       setTransactions(txs);
       setCategories(cats);
+      setBudgets(bgs);
     }).catch(() => {}).finally(() => setLoading(false));
   }, [user?.id]);
 
@@ -133,10 +137,10 @@ export default function AnalyticsPage() {
           <span className="text-[#c3c0ff] font-bold tracking-widest uppercase text-xs mb-2 block">Overview</span>
           <h1 className="text-5xl md:text-6xl font-headline font-extrabold tracking-tight text-white">Analytics</h1>
         </div>
-        <div className="flex bg-[#1c1b1b] p-1 rounded-full">
+        <div className="flex bg-surface p-1 rounded-full overflow-x-auto no-scrollbar">
           {(["Monthly","Quarterly","Yearly"] as Period[]).map((p) => (
             <button key={p} onClick={() => setPeriod(p)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${period === p ? "bg-[#2a2a2a] text-[#e5e2e1]" : "text-[#c7c4d8] hover:text-[#e5e2e1]"}`}>
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${period === p ? "bg-[#2a2a2a] text-on-surface" : "text-on-surface-variant hover:text-on-surface"}`}>
               {p}
             </button>
           ))}
@@ -146,7 +150,7 @@ export default function AnalyticsPage() {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {[8,4,5,7].map((span, i) => (
-            <div key={i} className={`md:col-span-${span} h-64 bg-[#1c1b1b] rounded-2xl animate-pulse`} />
+            <div key={i} className={`md:col-span-${span} h-64 bg-surface rounded-2xl animate-pulse`} />
           ))}
         </div>
       ) : (
@@ -154,10 +158,10 @@ export default function AnalyticsPage() {
           {/* Main bento */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
             {/* Bar chart */}
-            <div className="md:col-span-8 bg-[#1c1b1b] rounded-2xl p-8 flex flex-col gap-6 relative overflow-hidden">
+            <div className="md:col-span-8 bg-surface rounded-2xl p-8 flex flex-col gap-6 relative overflow-hidden">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-[#c7c4d8] text-sm font-medium mb-1">Cash Flow ({period})</h3>
+                  <h3 className="text-on-surface-variant text-sm font-medium mb-1">Cash Flow ({period})</h3>
                   <div className="flex items-baseline gap-4 mt-2">
                     <p className="text-3xl font-headline font-bold text-white">${(periodIncome - periodSpend).toFixed(2)} <span className="text-sm font-normal text-[#918fa1]">Net</span></p>
                   </div>
@@ -174,7 +178,7 @@ export default function AnalyticsPage() {
               <div className="h-48 w-full flex items-end gap-2 sm:gap-4 mt-4">
                 {barData.map((b, i) => (
                   <div key={i} className="flex-1 flex justify-center items-end gap-1 group relative h-full">
-                    <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-[#1c1b1b] p-2 rounded-xl text-[10px] whitespace-nowrap z-10 border border-[#464555]/20 shadow-xl pointer-events-none">
+                    <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-surface p-2 rounded-xl text-[10px] whitespace-nowrap z-10 border border-[#464555]/20 shadow-xl pointer-events-none">
                       <p className="text-[#c3c0ff] font-bold">In: ${b.income.toFixed(0)}</p>
                       <p className="text-[#ffb4ab] font-bold">Out: ${b.expense.toFixed(0)}</p>
                     </div>
@@ -191,7 +195,7 @@ export default function AnalyticsPage() {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between text-xs text-[#c7c4d8] uppercase tracking-widest px-1">
+              <div className="flex justify-between text-xs text-on-surface-variant uppercase tracking-widest px-1">
                 {barData.map((b) => <span key={b.label}>{b.label}</span>)}
               </div>
               <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/5 blur-[100px] -z-0" />
@@ -232,7 +236,7 @@ export default function AnalyticsPage() {
           {/* Secondary row */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
             {/* Donut */}
-            <div className="md:col-span-5 bg-[#1c1b1b] rounded-2xl p-8 flex flex-col items-center">
+            <div className="md:col-span-5 bg-surface rounded-2xl p-8 flex flex-col items-center">
               <h3 className="w-full text-left text-white font-headline font-bold mb-6">Category Split</h3>
               <div className="relative w-44 h-44 mb-6">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
@@ -253,24 +257,24 @@ export default function AnalyticsPage() {
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <span className="text-xl font-bold text-white">${periodSpend.toFixed(0)}</span>
-                  <span className="text-[10px] text-[#c7c4d8] uppercase tracking-widest">Spent</span>
+                  <span className="text-[10px] text-on-surface-variant uppercase tracking-widest">Spent</span>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3 w-full">
                 {catBreakdown.slice(0, 4).map((cat, i) => (
                   <div key={cat.category} className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: DONUT_COLORS[i] }} />
-                    <span className="text-xs text-[#c7c4d8] capitalize truncate">{cat.category} ({cat.percentage}%)</span>
+                    <span className="text-xs text-on-surface-variant capitalize truncate">{cat.category} ({cat.percentage}%)</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Monthly variance */}
-            <div className="md:col-span-7 bg-[#1c1b1b] rounded-2xl p-8">
+            <div className="md:col-span-7 bg-surface rounded-2xl p-8">
               <h3 className="text-white font-headline font-bold mb-6">Category Breakdown</h3>
               {catBreakdown.length === 0 ? (
-                <p className="text-[#c7c4d8] text-sm">No expense data yet.</p>
+                <p className="text-on-surface-variant text-sm">No expense data yet.</p>
               ) : (
                 <div className="space-y-5">
                   {catBreakdown.map((cat) => (
@@ -281,12 +285,12 @@ export default function AnalyticsPage() {
                         </div>
                         <div>
                           <p className="text-white font-bold capitalize">{cat.category}</p>
-                          <p className="text-xs text-[#c7c4d8]">{cat.count} transaction{cat.count !== 1 ? "s" : ""}</p>
+                          <p className="text-xs text-on-surface-variant">{cat.count} transaction{cat.count !== 1 ? "s" : ""}</p>
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="text-white font-bold">${cat.amount.toFixed(2)}</p>
-                        <p className="text-xs text-[#c7c4d8]">{cat.percentage}% of total</p>
+                        <p className="text-xs text-on-surface-variant">{cat.percentage}% of total</p>
                       </div>
                     </div>
                   ))}
@@ -294,8 +298,80 @@ export default function AnalyticsPage() {
               )}
             </div>
           </div>
+
+          {/* Budget Health Section */}
+          <section className="mt-8 bg-surface rounded-2xl p-8 border border-white/5">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h3 className="text-xl font-headline font-bold text-white">Budget Health</h3>
+                <div className="flex items-center gap-3 mt-1">
+                  <p className="text-sm text-[#918fa1]">Performance across your defined spending limits</p>
+                  <span className="w-1 h-1 rounded-full bg-[#464555]" />
+                  <p className="text-[10px] font-bold text-[#ffb4ab]">
+                    {budgets.filter(b => (b.spent / (b.limitAmount || 1)) > 1).length} Over Budget
+                  </p>
+                  <span className="w-1 h-1 rounded-full bg-[#464555]" />
+                  <p className="text-[10px] font-bold text-primary">
+                    {budgets.filter(b => (b.spent / (b.limitAmount || 1)) <= 1).length} Healthy
+                  </p>
+                </div>
+              </div>
+              <Link href="/expenses/budgets" className="px-4 py-2 bg-[#2a2a2a] rounded-xl text-xs font-bold text-on-surface-variant hover:text-white transition-colors flex items-center gap-2">
+                Manage All <span className="material-symbols-outlined text-sm">open_in_new</span>
+              </Link>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {budgets.map(b => {
+                const percent = b.limitAmount > 0 ? (b.spent / b.limitAmount) * 100 : 0;
+                const isOver = percent > 100;
+                return (
+                  <div key={b.id} className="space-y-4 p-5 rounded-[2rem] bg-[#2a2a2a]/30 border border-white/5 hover:border-white/10 transition-all group">
+                    <div className="flex justify-between items-start">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                          <span className="material-symbols-outlined">{b.icon || 'account_balance_wallet'}</span>
+                        </div>
+                        <div>
+                          <p className="font-bold text-white">{b.name}</p>
+                          <p className="text-[10px] uppercase tracking-widest text-[#918fa1]">{b.period}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className={`text-sm font-black ${isOver ? 'text-[#ffb4ab]' : 'text-white'}`}>
+                          ${b.spent.toLocaleString()}
+                        </p>
+                        <p className="text-[10px] text-[#918fa1]">of ${b.limitAmount.toLocaleString()}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="h-2 w-full bg-background rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full transition-all duration-1000 ${isOver ? 'bg-[#ffb4ab]' : 'bg-primary'}`}
+                          style={{ width: `${Math.min(percent, 100)}%` }}
+                        />
+                      </div>
+                      <div className="flex justify-between items-center text-[10px] font-bold">
+                        <span className={isOver ? 'text-[#ffb4ab]' : 'text-[#918fa1]'}>
+                          {isOver ? 'EXCEEDED' : `${Math.round(100 - percent)}% REMAINING`}
+                        </span>
+                        <span className="text-white">{Math.round(percent)}%</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+              {budgets.length === 0 && (
+                <div className="col-span-full py-12 text-center bg-background/50 rounded-[2rem] border border-dashed border-white/10">
+                  <p className="text-[#918fa1] italic">No active budgets found. Start by creating one in the expenses section.</p>
+                </div>
+              )}
+            </div>
+          </section>
         </>
       )}
     </main>
   );
 }
+

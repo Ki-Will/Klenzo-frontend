@@ -36,7 +36,7 @@ export default function NotificationsPage() {
         <div className="flex justify-between items-end">
           <div>
             <span className="text-[#c3c0ff] uppercase tracking-[0.3em] text-[10px] mb-2 block">Activity</span>
-            <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-[#e5e2e1]">Notifications</h1>
+            <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-on-surface">Notifications</h1>
           </div>
           {unread.length > 0 && (
             <button
@@ -52,12 +52,12 @@ export default function NotificationsPage() {
         {loading ? (
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 bg-[#1c1b1b] rounded-2xl animate-pulse" />
+              <div key={i} className="h-20 bg-surface rounded-2xl animate-pulse" />
             ))}
           </div>
 
         ) : notifs.length === 0 ? (
-          <div className="text-center py-20 text-[#c7c4d8]">
+          <div className="text-center py-20 text-on-surface-variant">
             <span className="material-symbols-outlined text-5xl mb-4 block opacity-30">notifications_off</span>
             <p className="font-headline font-bold text-lg">All caught up</p>
             <p className="text-sm mt-1">No notifications right now.</p>
@@ -68,29 +68,29 @@ export default function NotificationsPage() {
             {/* ── Unread ── */}
             {unread.length > 0 && (
               <section>
-                <p className="text-xs font-bold text-[#c7c4d8] uppercase tracking-widest mb-4">
+                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">
                   New · {unread.length}
                 </p>
                 <div className="space-y-2">
                   {unread.map((n) => (
                     <div
                       key={n.id}
-                      className="flex items-start gap-4 p-5 bg-[#1c1b1b] rounded-2xl border border-[#c3c0ff]/10 hover:bg-[#2a2a2a] transition-all group"
+                      className="flex items-start gap-4 p-5 bg-surface rounded-2xl border border-[#c3c0ff]/10 hover:bg-[#2a2a2a] transition-all group"
                     >
                       {/* Icon — default dark style for all notification types */}
                       <div className="w-11 h-11 rounded-full bg-[#353534] flex items-center justify-center flex-shrink-0">
-                        <span className="material-symbols-outlined text-[#c7c4d8] text-[18px]">
+                        <span className="material-symbols-outlined text-on-surface-variant text-[18px]">
                           {TYPE_ICON[n.type ?? "default"] ?? TYPE_ICON.default}
                         </span>
                       </div>
 
                       <div className="flex-grow min-w-0">
-                        <p className="font-semibold text-[#e5e2e1] text-sm">{n.title}</p>
-                        <p className="text-sm text-[#c7c4d8] mt-0.5 leading-snug">{n.body}</p>
+                        <p className="font-semibold text-on-surface text-sm">{n.title}</p>
+                        <p className="text-sm text-on-surface-variant mt-0.5 leading-snug">{n.body}</p>
                       </div>
 
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                        <span className="text-[10px] text-[#c7c4d8] whitespace-nowrap">
+                        <span className="text-[10px] text-on-surface-variant whitespace-nowrap">
                           {timeAgo(n.createdAt)}
                         </span>
                         <div className="flex items-center gap-1">
@@ -99,7 +99,7 @@ export default function NotificationsPage() {
                           {/* Mark read — visible on hover */}
                           <button
                             onClick={() => markRead(n.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity text-[#c7c4d8] hover:text-[#c3c0ff] p-0.5"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-[#c3c0ff] p-0.5"
                             title="Mark as read"
                           >
                             <span className="material-symbols-outlined text-sm">check</span>
@@ -107,7 +107,7 @@ export default function NotificationsPage() {
                           {/* Dismiss */}
                           <button
                             onClick={() => dismiss(n.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity text-[#c7c4d8] hover:text-[#ffb4ab] p-0.5"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-[#ffb4ab] p-0.5"
                             title="Dismiss"
                           >
                             <span className="material-symbols-outlined text-sm">close</span>
@@ -123,12 +123,12 @@ export default function NotificationsPage() {
             {/* ── Read / Earlier ── */}
             {read.length > 0 && (
               <section>
-                <p className="text-xs font-bold text-[#c7c4d8] uppercase tracking-widest mb-4">Earlier</p>
+                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">Earlier</p>
                 <div className="space-y-2">
                   {read.map((n) => (
                     <div
                       key={n.id}
-                      className="flex items-start gap-4 p-5 bg-[#1c1b1b] rounded-2xl hover:bg-[#2a2a2a] transition-all opacity-50 hover:opacity-100 group"
+                      className="flex items-start gap-4 p-5 bg-surface rounded-2xl hover:bg-[#2a2a2a] transition-all opacity-50 hover:opacity-100 group"
                     >
                       <div className="w-11 h-11 rounded-full bg-[#2a2a2a] flex items-center justify-center flex-shrink-0">
                         <span className="material-symbols-outlined text-[#918fa1] text-[18px]">
@@ -137,17 +137,17 @@ export default function NotificationsPage() {
                       </div>
 
                       <div className="flex-grow min-w-0">
-                        <p className="font-semibold text-[#e5e2e1] text-sm">{n.title}</p>
-                        <p className="text-sm text-[#c7c4d8] mt-0.5 leading-snug">{n.body}</p>
+                        <p className="font-semibold text-on-surface text-sm">{n.title}</p>
+                        <p className="text-sm text-on-surface-variant mt-0.5 leading-snug">{n.body}</p>
                       </div>
 
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                        <span className="text-[10px] text-[#c7c4d8] whitespace-nowrap">
+                        <span className="text-[10px] text-on-surface-variant whitespace-nowrap">
                           {timeAgo(n.createdAt)}
                         </span>
                         <button
                           onClick={() => dismiss(n.id)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity text-[#c7c4d8] hover:text-[#ffb4ab] p-0.5"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-[#ffb4ab] p-0.5"
                           title="Dismiss"
                         >
                           <span className="material-symbols-outlined text-sm">close</span>
@@ -164,3 +164,4 @@ export default function NotificationsPage() {
     </main>
   );
 }
+

@@ -5,7 +5,7 @@ import { productivity as productivityApi, type Task, type TaskStatus } from "@/l
 const PRIORITY_LABELS: Record<number, { label: string; color: string; bg: string }> = {
   4: { label: "Critical",  color: "text-[#dad7ff]",  bg: "bg-[#4f46e5]" },
   3: { label: "High",      color: "text-[#c3c0ff]",  bg: "bg-[#4f46e5]/20" },
-  2: { label: "Standard",  color: "text-[#c7c4d8]",  bg: "bg-[#353534]" },
+  2: { label: "Standard",  color: "text-on-surface-variant",  bg: "bg-[#353534]" },
   1: { label: "Low",       color: "text-[#918fa1]",  bg: "bg-[#2a2a2a]" },
 };
 
@@ -64,16 +64,16 @@ function AddTaskModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      <div className="w-full max-w-md bg-[#1c1b1b] rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#464555]/20">
+      <div className="w-full max-w-md bg-surface rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#464555]/20">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-headline font-bold">New Task</h2>
-          <button onClick={onClose} className="text-[#c7c4d8] hover:text-white transition-colors">
+          <button onClick={onClose} className="text-on-surface-variant hover:text-white transition-colors">
             <span className="material-symbols-outlined">close</span>
           </button>
         </div>
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+            <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
               Title *
             </label>
             <input
@@ -82,11 +82,11 @@ function AddTaskModal({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Design System Overhaul"
               required
-              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+            <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
               Description
             </label>
             <textarea
@@ -94,18 +94,18 @@ function AddTaskModal({
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Optional details..."
               rows={2}
-              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all resize-none"
+              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all resize-none"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+              <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
                 Status
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as TaskStatus)}
-                className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-[#e5e2e1] focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
               >
                 <option value="todo">Todo</option>
                 <option value="in_progress">In Progress</option>
@@ -114,13 +114,13 @@ function AddTaskModal({
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+              <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
                 Priority
               </label>
               <select
                 value={priority}
                 onChange={(e) => setPriority(Number(e.target.value))}
-                className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-[#e5e2e1] focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
               >
                 <option value={4}>Critical</option>
                 <option value={3}>High</option>
@@ -130,14 +130,14 @@ function AddTaskModal({
             </div>
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+            <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
               Due Date
             </label>
             <input
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-[#e5e2e1] focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
             />
           </div>
           <button
@@ -177,7 +177,7 @@ function TaskCard({
 
   return (
     <div
-      className={`bg-[#1c1b1b] p-6 rounded-2xl border transition-all group cursor-pointer relative overflow-hidden ${
+      className={`bg-surface p-6 rounded-2xl border transition-all group cursor-pointer relative overflow-hidden ${
         task.status === "in_progress"
           ? "border-[#c3c0ff]/20 shadow-xl shadow-black/40"
           : "border-[#464555]/5 hover:border-[#c3c0ff]/20"
@@ -193,14 +193,14 @@ function TaskCard({
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={() => onStatusChange(task.id, nextStatus[task.status])}
-            className="p-1 hover:text-[#c3c0ff] transition-colors text-[#c7c4d8]"
+            className="p-1 hover:text-[#c3c0ff] transition-colors text-on-surface-variant"
             title="Advance status"
           >
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
           <button
             onClick={() => onDelete(task.id)}
-            className="p-1 hover:text-[#ffb4ab] transition-colors text-[#c7c4d8]"
+            className="p-1 hover:text-[#ffb4ab] transition-colors text-on-surface-variant"
             title="Delete"
           >
             <span className="material-symbols-outlined text-sm">delete</span>
@@ -209,7 +209,7 @@ function TaskCard({
       </div>
 
       <h3
-        className={`font-bold text-[#e5e2e1] mb-2 leading-tight ${
+        className={`font-bold text-on-surface mb-2 leading-tight ${
           isDone ? "line-through opacity-40" : ""
         }`}
       >
@@ -217,7 +217,7 @@ function TaskCard({
       </h3>
 
       {task.description && (
-        <p className="text-xs text-[#c7c4d8] line-clamp-2 mb-4">{task.description}</p>
+        <p className="text-xs text-on-surface-variant line-clamp-2 mb-4">{task.description}</p>
       )}
 
       {task.status === "in_progress" && (
@@ -227,13 +227,13 @@ function TaskCard({
       )}
 
       <div className="flex items-center justify-between mt-2">
-        <div className="w-6 h-6 rounded-full bg-[#353534] flex items-center justify-center text-[10px] font-bold text-[#c7c4d8]">
+        <div className="w-6 h-6 rounded-full bg-[#353534] flex items-center justify-center text-[10px] font-bold text-on-surface-variant">
           U
         </div>
         {task.dueDate && (
           <div
             className={`flex items-center gap-1 text-[10px] font-bold ${
-              isOverdue ? "text-[#ffb4ab]" : "text-[#c7c4d8]"
+              isOverdue ? "text-[#ffb4ab]" : "text-on-surface-variant"
             }`}
           >
             <span className="material-symbols-outlined text-xs">
@@ -314,10 +314,10 @@ export default function ProductivityPage() {
           {/* Hero Stats */}
           <section>
             <div className="flex flex-col mb-10">
-              <h1 className="text-5xl font-extrabold font-headline tracking-tight text-[#e5e2e1] mb-2">
+              <h1 className="text-5xl font-extrabold font-headline tracking-tight text-on-surface mb-2">
                 Deep Tasks
               </h1>
-              <p className="text-[#c7c4d8] max-w-lg">
+              <p className="text-on-surface-variant max-w-lg">
                 Your productivity is at{" "}
                 <span className="text-[#c3c0ff] font-bold">{pct}%</span> today. You&apos;ve
                 completed {done} tasks across {COLUMNS.length} stages.
@@ -335,30 +335,30 @@ export default function ProductivityPage() {
                   label: "In Progress",
                   value: String(inProgress),
                   sub: "Active tasks",
-                  color: "text-[#e5e2e1]",
+                  color: "text-on-surface",
                 },
                 {
                   label: "Today's Focus",
                   value: `${done}/${total}`,
                   sub: `${total - done} remaining`,
-                  color: "text-[#e5e2e1]",
+                  color: "text-on-surface",
                 },
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="bg-[#1c1b1b] p-8 rounded-2xl border border-[#464555]/5 flex flex-col gap-4 relative overflow-hidden group"
+                  className="bg-surface p-8 rounded-2xl border border-[#464555]/5 flex flex-col gap-4 relative overflow-hidden group"
                 >
                   <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
                     <span className="material-symbols-outlined text-9xl">trending_up</span>
                   </div>
-                  <span className="text-[#c7c4d8] uppercase tracking-widest text-[10px] font-bold">
+                  <span className="text-on-surface-variant uppercase tracking-widest text-[10px] font-bold">
                     {stat.label}
                   </span>
                   <div className="flex items-end gap-3">
                     <span className={`text-4xl font-headline font-black ${stat.color}`}>
                       {stat.value}
                     </span>
-                    <span className="text-sm text-[#c7c4d8]/60 mb-1">{stat.sub}</span>
+                    <span className="text-sm text-on-surface-variant/60 mb-1">{stat.sub}</span>
                   </div>
                 </div>
               ))}
@@ -370,7 +370,7 @@ export default function ProductivityPage() {
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-4">
                 <h2 className="text-2xl font-bold font-headline">Kanban Board</h2>
-                <span className="px-3 py-1 bg-[#2a2a2a] rounded-full text-xs font-bold text-[#c7c4d8]">
+                <span className="px-3 py-1 bg-[#2a2a2a] rounded-full text-xs font-bold text-on-surface-variant">
                   {total} tasks
                 </span>
               </div>
@@ -394,12 +394,12 @@ export default function ProductivityPage() {
                     <div className="flex items-center justify-between px-2">
                       <div className="flex items-center gap-2">
                         <div className={`w-2 h-2 rounded-full ${col.dot}`} />
-                        <span className="font-bold text-sm text-[#e5e2e1]">{col.label}</span>
-                        <span className="text-xs text-[#c7c4d8]/50">{colTasks.length}</span>
+                        <span className="font-bold text-sm text-on-surface">{col.label}</span>
+                        <span className="text-xs text-on-surface-variant/50">{colTasks.length}</span>
                       </div>
                       <button
                         onClick={() => setShowModal(true)}
-                        className="text-[#c7c4d8] hover:text-[#c3c0ff] transition-colors"
+                        className="text-on-surface-variant hover:text-[#c3c0ff] transition-colors"
                       >
                         <span className="material-symbols-outlined text-sm">add</span>
                       </button>
@@ -412,7 +412,7 @@ export default function ProductivityPage() {
                       }`}
                     >
                       {colTasks.length === 0 ? (
-                        <div className="border-2 border-dashed border-[#464555]/20 rounded-2xl p-8 text-center text-[#c7c4d8]/40 text-sm">
+                        <div className="border-2 border-dashed border-[#464555]/20 rounded-2xl p-8 text-center text-on-surface-variant/40 text-sm">
                           No tasks here
                         </div>
                       ) : (
@@ -435,20 +435,20 @@ export default function ProductivityPage() {
           {/* Activity + Insights */}
           <section className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12">
             {/* Activity chart */}
-            <div className="md:col-span-8 bg-[#1c1b1b] rounded-2xl p-8 border border-[#464555]/5 overflow-hidden relative">
+            <div className="md:col-span-8 bg-surface rounded-2xl p-8 border border-[#464555]/5 overflow-hidden relative">
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <h3 className="text-xl font-bold font-headline">Activity Locus</h3>
-                  <p className="text-xs text-[#c7c4d8]">
+                  <p className="text-xs text-on-surface-variant">
                     Intelligent tracking of peak focus hours
                   </p>
                 </div>
                 <div className="flex gap-4">
-                  <span className="flex items-center gap-2 text-[10px] font-bold text-[#c7c4d8] uppercase">
+                  <span className="flex items-center gap-2 text-[10px] font-bold text-on-surface-variant uppercase">
                     <div className="w-2 h-2 rounded-full bg-[#c3c0ff]" />
                     Deep Work
                   </span>
-                  <span className="flex items-center gap-2 text-[10px] font-bold text-[#c7c4d8] uppercase">
+                  <span className="flex items-center gap-2 text-[10px] font-bold text-on-surface-variant uppercase">
                     <div className="w-2 h-2 rounded-full bg-[#413f82]" />
                     Admin
                   </span>
@@ -507,3 +507,4 @@ export default function ProductivityPage() {
     </>
   );
 }
+

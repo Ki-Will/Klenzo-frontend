@@ -196,6 +196,12 @@ export interface UserProfile {
   name?: string;
   phone?: string;
   avatar?: string;
+  notificationSettings?: {
+    smartInsights: boolean;
+    transactionAlerts: boolean;
+    securityAlerts: boolean;
+    groupAlerts: boolean;
+  };
 }
 
 export interface Session {
@@ -220,6 +226,7 @@ export interface Transaction {
   groupId?: string;
   status?: "pending" | "approved";
   parentTransactionId?: number;
+  budgetId?: number;
 }
 
 export interface CreateTransactionDto {
@@ -230,9 +237,21 @@ export interface CreateTransactionDto {
   transactionType: TransactionType;
   date: string;
   groupId?: string;
-  /** "pending" = awaiting member approval before counting in personal expenses */
   status?: "pending" | "approved";
   parentTransactionId?: number;
+  budgetId?: number;
+}
+
+export interface UpdateTransactionDto {
+  amount?: number;
+  description?: string;
+  category?: string;
+  transactionType?: TransactionType;
+  date?: string;
+  groupId?: string;
+  status?: "pending" | "approved";
+  parentTransactionId?: number;
+  budgetId?: number | null;
 }
 
 export interface CategorySplit {
@@ -240,6 +259,32 @@ export interface CategorySplit {
   amount: number;
   percentage: number;
   count: number;
+}
+
+export interface Budget {
+  id: number;
+  userId: number;
+  name: string;
+  category?: string;
+  limitAmount: number;
+  spent: number;
+  period: string; // 'monthly' | 'quarterly' | 'yearly' | 'custom'
+  color?: string;
+  icon?: string;
+  startDate?: string;
+  endDate?: string;
+  createdAt: string;
+}
+
+export interface CreateBudgetDto {
+  name: string;
+  category?: string;
+  limitAmount: number;
+  period: string;
+  color?: string;
+  icon?: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 export interface AnalyticsSummary {
@@ -374,7 +419,12 @@ export const auth = {
    * POST /auth/profile  (backend uses POST for update, same route as GET)
    * Only sends fields that are present.
    */
-  updateProfile: (data: { name?: string; phone?: string; avatar?: string }) =>
+  updateProfile: (data: { 
+    name?: string; 
+    phone?: string; 
+    avatar?: string;
+    notificationSettings?: UserProfile["notificationSettings"];
+  }) =>
     apiFetch<UserProfile>("/auth/profile", {
       method: "POST",
       body: JSON.stringify(data),
@@ -421,6 +471,10 @@ export const auth = {
  */
 function normaliseTransaction(t: Transaction): Transaction {
   return { ...t, amount: Number(t.amount) };
+}
+
+function normaliseBudget(b: Budget): Budget {
+  return { ...b, limitAmount: Number(b.limitAmount), spent: Number(b.spent) };
 }
 
 const mockGroups: Group[] = [
@@ -507,6 +561,13 @@ export const finance = {
         } as Transaction;
       })
       .then(normaliseTransaction),
+
+  /** PATCH /finance/transactions/:id */
+  updateTransaction: (id: number, dto: UpdateTransactionDto) =>
+    apiFetch<Transaction>(`/finance/transactions/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(dto),
+    }).then(normaliseTransaction),
 
   /** DELETE /finance/transactions/:id */
   deleteTransaction: (id: number) =>
@@ -642,6 +703,30 @@ export const finance = {
     apiFetch<Group>(`/finance/groups/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ name }),
+    }),
+
+  /** GET /finance/budgets */
+  getBudgets: () =>
+    apiFetch<Budget[]>("/finance/budgets").then((bgs) => bgs.map(normaliseBudget)),
+
+  /** POST /finance/budgets */
+  createBudget: (dto: CreateBudgetDto) =>
+    apiFetch<Budget>("/finance/budgets", {
+      method: "POST",
+      body: JSON.stringify(dto),
+    }).then(normaliseBudget),
+
+  /** PATCH /finance/budgets/:id */
+  updateBudget: (id: number, dto: Partial<CreateBudgetDto>) =>
+    apiFetch<Budget>(`/finance/budgets/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(dto),
+    }).then(normaliseBudget),
+
+  /** DELETE /finance/budgets/:id */
+  deleteBudget: (id: number) =>
+    apiFetch<{ success: boolean }>(`/finance/budgets/${id}`, {
+      method: "DELETE",
     }),
 
   /** GET /finance/accounts */

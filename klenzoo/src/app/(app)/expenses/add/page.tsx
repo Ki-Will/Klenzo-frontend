@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
-import { finance, type TransactionType, type Group, type GroupMember } from "@/lib/api";
+import { finance, type TransactionType, type Group, type GroupMember, type Budget } from "@/lib/api";
 import CustomDatePicker from "@/components/CustomDatePicker";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -89,6 +89,7 @@ function AddExpenseForm() {
   const router   = useRouter();
   const searchParams = useSearchParams();
   const groupId  = searchParams.get("groupId") ?? undefined;
+  const initialBudgetId = searchParams.get("budgetId");
 
   // ── Amount ──
   const [amount, setAmount] = useState("0");
@@ -106,9 +107,15 @@ function AddExpenseForm() {
   const [splits,      setSplits]      = useState<MemberSplit[]>([]);
   const [loadingGroup, setLoadingGroup] = useState(false);
 
-  // ── Submit ──
-  const [submitting, setSubmitting] = useState(false);
   const [error,      setError]      = useState("");
+  const [budgets,    setBudgets]    = useState<Budget[]>([]);
+  const [budgetId,   setBudgetId]   = useState<number | undefined>(initialBudgetId ? parseInt(initialBudgetId) : undefined);
+  const [submitting, setSubmitting] = useState(false);
+
+  // Fetch budgets on mount
+  useEffect(() => {
+    finance.getBudgets().then(setBudgets).catch(() => {});
+  }, []);
 
   // Load group when groupId is present
   useEffect(() => {
@@ -206,6 +213,7 @@ function AddExpenseForm() {
         transactionType: txType,
         date: new Date(date).toISOString(),
         groupId,
+        budgetId,
       });
 
       // 2. If this is a group expense, create a PENDING split transaction
@@ -387,6 +395,32 @@ function AddExpenseForm() {
               className="w-full bg-[#1c1b1b] border-none rounded-2xl p-4 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#4f46e5] transition-all resize-none"
               placeholder="Merchant name or note..." rows={2} />
           </div>
+
+          {/* Budget Selection */}
+          {!isGroupMode && budgets.length > 0 && (
+            <div className="space-y-3">
+              <label className="font-headline uppercase tracking-widest text-[10px] text-[#918fa1] block">Link to Budget</label>
+              <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                <button
+                  onClick={() => setBudgetId(undefined)}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex-shrink-0 ${!budgetId ? "bg-[#c3c0ff] text-[#0f0069]" : "bg-[#1c1b1b] text-[#c7c4d8]"}`}
+                >
+                  Auto-match
+                </button>
+                {budgets.map(b => (
+                  <button
+                    key={b.id}
+                    onClick={() => setBudgetId(b.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all flex-shrink-0 ${budgetId === b.id ? "bg-[#c3c0ff] text-[#0f0069]" : "bg-[#1c1b1b] text-[#c7c4d8]"}`}
+                    style={budgetId === b.id ? {} : { borderLeft: `3px solid ${b.color || "#4f46e5"}` }}
+                  >
+                    <span className="material-symbols-outlined text-sm">{b.icon || "category"}</span>
+                    {b.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* ── Group Split Section ── */}
           {isGroupMode && (

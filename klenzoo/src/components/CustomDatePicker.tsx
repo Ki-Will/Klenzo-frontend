@@ -51,11 +51,11 @@ export default function CustomDatePicker({ value, onChange }: Props) {
       <button 
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between gap-3 bg-[#1c1b1b] p-4 rounded-2xl border border-[#464555]/10 hover:bg-[#2a2a2a] transition-colors"
+        className="w-full flex items-center justify-between gap-3 bg-surface p-4 rounded-2xl border border-[#464555]/10 hover:bg-[#2a2a2a] transition-colors"
       >
         <div className="flex items-center gap-3">
           <span className="material-symbols-outlined text-[#c3c0ff]">calendar_month</span>
-          <span className="text-[#e5e2e1] text-sm font-medium">
+          <span className="text-on-surface text-sm font-medium">
             {value ? new Date(value).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }) : "Select Date"}
           </span>
         </div>
@@ -63,15 +63,15 @@ export default function CustomDatePicker({ value, onChange }: Props) {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-full sm:w-[320px] bg-[#1c1b1b] border border-[#464555]/20 rounded-3xl p-5 shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-50">
+        <div className="absolute top-full left-0 mt-2 w-full sm:w-[320px] bg-surface border border-[#464555]/20 rounded-3xl p-5 shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-50">
           <div className="flex items-center justify-between mb-4">
-            <button type="button" onClick={handlePrevMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#353534] text-[#c7c4d8] transition-colors">
+            <button type="button" onClick={handlePrevMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#353534] text-on-surface-variant transition-colors">
               <span className="material-symbols-outlined text-sm">chevron_left</span>
             </button>
-            <h3 className="text-[#e5e2e1] font-bold text-sm">
+            <h3 className="text-on-surface font-bold text-sm">
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
             </h3>
-            <button type="button" onClick={handleNextMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#353534] text-[#c7c4d8] transition-colors">
+            <button type="button" onClick={handleNextMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#353534] text-on-surface-variant transition-colors">
               <span className="material-symbols-outlined text-sm">chevron_right</span>
             </button>
           </div>
@@ -103,7 +103,7 @@ export default function CustomDatePicker({ value, onChange }: Props) {
                       ? "bg-[#c3c0ff] text-[#0f0069] font-bold shadow-[0_0_15px_rgba(195,192,255,0.4)]" 
                       : isToday 
                         ? "border border-[#4f46e5]/50 text-[#c3c0ff] font-bold hover:bg-[#2a2a2a]"
-                        : "text-[#c7c4d8] hover:bg-[#353534]"
+                        : "text-on-surface-variant hover:bg-[#353534]"
                   }`}
                 >
                   {day}
@@ -116,3 +116,4 @@ export default function CustomDatePicker({ value, onChange }: Props) {
     </div>
   );
 }
+

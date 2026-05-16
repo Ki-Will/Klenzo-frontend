@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         source: "/backend/:path*",
         destination: `${BACKEND}/api/:path*`,
       },
+      {
+        source: "/storage/:path*",
+        destination: "http://localhost:9000/klenzo-bucket/:path*",
+      },
     ];
   },
 };

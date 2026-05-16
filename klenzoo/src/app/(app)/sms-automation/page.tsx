@@ -44,10 +44,10 @@ export default function SmsAutomationPage() {
           <span className="text-[#c3c0ff] font-headline uppercase tracking-[0.3em] text-[10px] mb-2 block">
             Automation
           </span>
-          <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-[#e5e2e1]">
+          <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-on-surface">
             SMS Tracking
           </h1>
-          <p className="text-[#c7c4d8] mt-3 text-lg max-w-xl">
+          <p className="text-on-surface-variant mt-3 text-lg max-w-xl">
             Klenzoo automatically reads your bank SMS notifications and logs every transaction —
             zero manual entry required.
           </p>
@@ -57,7 +57,7 @@ export default function SmsAutomationPage() {
         <div className="space-y-4">
           {steps.map((step, i) => (
             <div key={i} className="relative">
-              <div className="flex items-start gap-6 p-6 bg-[#1c1b1b] rounded-2xl border border-[#464555]/10 hover:bg-[#2a2a2a] transition-all">
+              <div className="flex items-start gap-6 p-6 bg-surface rounded-2xl border border-[#464555]/10 hover:bg-[#2a2a2a] transition-all">
                 <div className={`w-14 h-14 ${step.bg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
                   <span className={`material-symbols-outlined text-2xl ${step.color}`}>
                     {step.icon}
@@ -69,8 +69,8 @@ export default function SmsAutomationPage() {
                       Step {step.step}
                     </span>
                   </div>
-                  <h3 className="font-headline font-bold text-lg text-[#e5e2e1]">{step.title}</h3>
-                  <p className="text-[#c7c4d8] text-sm mt-1">{step.description}</p>
+                  <h3 className="font-headline font-bold text-lg text-on-surface">{step.title}</h3>
+                  <p className="text-on-surface-variant text-sm mt-1">{step.description}</p>
                 </div>
               </div>
               {i < steps.length - 1 && (
@@ -86,7 +86,7 @@ export default function SmsAutomationPage() {
         <div className="bg-[#0e0e0e] border border-[#464555]/10 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="font-headline font-bold text-xl">Enable SMS Tracking</h3>
-            <p className="text-[#c7c4d8] text-sm mt-1">
+            <p className="text-on-surface-variant text-sm mt-1">
               Grant permission to read bank SMS notifications.
             </p>
           </div>
@@ -101,3 +101,4 @@ export default function SmsAutomationPage() {
     </main>
   );
 }
+

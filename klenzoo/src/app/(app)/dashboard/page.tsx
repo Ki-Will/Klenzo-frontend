@@ -75,11 +75,11 @@ export default function DashboardPage() {
         {/* Hero */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-7 space-y-4">
-            <h2 className="text-[#c7c4d8] text-sm uppercase tracking-[0.2em]">
+            <h2 className="text-on-surface-variant text-sm uppercase tracking-[0.2em]">
               {user ? `Welcome back, ${user.email.split("@")[0]}` : "Total Liquidity"}
             </h2>
             <div className="flex items-baseline space-x-4 flex-wrap gap-y-2">
-              <h1 className="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter text-[#e5e2e1]">
+              <h1 className="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter text-on-surface">
                 ${balance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h1>
               <div className="flex items-center text-[#c3c0ff] bg-[#4f46e5]/10 px-3 py-1 rounded-full text-sm font-semibold">
@@ -89,11 +89,11 @@ export default function DashboardPage() {
             </div>
             <div className="flex gap-6 text-sm">
               <div>
-                <span className="text-[#c7c4d8]">Income </span>
+                <span className="text-on-surface-variant">Income </span>
                 <span className="text-[#c3c0ff] font-bold">${totalIncome.toFixed(2)}</span>
               </div>
               <div>
-                <span className="text-[#c7c4d8]">Spent </span>
+                <span className="text-on-surface-variant">Spent </span>
                 <span className="text-[#ffb4ab] font-bold">${totalExpense.toFixed(2)}</span>
               </div>
             </div>
@@ -117,12 +117,12 @@ export default function DashboardPage() {
 
         {/* Chart + Insight */}
         <section className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <div className="xl:col-span-2 bg-[#1c1b1b] rounded-2xl p-8 space-y-8">
+          <div className="xl:col-span-2 bg-surface rounded-2xl p-8 space-y-8">
             <div className="flex justify-between items-center">
               <h3 className="font-headline font-bold text-xl">Spending Velocity</h3>
               <div className="flex space-x-2">
-                <button className="px-4 py-1 text-xs rounded-full bg-[#353534] text-[#e5e2e1]">Weekly</button>
-                <button className="px-4 py-1 text-xs rounded-full text-[#c7c4d8] hover:bg-[#2a2a2a] transition-colors">Monthly</button>
+                <button className="px-4 py-1 text-xs rounded-full bg-[#353534] text-on-surface">Weekly</button>
+                <button className="px-4 py-1 text-xs rounded-full text-on-surface-variant hover:bg-[#2a2a2a] transition-colors">Monthly</button>
               </div>
             </div>
             <div className="h-48 w-full relative pt-4 flex items-end gap-1">
@@ -134,7 +134,7 @@ export default function DashboardPage() {
                   />
                 </div>
               ))}
-              <div className="absolute bottom-[-20px] left-0 w-full flex justify-between text-[10px] text-[#c7c4d8]">
+              <div className="absolute bottom-[-20px] left-0 w-full flex justify-between text-[10px] text-on-surface-variant">
                 {["MON","TUE","WED","THU","FRI","SAT","SUN"].map((d) => <span key={d}>{d}</span>)}
               </div>
             </div>
@@ -153,7 +153,7 @@ export default function DashboardPage() {
             </div>
             <div className="pt-6 border-t border-[#464555]/5">
               <div className="flex items-center justify-between text-sm mb-3">
-                <span className="text-[#c7c4d8]">Savings Rate</span>
+                <span className="text-on-surface-variant">Savings Rate</span>
                 <span className="text-white font-bold">
                   {totalIncome > 0 ? `${Math.round((balance / totalIncome) * 100)}%` : "—"}
                 </span>
@@ -178,31 +178,31 @@ export default function DashboardPage() {
             {loadingTx ? (
               <div className="space-y-3">
                 {[1,2,3].map((i) => (
-                  <div key={i} className="h-20 bg-[#1c1b1b] rounded-2xl animate-pulse" />
+                  <div key={i} className="h-20 bg-surface rounded-2xl animate-pulse" />
                 ))}
               </div>
             ) : (
               <div className="space-y-3">
                 {recent.map((tx) => (
-                  <Link key={tx.id} href={`/expenses/${tx.id}`} className="group flex items-center justify-between p-5 rounded-2xl bg-[#1c1b1b] hover:bg-[#2a2a2a] transition-all">
+                  <Link key={tx.id} href={`/expenses/${tx.id}`} className="group flex items-center justify-between p-5 rounded-2xl bg-surface hover:bg-[#2a2a2a] transition-all">
                     <div className="flex items-center space-x-4">
                       <div className="w-12 h-12 rounded-full bg-[#353534] flex items-center justify-center text-[#c3c0ff] group-hover:scale-110 transition-transform">
                         <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>{txIcon(tx)}</span>
                       </div>
                       <div>
-                        <h4 className="font-bold text-[#e5e2e1]">{tx.description ?? tx.category ?? "Transaction"}</h4>
-                        <p className="text-xs text-[#c7c4d8]">{tx.category ?? tx.transactionType} • {timeAgo(tx.date)}</p>
+                        <h4 className="font-bold text-on-surface">{tx.description ?? tx.category ?? "Transaction"}</h4>
+                        <p className="text-xs text-on-surface-variant">{tx.category ?? tx.transactionType} • {timeAgo(tx.date)}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`font-bold ${tx.transactionType === "income" ? "text-[#c3c0ff]" : "text-[#e5e2e1]"}`}>
+                      <p className={`font-bold ${tx.transactionType === "income" ? "text-[#c3c0ff]" : "text-on-surface"}`}>
                         {formatAmount(tx)}
                       </p>
                     </div>
                   </Link>
                 ))}
                 {recent.length === 0 && (
-                  <div className="text-center py-12 text-[#c7c4d8]">
+                  <div className="text-center py-12 text-on-surface-variant">
                     <span className="material-symbols-outlined text-4xl mb-3 block opacity-30">receipt_long</span>
                     No transactions yet.{" "}
                     <Link href="/expenses/add" className="text-[#c3c0ff] hover:underline">Add one</Link>
@@ -212,12 +212,12 @@ export default function DashboardPage() {
             )}
           </div>
 
-          <div className="lg:col-span-4 bg-[#1c1b1b] rounded-2xl overflow-hidden relative min-h-[280px]">
+          <div className="lg:col-span-4 bg-surface rounded-2xl overflow-hidden relative min-h-[280px]">
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/20 to-transparent" />
             <div className="relative p-8 h-full flex flex-col justify-between">
               <div>
                 <h3 className="font-headline font-bold text-xl">Quick Links</h3>
-                <p className="text-sm text-[#c7c4d8] mt-1">Navigate your ecosystem</p>
+                <p className="text-sm text-on-surface-variant mt-1">Navigate your ecosystem</p>
               </div>
               <div className="space-y-3 mt-6">
                 {[
@@ -229,7 +229,7 @@ export default function DashboardPage() {
                   <Link key={item.href} href={item.href} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group">
                     <span className="material-symbols-outlined text-[#c3c0ff] text-sm">{item.icon}</span>
                     <span className="text-sm font-medium">{item.label}</span>
-                    <span className="material-symbols-outlined text-[#c7c4d8] text-sm ml-auto opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                    <span className="material-symbols-outlined text-on-surface-variant text-sm ml-auto opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
                   </Link>
                 ))}
               </div>
@@ -241,3 +241,4 @@ export default function DashboardPage() {
     </main>
   );
 }
+

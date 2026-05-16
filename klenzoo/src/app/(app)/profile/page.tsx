@@ -63,11 +63,11 @@ export default function ProfilePage() {
       <div className="max-w-2xl mx-auto space-y-8">
         <div>
           <span className="text-[#c3c0ff] uppercase tracking-[0.3em] text-[10px] mb-2 block">Account</span>
-          <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-[#e5e2e1]">Profile</h1>
+          <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-on-surface">Profile</h1>
         </div>
 
         {/* Avatar */}
-        <div className="flex flex-col items-center py-8 bg-[#1c1b1b] rounded-2xl">
+        <div className="flex flex-col items-center py-8 bg-surface rounded-2xl">
           <div className="relative mb-4">
             <div className="w-24 h-24 rounded-full bg-[#353534] flex items-center justify-center ring-4 ring-[#4f46e5]/20 overflow-hidden">
               {user?.avatar ? (
@@ -90,7 +90,7 @@ export default function ProfilePage() {
           <h2 className="text-2xl font-headline font-bold">{user?.name ?? user?.email?.split("@")[0] ?? "User"}</h2>
           <p className="text-[#c3c0ff] text-sm">{user?.email}</p>
           <div className="flex gap-3 mt-4">
-            <span className="px-4 py-1.5 bg-[#2a2a2a] rounded-full text-xs font-bold uppercase tracking-wider text-[#c7c4d8]">
+            <span className="px-4 py-1.5 bg-[#2a2a2a] rounded-full text-xs font-bold uppercase tracking-wider text-on-surface-variant">
               {user?.isActive ? "Active" : "Inactive"}
             </span>
             <span className="px-4 py-1.5 bg-[#c3c0ff]/10 rounded-full text-xs font-bold uppercase tracking-wider text-[#c3c0ff]">
@@ -100,7 +100,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSave} className="bg-[#1c1b1b] rounded-2xl p-8 space-y-6">
+        <form onSubmit={handleSave} className="bg-surface rounded-2xl p-8 space-y-6">
           <h3 className="font-headline font-bold text-lg">Personal Information</h3>
 
           {[
@@ -109,7 +109,7 @@ export default function ProfilePage() {
             { label: "Phone", value: phone, onChange: setPhone, icon: "phone", type: "tel", placeholder: "+1 (555) 000-0000" },
           ].map((field) => (
             <div key={field.label} className="space-y-2">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">{field.label}</label>
+              <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">{field.label}</label>
               <div className="relative flex items-center">
                 <span className="material-symbols-outlined absolute left-4 text-[#918fa1]">{field.icon}</span>
                 <input
@@ -118,7 +118,7 @@ export default function ProfilePage() {
                   onChange={(e) => field.onChange(e.target.value)}
                   placeholder={field.placeholder}
                   disabled={field.disabled}
-                  className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 pl-12 pr-4 text-[#e5e2e1] focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -149,7 +149,7 @@ export default function ProfilePage() {
 
         {/* Last login */}
         {user?.lastLogin && (
-          <p className="text-center text-xs text-[#c7c4d8]/50">
+          <p className="text-center text-xs text-on-surface-variant/50">
             Last login: {new Date(user.lastLogin).toLocaleString()}
           </p>
         )}
@@ -157,3 +157,4 @@ export default function ProfilePage() {
     </main>
   );
 }
+
