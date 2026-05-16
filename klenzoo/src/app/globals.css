@@ -1,73 +1,216 @@
 @import "tailwindcss";
 
-@theme {
-  /* === CORE BRAND (Deep Neon Purple System) === */
-  --color-primary: #8b7fff;              /* cleaner main purple */
-  --color-primary-container: #5a4dff;    /* stronger accent */
+/* ============================================================
+   KLENZOO — DESIGN TOKEN SYSTEM
+   Light / Dark mode via [data-theme] attribute (next-themes)
+   ============================================================ */
+
+/* ── DARK THEME (default) ───────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  /* Brand */
+  --color-primary: #8b7fff;
+  --color-primary-container: #5a4dff;
   --color-on-primary: #0a0033;
   --color-on-primary-container: #e9e7ff;
-
   --color-primary-fixed: #dcd9ff;
   --color-primary-fixed-dim: #b3acff;
   --color-on-primary-fixed: #120066;
   --color-on-primary-fixed-variant: #4c3dff;
-
   --color-inverse-primary: #6c63ff;
 
-  /* === SECONDARY (cool muted support tone) === */
+  /* Secondary */
   --color-secondary: #9aa0ff;
   --color-secondary-container: #2f2c66;
   --color-on-secondary: #15124a;
   --color-on-secondary-container: #c9c7ff;
-
   --color-secondary-fixed: #e3e1ff;
   --color-secondary-fixed-dim: #b8b4ff;
   --color-on-secondary-fixed: #0d0a3a;
   --color-on-secondary-fixed-variant: #2f2c66;
 
-  /* === TERTIARY (contrast accent - warmer glow) === */
+  /* Tertiary */
   --color-tertiary: #ff9e7a;
   --color-tertiary-container: #7a2d00;
   --color-on-tertiary: #2b0d00;
   --color-on-tertiary-container: #ffd9cc;
-
   --color-tertiary-fixed: #ffd9cc;
   --color-tertiary-fixed-dim: #ffb59a;
   --color-on-tertiary-fixed: #3a1200;
   --color-on-tertiary-fixed-variant: #7a2d00;
 
-  /* === ERROR === */
+  /* Error */
   --color-error: #ff8a80;
   --color-error-container: #7a0006;
   --color-on-error: #2b0002;
   --color-on-error-container: #ffd6d2;
 
-  /* === SURFACES (this is where most improvement happened) === */
-  --color-background: #0b0b0f; /* darker = more premium */
+  /* Surfaces */
+  --color-background: #0b0b0f;
   --color-surface: #111116;
   --color-surface-dim: #0b0b0f;
   --color-surface-bright: #2a2a35;
-
   --color-surface-container-lowest: #07070a;
   --color-surface-container-low: #14141b;
   --color-surface-container: #181821;
   --color-surface-container-high: #21212b;
   --color-surface-container-highest: #2c2c38;
-
   --color-surface-variant: #2a2a35;
   --color-surface-tint: #8b7fff;
 
-  /* TEXT */
+  /* Text */
   --color-on-background: #f1f1f5;
   --color-on-surface: #e8e8ee;
   --color-on-surface-variant: #b8b8c9;
-
   --color-inverse-surface: #f1f1f5;
   --color-inverse-on-surface: #1a1a22;
 
-  /* BORDERS */
+  /* Borders */
   --color-outline: #6f6f85;
   --color-outline-variant: #3a3a4a;
+
+  /* Component-level tokens */
+  --c-topbar-bg: rgba(19, 19, 19, 0.92);
+  --c-sidenav-bg: #131313;
+  --c-card: #1c1b1b;
+  --c-card-deep: #0e0e0e;
+  --c-card-high: #2a2a2a;
+  --c-card-highest: #353534;
+  --c-border: rgba(70, 69, 85, 0.15);
+  --c-border-subtle: rgba(255, 255, 255, 0.04);
+  --c-text-primary: #e5e2e1;
+  --c-text-secondary: #c7c4d8;
+  --c-text-muted: #918fa1;
+  --c-input-bg: #0e0e0e;
+  --c-hover-overlay: rgba(255, 255, 255, 0.04);
+  --c-active-overlay: rgba(255, 255, 255, 0.08);
+  --c-scrollbar-thumb: rgba(139, 127, 255, 0.25);
+  --c-glass-bg: rgba(24, 24, 33, 0.65);
+  --c-bottom-nav-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+  --c-search-bg: #1c1b1b;
+  --c-search-results-bg: #161616;
+  --c-mobile-overlay-bg: rgba(14, 14, 14, 0.98);
+  --c-app-shell-bg: #131313;
+}
+
+/* ── LIGHT THEME ─────────────────────────────────────────────── */
+[data-theme="light"] {
+  /* Brand — same hue, lighter context */
+  --color-primary: #5a4dff;
+  --color-primary-container: #ede9ff;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #1a0066;
+  --color-primary-fixed: #dcd9ff;
+  --color-primary-fixed-dim: #b3acff;
+  --color-on-primary-fixed: #120066;
+  --color-on-primary-fixed-variant: #3d2eff;
+  --color-inverse-primary: #8b7fff;
+
+  /* Secondary */
+  --color-secondary: #4a5cdb;
+  --color-secondary-container: #dfe1ff;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #001074;
+  --color-secondary-fixed: #e3e1ff;
+  --color-secondary-fixed-dim: #b8b4ff;
+  --color-on-secondary-fixed: #0d0a3a;
+  --color-on-secondary-fixed-variant: #2f2c66;
+
+  /* Tertiary */
+  --color-tertiary: #c94f00;
+  --color-tertiary-container: #ffdbc9;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #411400;
+  --color-tertiary-fixed: #ffd9cc;
+  --color-tertiary-fixed-dim: #ffb59a;
+  --color-on-tertiary-fixed: #3a1200;
+  --color-on-tertiary-fixed-variant: #7a2d00;
+
+  /* Error */
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #410002;
+
+  /* Surfaces — light */
+  --color-background: #f5f5fa;
+  --color-surface: #fefefe;
+  --color-surface-dim: #e8e8f0;
+  --color-surface-bright: #ffffff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f2f2f8;
+  --color-surface-container: #ebebf2;
+  --color-surface-container-high: #e5e5ed;
+  --color-surface-container-highest: #dfdfe7;
+  --color-surface-variant: #e4e1f4;
+  --color-surface-tint: #5a4dff;
+
+  /* Text */
+  --color-on-background: #1a1a2e;
+  --color-on-surface: #1a1a2e;
+  --color-on-surface-variant: #46454f;
+  --color-inverse-surface: #2f2f3a;
+  --color-inverse-on-surface: #f3f0ff;
+
+  /* Borders */
+  --color-outline: #77757e;
+  --color-outline-variant: #c8c5d3;
+
+  /* Component-level tokens */
+  --c-topbar-bg: rgba(245, 245, 250, 0.92);
+  --c-sidenav-bg: #fefefe;
+  --c-card: #ffffff;
+  --c-card-deep: #f0f0f8;
+  --c-card-high: #ebebf2;
+  --c-card-highest: #e5e5ed;
+  --c-border: rgba(118, 116, 134, 0.15);
+  --c-border-subtle: rgba(0, 0, 0, 0.05);
+  --c-text-primary: #1a1a2e;
+  --c-text-secondary: #46454f;
+  --c-text-muted: #77757e;
+  --c-input-bg: #f2f2f8;
+  --c-hover-overlay: rgba(90, 77, 255, 0.05);
+  --c-active-overlay: rgba(90, 77, 255, 0.1);
+  --c-scrollbar-thumb: rgba(90, 77, 255, 0.2);
+  --c-glass-bg: rgba(254, 254, 254, 0.75);
+  --c-bottom-nav-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
+  --c-search-bg: #f0f0f8;
+  --c-search-results-bg: #ffffff;
+  --c-mobile-overlay-bg: rgba(245, 245, 250, 0.98);
+  --c-app-shell-bg: #f5f5fa;
+}
+
+/* ============================================================
+   TAILWIND @theme BRIDGE
+   ============================================================ */
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary: var(--color-on-primary);
+  --color-on-primary-container: var(--color-on-primary-container);
+  --color-primary-fixed: var(--color-primary-fixed);
+  --color-primary-fixed-dim: var(--color-primary-fixed-dim);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-on-secondary: var(--color-on-secondary);
+  --color-tertiary: var(--color-tertiary);
+  --color-error: var(--color-error);
+  --color-error-container: var(--color-error-container);
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-dim: var(--color-surface-dim);
+  --color-surface-bright: var(--color-surface-bright);
+  --color-surface-container-lowest: var(--color-surface-container-lowest);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+  --color-surface-variant: var(--color-surface-variant);
+  --color-on-background: var(--color-on-background);
+  --color-on-surface: var(--color-on-surface);
+  --color-on-surface-variant: var(--color-on-surface-variant);
+  --color-outline: var(--color-outline);
+  --color-outline-variant: var(--color-outline-variant);
 
   /* === RADIUS === */
   --radius-DEFAULT: 1rem;
@@ -81,71 +224,152 @@
   --font-label: "Inter", sans-serif;
 }
 
-/* === BASE === */
+/* ============================================================
+   BASE
+   ============================================================ */
 body {
   font-family: var(--font-body);
   background-color: var(--color-background);
   color: var(--color-on-surface);
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.2s ease;
 }
 
-/* === FONTS === */
+/* ── Theme transition (smooth on switch) ── */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* Exclude transitions on interactive elements that need instant feedback */
+button, a, input, select, textarea {
+  transition-property: background-color, border-color, box-shadow, color, opacity, transform;
+  transition-duration: 0.15s;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
 .font-headline,
 .font-manrope {
   font-family: var(--font-headline);
 }
 
-/* === MATERIAL ICON FIX === */
+/* ============================================================
+   MATERIAL ICON FIX
+   ============================================================ */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-display: block;
   font-variation-settings: 'FILL' 0, 'wght' 400;
 }
 
-/* === GLASS (cleaner + less muddy) === */
+/* ============================================================
+   GLASS
+   ============================================================ */
 .glass-panel {
-  background: rgba(24, 24, 33, 0.65);
+  background: var(--c-glass-bg);
   backdrop-filter: blur(30px);
   border: 1px solid rgba(139, 127, 255, 0.08);
 }
 
-/* === GLOW SYSTEM (this is where your UI will shine) === */
+[data-theme="light"] .glass-panel {
+  border: 1px solid rgba(90, 77, 255, 0.1);
+}
+
+/* ============================================================
+   GLOW SYSTEM
+   ============================================================ */
 .neon-line {
   filter: drop-shadow(0 0 10px rgba(139, 127, 255, 0.45));
 }
-
 .glow-line {
   filter: drop-shadow(0 0 12px rgba(90, 77, 255, 0.65));
 }
 
-/* === GRADIENTS (more premium feel) === */
+/* ============================================================
+   GRADIENTS
+   ============================================================ */
 .primary-gradient {
   background: linear-gradient(135deg, #5a4dff 0%, #8b7fff 60%, #c7c3ff 100%);
 }
 
 .luminous-gradient {
-  background: linear-gradient(135deg, #5a4dff 0%, #a29bff 50%, #ffffff 120%);
+  background: linear-gradient(135deg, #5a4dff 0%, #a29bff 50%, #c7c3ff 120%);
 }
 
-/* === BANNER ANIMATION === */
+/* ============================================================
+   BANNER ANIMATION
+   ============================================================ */
 @keyframes slide-down {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .animate-slide-down {
   animation: slide-down 0.3s ease-out;
 }
 
-/* === SCROLLBAR === */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar-thumb);
+  border-radius: 9999px;
 }
-.no-scrollbar {
-  scrollbar-width: none;
+
+/* ============================================================
+   THEME-AWARE UTILITY OVERRIDES
+   These override the hardcoded hex values used throughout the
+   components, giving them automatic light/dark awareness.
+   ============================================================ */
+
+/* App shell background */
+.bg-app-shell {
+  background-color: var(--c-app-shell-bg);
+}
+
+/* Cards */
+.bg-card { background-color: var(--c-card); }
+.bg-card-deep { background-color: var(--c-card-deep); }
+.bg-card-high { background-color: var(--c-card-high); }
+
+/* Text */
+.text-primary-text { color: var(--c-text-primary); }
+.text-secondary-text { color: var(--c-text-secondary); }
+.text-muted { color: var(--c-text-muted); }
+
+/* Input */
+.bg-input { background-color: var(--c-input-bg); }
+
+/* ============================================================
+   THEME TOGGLE BUTTON
+   ============================================================ */
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background: var(--c-card-high);
+  color: var(--c-text-secondary);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+.theme-toggle-btn:hover {
+  background: var(--c-card-highest);
+  color: var(--c-text-primary);
+}
+.theme-toggle-btn:active {
+  transform: scale(0.9);
 }
