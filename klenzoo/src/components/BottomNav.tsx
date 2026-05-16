@@ -22,12 +22,15 @@ export default function BottomNav() {
     <nav
       className="lg:hidden fixed bottom-0 left-0 right-0 z-50
                  flex items-end justify-around
-                 px-2 pt-3 pb-safe
-                 bg-surface-dim/95 backdrop-blur-2xl
-                 rounded-t-[2rem]
-                 shadow-[0_-8px_32px_rgba(0,0,0,0.5)]
-                 border-t border-white/5"
-      style={{ paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
+                 px-2 pt-3 rounded-t-[2rem]"
+      style={{
+        backgroundColor: "var(--c-sidenav-bg)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        borderTop: "1px solid var(--c-border-subtle)",
+        boxShadow: "var(--c-bottom-nav-shadow)",
+        paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))",
+      }}
     >
       {navItems.map((item) => {
         const isActive =
@@ -40,13 +43,12 @@ export default function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
-              aria-label="Add expense"
+              aria-label="Finance"
               className="flex flex-col items-center justify-center
                          w-14 h-14 rounded-full
-                         bg-[#4f46e5]
-                         shadow-[0_0_24px_rgba(79,70,229,0.5)]
                          -translate-y-3
-                         active:scale-90 transition-transform"
+                         active:scale-90 transition-transform luminous-gradient"
+              style={{ boxShadow: "0 0 24px rgba(79,70,229,0.45)" }}
             >
               <span className="material-symbols-outlined text-white text-[22px] leading-none">
                 {item.icon}
@@ -59,10 +61,10 @@ export default function BottomNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex flex-col items-center justify-center gap-1
-                        min-w-[3rem] px-1 py-1
-                        active:scale-90 transition-all duration-150
-                        ${isActive ? "text-[#c3c0ff]" : "text-[#918fa1]"}`}
+            className="flex flex-col items-center justify-center gap-1
+                       min-w-[3rem] px-1 py-1
+                       active:scale-90 transition-all duration-150"
+            style={{ color: isActive ? "var(--color-primary)" : "var(--c-text-muted)" }}
           >
             <span
               className="material-symbols-outlined text-[22px] leading-none"
@@ -70,10 +72,7 @@ export default function BottomNav() {
             >
               {item.icon}
             </span>
-            <span
-              className={`text-[9px] font-semibold tracking-wide leading-none
-                          ${isActive ? "text-[#c3c0ff]" : "text-[#918fa1]"}`}
-            >
+            <span className="text-[9px] font-semibold tracking-wide leading-none">
               {item.label}
             </span>
           </Link>

@@ -17,7 +17,13 @@ export default function SideNav() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-72 bg-[#131313] hidden lg:flex flex-col p-8 z-40 rounded-r-[3rem]">
+    <aside
+      className="fixed left-0 top-0 h-full w-72 hidden lg:flex flex-col p-8 z-40 rounded-r-[3rem]"
+      style={{
+        backgroundColor: "var(--c-sidenav-bg)",
+        borderRight: "1px solid var(--c-border-subtle)",
+      }}
+    >
       {/* Brand */}
       <div className="mb-12">
         <Link
@@ -37,12 +43,33 @@ export default function SideNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-4 py-3 px-4 rounded-xl transition-all duration-300 text-sm font-headline relative ${
-                isActive
-                  ? "text-[#4f46e5] font-bold bg-[#4f46e5]/5 after:content-[''] after:absolute after:right-0 after:w-1 after:h-8 after:bg-[#4f46e5] after:rounded-full"
-                  : "text-[#c7c4d8] opacity-60 hover:opacity-100 hover:bg-[#2a2a2a]"
-              }`}
+              className="flex items-center gap-4 py-3 px-4 rounded-xl transition-all duration-300 text-sm font-headline relative"
+              style={{
+                color: isActive ? "var(--color-primary)" : "var(--c-text-secondary)",
+                fontWeight: isActive ? 700 : 400,
+                backgroundColor: isActive ? "rgba(90,77,255,0.07)" : "transparent",
+                opacity: isActive ? 1 : 0.75,
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.backgroundColor = "var(--c-hover-overlay)";
+                  e.currentTarget.style.opacity = "1";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.opacity = "0.75";
+                }
+              }}
             >
+              {/* Active indicator bar */}
+              {isActive && (
+                <span
+                  className="absolute right-0 w-1 h-8 rounded-full"
+                  style={{ backgroundColor: "var(--color-primary)" }}
+                />
+              )}
               <span
                 className="material-symbols-outlined"
                 style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}
@@ -58,7 +85,8 @@ export default function SideNav() {
       {/* CTA */}
       <Link
         href="/expenses/add"
-        className="mt-8 w-full py-4 rounded-full luminous-gradient text-white font-bold text-sm text-center shadow-lg shadow-[#4f46e5]/20 active:scale-95 transition-transform flex items-center justify-center gap-2"
+        className="mt-8 w-full py-4 rounded-full luminous-gradient text-white font-bold text-sm text-center shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2"
+        style={{ boxShadow: "0 4px 20px rgba(79,70,229,0.25)" }}
       >
         <span className="material-symbols-outlined text-sm">add</span>
         Add New Entry

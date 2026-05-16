@@ -16,13 +16,19 @@ function AppShell({ children }: { children: React.ReactNode }) {
   // so we don't need to do any redirect logic here.
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#131313] flex items-center justify-center">
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: "var(--c-app-shell-bg)" }}
+      >
         <div className="flex space-x-2">
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce"
-              style={{ animationDelay: `${i * 0.15}s` }}
+              className="w-2 h-2 rounded-full animate-bounce"
+              style={{
+                backgroundColor: "var(--color-primary)",
+                animationDelay: `${i * 0.15}s`,
+              }}
             />
           ))}
         </div>
@@ -31,7 +37,10 @@ function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#131313]">
+    <div
+      className="min-h-screen"
+      style={{ backgroundColor: "var(--c-app-shell-bg)" }}
+    >
       <TopBar />
       <SideNav />
       {/* pt-16/pt-20 offsets for the fixed TopBar. lg:ml-72 for sidebar. */}
