@@ -15,7 +15,7 @@ export default function Home() {
 
   // Show loading spinner while checking auth
   return (
-    <div className="min-h-screen bg-[#131313] flex items-center justify-center">
+    <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="flex space-x-2">
         {[0, 1, 2].map((i) => (
           <div
@@ -28,3 +28,4 @@ export default function Home() {
     </div>
   );
 }
+

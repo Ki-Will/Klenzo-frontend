@@ -122,10 +122,10 @@ function BroadcastModal({ onClose, onSent }: { onClose: () => void; onSent: (b: 
               <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">Color</label>
               <select value={color} onChange={(e) => setColor(e.target.value as BannerColor)}
                 className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-[#e5e2e1] focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all">
-                <option value="info">🔵 Info (Blue)</option>
-                <option value="success">🟢 Success (Green)</option>
-                <option value="warning">🟠 Warning (Amber)</option>
-                <option value="error">🔴 Error (Red)</option>
+                <option value="info">Info (Blue)</option>
+                <option value="success">Success (Green)</option>
+                <option value="warning">Warning (Amber)</option>
+                <option value="error">Error (Red)</option>
               </select>
             </div>
             <div className="space-y-2">
@@ -292,11 +292,11 @@ export default function AdminPage() {
   useEffect(() => {
     if (tab !== "users") return;
     setLoading(true);
-    adminApi.getUsers(1, 100, search || undefined)
+    adminApi.getUsers(1, 100)
       .then((data) => { if (data.users.length > 0) setUsers(data.users); })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [tab, search]);
+  }, [tab]);
 
   // Fetch broadcasts
   useEffect(() => {
