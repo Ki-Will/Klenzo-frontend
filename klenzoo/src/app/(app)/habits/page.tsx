@@ -72,16 +72,16 @@ function AddHabitModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      <div className="w-full max-w-md bg-[#1c1b1b] rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#464555]/20">
+      <div className="w-full max-w-md bg-card rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-outline/20">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-headline font-bold">New Habit</h2>
-          <button onClick={onClose} className="text-[#c7c4d8] hover:text-white transition-colors">
+          <h2 className="text-xl font-headline font-bold text-primary-text">New Habit</h2>
+          <button onClick={onClose} className="text-secondary-text hover:text-primary-text transition-colors">
             <span className="material-symbols-outlined">close</span>
           </button>
         </div>
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
               Habit Name *
             </label>
             <input
@@ -90,11 +90,11 @@ function AddHabitModal({
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Morning Meditation"
               required
-              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+              className="w-full bg-input border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
               Description
             </label>
             <input
@@ -102,11 +102,11 @@ function AddHabitModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="e.g. 20 minutes every morning"
-              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+              className="w-full bg-input border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             />
           </div>
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
               Frequency
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -117,8 +117,8 @@ function AddHabitModal({
                   onClick={() => setFrequency(f)}
                   className={`py-3 rounded-2xl text-sm font-bold capitalize transition-all ${
                     frequency === f
-                      ? "bg-[#4f46e5]/20 border border-[#4f46e5]/40 text-[#c3c0ff]"
-                      : "bg-[#0e0e0e] text-[#c7c4d8] hover:bg-[#2a2a2a]"
+                      ? "bg-primary/20 border border-primary/40 text-primary"
+                      : "bg-input text-secondary-text hover:bg-card-high"
                   }`}
                 >
                   {f}
@@ -126,7 +126,7 @@ function AddHabitModal({
               ))}
             </div>
           </div>
-          {error && <p className="text-[#ffb4ab] text-sm">{error}</p>}
+          {error && <p className="text-error text-sm">{error}</p>}
           <button
             type="submit"
             disabled={loading}
@@ -218,12 +218,12 @@ export default function HabitsPage() {
           {/* Hero */}
           <section className="mb-12 flex items-end justify-between flex-wrap gap-4">
             <div>
-              <h1 className="font-headline text-5xl lg:text-6xl font-extrabold tracking-tighter text-[#e5e2e1] mb-2">
+              <h1 className="font-headline text-5xl lg:text-6xl font-extrabold tracking-tighter text-primary-text mb-2">
                 Morning{" "}
                 <span
                   className="font-headline"
                   style={{
-                    background: "linear-gradient(135deg, #4f46e5 0%, #c3c0ff 100%)",
+                    background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-fixed-dim) 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                   }}
@@ -231,17 +231,17 @@ export default function HabitsPage() {
                   Flow.
                 </span>
               </h1>
-              <p className="text-[#c7c4d8] text-lg font-light">
+              <p className="text-secondary-text text-lg font-light">
                 Your current streak is{" "}
-                <span className="text-[#c3c0ff] font-bold">{featured?.currentStreak ?? 0} days</span>.
+                <span className="text-primary font-bold">{featured?.currentStreak ?? 0} days</span>.
                 Consistency is the silent engine of growth.
               </p>
             </div>
             <div className="text-right">
-              <p className="text-xs uppercase tracking-widest text-[#c3c0ff] font-bold mb-1">
+              <p className="text-xs uppercase tracking-widest text-primary font-bold mb-1">
                 Daily Completion
               </p>
-              <p className="text-4xl font-headline font-black">{completionPct}%</p>
+              <p className="text-4xl font-headline font-black text-primary-text">{completionPct}%</p>
             </div>
           </section>
 
@@ -249,12 +249,12 @@ export default function HabitsPage() {
           <div className="grid grid-cols-12 gap-6">
             {/* Featured habit — large card */}
             {featured && (
-              <div className="col-span-12 lg:col-span-8 bg-[#1c1b1b] rounded-2xl p-8 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#4f46e5]/5 rounded-full blur-3xl -mr-24 -mt-24 group-hover:bg-[#4f46e5]/10 transition-all duration-700" />
+              <div className="col-span-12 lg:col-span-8 bg-card rounded-2xl p-8 relative overflow-hidden group border border-outline/10">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-24 -mt-24 group-hover:bg-primary/10 transition-all duration-700" />
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="flex justify-between items-start mb-12 flex-wrap gap-4">
                     <div className="flex gap-4">
-                      <div className="h-14 w-14 rounded-2xl bg-[#353534] flex items-center justify-center text-[#c3c0ff]">
+                      <div className="h-14 w-14 rounded-2xl bg-card-highest flex items-center justify-center text-primary">
                         <span
                           className="material-symbols-outlined text-3xl"
                           style={{ fontVariationSettings: "'FILL' 1" }}
@@ -263,12 +263,12 @@ export default function HabitsPage() {
                         </span>
                       </div>
                       <div>
-                        <h3 className="text-2xl font-headline font-bold">{featured.name}</h3>
-                        <p className="text-[#c7c4d8]/60">{featured.description}</p>
+                        <h3 className="text-2xl font-headline font-bold text-primary-text">{featured.name}</h3>
+                        <p className="text-secondary-text/60">{featured.description}</p>
                       </div>
                     </div>
-                    <div className="bg-[#353534] px-4 py-2 rounded-full">
-                      <span className="text-[#c3c0ff] font-bold">
+                    <div className="bg-card-highest px-4 py-2 rounded-full">
+                      <span className="text-primary font-bold">
                         {featured.currentStreak} Day Streak
                       </span>
                     </div>
@@ -280,26 +280,26 @@ export default function HabitsPage() {
                       {WEEKLY_BARS.map(({ day, h }) => (
                         <div
                           key={day}
-                          className="flex-1 bg-[#353534] rounded-t-xl relative group/bar"
+                          className="flex-1 bg-card-highest rounded-t-xl relative group/bar"
                         >
                           {h !== "0%" && (
                             <div
                               className={`absolute bottom-0 w-full rounded-t-xl ${
                                 h === "100%"
-                                  ? "bg-[#4f46e5] shadow-[0_-10px_20px_rgba(79,70,229,0.3)]"
-                                  : "bg-[#4f46e5]/40"
+                                  ? "bg-primary shadow-[0_-10px_20px_rgba(90,77,255,0.3)]"
+                                  : "bg-primary/40"
                               }`}
                               style={{ height: h }}
                             />
                           )}
-                          <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-[#c7c4d8] opacity-0 group-hover/bar:opacity-100 transition-opacity">
+                          <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-secondary-text opacity-0 group-hover/bar:opacity-100 transition-opacity">
                             {day}
                           </span>
                         </div>
                       ))}
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-[#c7c4d8]">
+                      <span className="text-sm text-secondary-text">
                         {featured.lastCompletedDate
                           ? `Last: ${new Date(featured.lastCompletedDate).toLocaleDateString("en-US", { weekday: "short", hour: "2-digit", minute: "2-digit" })}`
                           : "Not completed yet"}
@@ -307,7 +307,7 @@ export default function HabitsPage() {
                       <button
                         onClick={() => handleComplete(featured.id)}
                         disabled={isCompletedToday(featured) || completing === featured.id}
-                        className="px-8 py-3 bg-[#4f46e5] rounded-full text-[#dad7ff] font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-8 py-3 bg-primary rounded-full text-white font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isCompletedToday(featured)
                           ? "✓ Done Today"
@@ -326,21 +326,21 @@ export default function HabitsPage() {
               {rest.slice(0, 2).map((habit) => (
                 <div
                   key={habit.id}
-                  className="bg-[#1c1b1b] rounded-2xl p-6 border-l-4 border-[#c3c0ff] hover:bg-[#2a2a2a] transition-colors group cursor-pointer"
+                  className="bg-card rounded-2xl p-6 border-l-4 border-primary hover:bg-card-high transition-colors group cursor-pointer border border-outline/10"
                 >
                   <div className="flex justify-between items-center mb-4">
                     <span
-                      className="material-symbols-outlined text-[#c3c0ff]"
+                      className="material-symbols-outlined text-primary"
                       style={{ fontVariationSettings: "'FILL' 1" }}
                     >
                       {HABIT_ICONS[habit.name] ?? "star"}
                     </span>
-                    <span className="text-xs font-bold px-2 py-1 bg-[#c3c0ff]/10 text-[#c3c0ff] rounded-xl">
+                    <span className="text-xs font-bold px-2 py-1 bg-primary/10 text-primary rounded-xl">
                       {habit.currentStreak} day streak
                     </span>
                   </div>
-                  <h4 className="text-xl font-bold mb-1">{habit.name}</h4>
-                  <p className="text-[#c7c4d8] text-sm mb-4">{habit.description}</p>
+                  <h4 className="text-xl font-bold mb-1 text-primary-text">{habit.name}</h4>
+                  <p className="text-secondary-text text-sm mb-4">{habit.description}</p>
                   <div className="flex justify-between items-center">
                     <div className="flex gap-1">
                       {Array.from({ length: 4 }).map((_, i) => (
@@ -348,8 +348,8 @@ export default function HabitsPage() {
                           key={i}
                           className={`h-1 w-8 rounded-full ${
                             i < Math.min(habit.currentStreak, 4)
-                              ? "bg-[#c3c0ff]"
-                              : "bg-[#353534]"
+                              ? "bg-primary"
+                              : "bg-card-highest"
                           }`}
                         />
                       ))}
@@ -359,8 +359,8 @@ export default function HabitsPage() {
                       disabled={isCompletedToday(habit) || completing === habit.id}
                       className={`h-8 w-8 rounded-full border flex items-center justify-center transition-all ${
                         isCompletedToday(habit)
-                          ? "bg-[#4f46e5] border-[#4f46e5] text-white"
-                          : "border-[#464555] text-[#c7c4d8] group-hover:bg-[#4f46e5] group-hover:border-[#4f46e5] group-hover:text-white"
+                          ? "bg-primary border-primary text-white"
+                          : "border-outline text-secondary-text group-hover:bg-primary group-hover:border-primary group-hover:text-white"
                       }`}
                     >
                       <span className="material-symbols-outlined text-sm">check</span>
@@ -371,9 +371,9 @@ export default function HabitsPage() {
             </div>
 
             {/* Quick Toggles */}
-            <div className="col-span-12 bg-[#0e0e0e] rounded-2xl p-8">
+            <div className="col-span-12 bg-card-deep rounded-2xl p-8 border border-outline/10">
               <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
-                <h3 className="text-2xl font-headline font-bold">Quick Toggles</h3>
+                <h3 className="text-2xl font-headline font-bold text-primary-text">Quick Toggles</h3>
                 <button
                   onClick={() => setShowModal(true)}
                   className="px-5 py-2 rounded-full luminous-gradient text-white text-xs font-bold flex items-center gap-2 active:scale-95 transition-transform"
@@ -397,8 +397,8 @@ export default function HabitsPage() {
                         disabled={done || completing === habit.id}
                         className={`h-12 w-12 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
                           done
-                            ? "bg-[#4f46e5] border-[#4f46e5] text-white"
-                            : "border-[#4f46e5] text-[#4f46e5] hover:bg-[#4f46e5] hover:text-white cursor-pointer"
+                            ? "bg-primary border-primary text-white"
+                            : "border-primary text-primary hover:bg-primary hover:text-white cursor-pointer"
                         }`}
                       >
                         <span className="material-symbols-outlined">
@@ -406,12 +406,12 @@ export default function HabitsPage() {
                         </span>
                       </button>
                       <div className="flex-grow min-w-0">
-                        <p className="font-bold truncate">{habit.name}</p>
-                        <p className="text-xs text-[#c7c4d8]/60">{habit.description}</p>
+                        <p className="font-bold text-primary-text truncate">{habit.name}</p>
+                        <p className="text-xs text-secondary-text/60">{habit.description}</p>
                       </div>
                       <button
                         onClick={() => handleDelete(habit.id)}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity text-[#ffb4ab] hover:text-[#ff6b6b] p-1"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:text-red-400 p-1"
                         title="Delete habit"
                       >
                         <span className="material-symbols-outlined text-sm">delete</span>
@@ -423,30 +423,30 @@ export default function HabitsPage() {
             </div>
 
             {/* Vision / Quote card */}
-            <div className="col-span-12 lg:col-span-5 bg-[#1c1b1b] rounded-2xl p-8 relative overflow-hidden h-[280px]">
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/30 to-transparent" />
+            <div className="col-span-12 lg:col-span-5 bg-card rounded-2xl p-8 relative overflow-hidden h-[280px] border border-outline/10">
+              <div className="absolute inset-0 bg-primary/5" />
               <div className="relative z-10 h-full flex flex-col justify-end">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#c3c0ff] font-bold mb-2">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-2">
                   Philosophy of Mind
                 </span>
-                <h4 className="text-xl font-headline font-bold leading-tight">
+                <h4 className="text-xl font-headline font-bold leading-tight text-primary-text">
                   &ldquo;We are what we repeatedly do. Excellence, then, is not an act, but a
                   habit.&rdquo;
                 </h4>
-                <p className="mt-3 text-[#c7c4d8] text-sm">— Aristotle</p>
+                <p className="mt-3 text-secondary-text text-sm">— Aristotle</p>
               </div>
             </div>
 
             {/* Growth Index chart */}
-            <div className="col-span-12 lg:col-span-7 bg-[#1c1b1b] rounded-2xl p-8 flex flex-col justify-between">
+            <div className="col-span-12 lg:col-span-7 bg-card rounded-2xl p-8 flex flex-col justify-between border border-outline/10">
               <div className="flex justify-between items-start">
                 <div>
-                  <h4 className="text-lg font-bold mb-1">Growth Index</h4>
-                  <p className="text-sm text-[#c7c4d8]">
+                  <h4 className="text-lg font-bold mb-1 text-primary-text">Growth Index</h4>
+                  <p className="text-sm text-secondary-text">
                     Correlation: Consistency vs. Productivity
                   </p>
                 </div>
-                <div className="flex items-center gap-1 text-[#c3c0ff]">
+                <div className="flex items-center gap-1 text-primary">
                   <span className="material-symbols-outlined text-sm">trending_up</span>
                   <span className="text-xs font-bold">+12.4%</span>
                 </div>
@@ -457,14 +457,14 @@ export default function HabitsPage() {
                     key={i}
                     className={`flex-1 rounded-t transition-all hover:opacity-80 ${
                       i === 5
-                        ? "bg-[#c3c0ff] shadow-[0_0_20px_rgba(195,192,255,0.4)]"
-                        : "bg-[#353534] hover:bg-[#4f46e5]/20"
+                        ? "bg-primary shadow-[0_0_20px_rgba(139,127,255,0.4)]"
+                        : "bg-card-highest hover:bg-primary/20"
                     }`}
                     style={{ height: `${h}%` }}
                   />
                 ))}
               </div>
-              <div className="mt-4 flex justify-between text-[10px] text-[#c7c4d8] uppercase tracking-widest opacity-40">
+              <div className="mt-4 flex justify-between text-[10px] text-secondary-text uppercase tracking-widest opacity-40">
                 <span>Nov 12</span>
                 <span>Nov 19</span>
                 <span>Today</span>
