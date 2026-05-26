@@ -2,7 +2,7 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { finance, type Group } from "@/lib/api";
+import { finance } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -32,18 +32,18 @@ function Steps({ current }: { current: number }) {
         return (
           <div key={label} className="flex items-center gap-2 flex-1 last:flex-none">
             <div className="flex items-center gap-2 flex-shrink-0">
-              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${done ? "bg-[#c3c0ff] text-[#0f0069]" :
-                active ? "bg-[#4f46e5] text-white" :
-                  "bg-[#2a2a2a] text-[#918fa1]"
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${done ? "bg-primary text-white" :
+                active ? "bg-primary text-white" :
+                  "bg-card-high text-muted"
                 }`}>
                 {done ? <span className="material-symbols-outlined text-sm">check</span> : i + 1}
               </div>
-              <span className={`text-xs font-semibold hidden sm:block ${active ? "text-[#e5e2e1]" : done ? "text-[#c3c0ff]" : "text-[#918fa1]"}`}>
+              <span className={`text-xs font-semibold hidden sm:block ${active ? "text-primary-text" : done ? "text-primary" : "text-muted"}`}>
                 {label}
               </span>
             </div>
             {i < steps.length - 1 && (
-              <div className={`flex-1 h-px mx-1 ${done ? "bg-[#c3c0ff]/40" : "bg-[#2a2a2a]"}`} />
+              <div className={`flex-1 h-px mx-1 ${done ? "bg-primary/40" : "bg-card-high"}`} />
             )}
           </div>
         );
@@ -170,14 +170,14 @@ export default function NewGroupPage() {
     <main className="px-6 lg:px-12 py-6 min-h-screen">
       <div className="max-w-2xl mx-auto">
 
-        <Link href="/groups" className="flex items-center gap-2 text-[#c7c4d8] hover:text-[#c3c0ff] transition-colors text-sm mb-8">
+        <Link href="/groups" className="flex items-center gap-2 text-secondary-text hover:text-primary transition-colors text-sm mb-8">
           <span className="material-symbols-outlined text-sm">arrow_back</span>
           Back to Groups
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-4xl font-headline font-extrabold tracking-tighter text-[#e5e2e1]">New Circle</h1>
-          <p className="text-[#c7c4d8] mt-1">Set up a group to split expenses with others.</p>
+          <h1 className="text-4xl font-headline font-extrabold tracking-tighter text-primary-text">New Circle</h1>
+          <p className="text-secondary-text mt-1">Set up a group to split expenses with others.</p>
         </div>
 
         <Steps current={step} />
@@ -186,7 +186,7 @@ export default function NewGroupPage() {
         {step === 0 && (
           <form onSubmit={goToMembers} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">Group Name *</label>
+              <label className="text-xs font-semibold text-muted uppercase tracking-widest">Group Name *</label>
               <input
                 type="text"
                 value={name}
@@ -194,25 +194,25 @@ export default function NewGroupPage() {
                 placeholder="e.g. Flatmates, Vacation 2025…"
                 required
                 autoFocus
-                className="w-full bg-[#1c1b1b] border-none rounded-2xl py-4 px-6 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                className="w-full bg-card border-none rounded-2xl py-4 px-6 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">Description <span className="normal-case text-[#918fa1]">(optional)</span></label>
+              <label className="text-xs font-semibold text-muted uppercase tracking-widest">Description <span className="normal-case text-muted">(optional)</span></label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="What is this group for?"
                 rows={2}
-                className="w-full bg-[#1c1b1b] border-none rounded-2xl py-4 px-6 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all resize-none"
+                className="w-full bg-card border-none rounded-2xl py-4 px-6 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none"
               />
             </div>
 
             <div className="space-y-3">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest block">Total Amount to Split <span className="normal-case text-[#918fa1]">(optional — set now or later)</span></label>
+              <label className="text-xs font-semibold text-muted uppercase tracking-widest block">Total Amount to Split <span className="normal-case text-muted">(optional — set now or later)</span></label>
               <div className="relative">
-                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[#918fa1] font-bold text-lg">$</span>
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted font-bold text-lg">$</span>
                 <input
                   type="number"
                   min="0"
@@ -220,7 +220,7 @@ export default function NewGroupPage() {
                   value={totalAmount}
                   onChange={(e) => setTotalAmount(e.target.value)}
                   placeholder="0.00"
-                  className="w-full bg-[#1c1b1b] border-none rounded-2xl py-4 pl-10 pr-6 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                  className="w-full bg-card border-none rounded-2xl py-4 pl-10 pr-6 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                 />
               </div>
             </div>
@@ -228,7 +228,7 @@ export default function NewGroupPage() {
             <button
               type="submit"
               disabled={!name.trim()}
-              className="w-full py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-primary text-white font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed"
             >
               Next — Add Members
             </button>
@@ -240,69 +240,69 @@ export default function NewGroupPage() {
           <form onSubmit={goToSplit} className="space-y-6">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">Members</label>
+                <label className="text-xs font-semibold text-muted uppercase tracking-widest">Members</label>
                 <button type="button" onClick={addMemberRow}
-                  className="flex items-center gap-1 text-[#c3c0ff] text-xs font-bold hover:underline">
+                  className="flex items-center gap-1 text-primary text-xs font-bold hover:underline">
                   <span className="material-symbols-outlined text-sm">add</span>
                   Add row
                 </button>
               </div>
 
               <div className="space-y-3">
-                <div className="flex gap-3 items-start rounded-2xl bg-[#1c1b1b] border border-[#c3c0ff]/20 p-3">
+                <div className="flex gap-3 items-start rounded-2xl bg-card border border-primary/20 p-3">
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-[#e5e2e1] truncate">
+                    <p className="text-sm font-semibold text-primary-text truncate">
                       {currentUserMember.name}
                     </p>
-                    <p className="text-xs text-[#c7c4d8] truncate">{currentUserMember.email}</p>
+                    <p className="text-xs text-secondary-text truncate">{currentUserMember.email}</p>
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-[#c3c0ff]/10 text-[#c3c0ff] text-[10px] font-bold uppercase tracking-wider">
+                  <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
                     Owner
                   </span>
                 </div>
                 {members.map((m, i) => (
-                  <div key={i} className="flex gap-3 items-start">
-                    <div className="flex-1 space-y-2">
+                  <div key={i} className="flex gap-3 items-center">
+                    <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div className="relative">
-                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#918fa1] text-sm">alternate_email</span>
+                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted text-sm">mail</span>
                         <input
                           type="email"
                           value={m.email}
                           onChange={(e) => updateMember(i, "email", e.target.value)}
                           placeholder="email@example.com"
-                          className="w-full bg-[#1c1b1b] border-none rounded-2xl py-3 pl-11 pr-4 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all text-sm"
+                          className="w-full bg-card border-none rounded-2xl py-3 pl-11 pr-4 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm"
                         />
                       </div>
                       <div className="relative">
-                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#918fa1] text-sm">person</span>
+                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted text-sm">person</span>
                         <input
                           type="text"
                           value={m.name}
                           onChange={(e) => updateMember(i, "name", e.target.value)}
                           placeholder="Display name (optional)"
-                          className="w-full bg-[#1c1b1b] border-none rounded-2xl py-3 pl-11 pr-4 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all text-sm"
+                          className="w-full bg-card border-none rounded-2xl py-3 pl-11 pr-4 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm"
                         />
                       </div>
                     </div>
                     {members.length > 1 && (
                       <button type="button" onClick={() => removeMemberRow(i)}
-                        className="mt-3 p-2 text-[#918fa1] hover:text-[#ffb4ab] transition-colors flex-shrink-0">
+                        className="p-2 text-muted hover:text-error transition-colors flex-shrink-0">
                         <span className="material-symbols-outlined text-sm">delete</span>
                       </button>
                     )}
                   </div>
                 ))}
               </div>
-              <p className="text-[#918fa1] text-xs">You are always included as the first member.</p>
+              <p className="text-muted text-xs">You are always included as the first member.</p>
             </div>
 
             <div className="flex gap-3">
               <button type="button" onClick={() => setStep(0)}
-                className="flex-1 py-4 bg-[#2a2a2a] hover:bg-[#3a3939] text-[#c7c4d8] font-bold rounded-full transition-all">
+                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all">
                 Back
               </button>
               <button type="submit"
-                className="flex-1 py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed">
+                className="flex-1 py-4 bg-primary text-white font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all">
                 Next — Split Method
               </button>
             </div>
@@ -315,7 +315,7 @@ export default function NewGroupPage() {
 
             {/* Method selector */}
             <div className="space-y-3">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest block">Split Method</label>
+              <label className="text-xs font-semibold text-muted uppercase tracking-widest block">Split Method</label>
               <div className="grid grid-cols-3 gap-3">
                 {([
                   { key: "equal", icon: "balance", label: "Equal", sub: "Split evenly" },
@@ -340,11 +340,11 @@ export default function NewGroupPage() {
                       }
                     }}
                     className={`flex flex-col items-center p-4 rounded-2xl transition-all border ${splitMethod === key
-                      ? "bg-[#4f46e5]/20 border-[#4f46e5]/50 text-[#c3c0ff]"
-                      : "bg-[#1c1b1b] border-[#464555]/10 text-[#c7c4d8] hover:bg-[#2a2a2a]"
+                      ? "bg-primary/20 border-primary/50 text-primary-text"
+                      : "bg-card border-outline/10 text-muted hover:bg-card-high"
                       }`}
                   >
-                    <span className={`material-symbols-outlined text-2xl mb-1 ${splitMethod === key ? "text-[#c3c0ff]" : "text-[#918fa1]"}`}
+                    <span className={`material-symbols-outlined text-2xl mb-1 ${splitMethod === key ? "text-primary" : "text-muted"}`}
                       style={splitMethod === key ? { fontVariationSettings: "'FILL' 1" } : {}}>
                       {icon}
                     </span>
@@ -358,15 +358,15 @@ export default function NewGroupPage() {
             {/* Total amount (editable here too) */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest">Total Amount</label>
+                <label className="text-xs font-semibold text-muted uppercase tracking-widest">Total Amount</label>
                 <button type="button" onClick={distributeEqually}
-                  className="text-[#c3c0ff] text-xs font-bold hover:underline flex items-center gap-1">
+                  className="text-primary text-xs font-bold hover:underline flex items-center gap-1">
                   <span className="material-symbols-outlined text-sm">auto_fix_high</span>
                   Distribute equally
                 </button>
               </div>
               <div className="relative">
-                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[#918fa1] font-bold text-lg">$</span>
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted font-bold text-lg">$</span>
                 <input
                   type="number"
                   min="0"
@@ -385,25 +385,25 @@ export default function NewGroupPage() {
                     }
                   }}
                   placeholder="0.00"
-                  className="w-full bg-[#1c1b1b] border-none rounded-2xl py-4 pl-10 pr-6 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                  className="w-full bg-card border-none rounded-2xl py-4 pl-10 pr-6 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                 />
               </div>
             </div>
 
             {/* Per-member shares */}
             <div className="space-y-3">
-              <label className="text-xs font-semibold text-[#c7c4d8] uppercase tracking-widest block">
+              <label className="text-xs font-semibold text-muted uppercase tracking-widest block">
                 {splitMethod === "percentage" ? "Share (%)" : "Amount ($)"} per Member
               </label>
               <div className="space-y-2">
                 {shares.map((s, i) => (
-                  <div key={s.email} className="flex items-center gap-4 bg-[#1c1b1b] rounded-2xl px-5 py-3">
-                    <div className="w-9 h-9 rounded-full bg-[#353534] flex items-center justify-center text-xs font-bold text-[#c7c4d8] flex-shrink-0">
+                  <div key={s.email} className="flex items-center gap-4 bg-card rounded-2xl px-5 py-3">
+                    <div className="w-9 h-9 rounded-full bg-card-highest flex items-center justify-center text-xs font-bold text-muted flex-shrink-0">
                       {s.name.slice(0, 2).toUpperCase()}
                     </div>
                     <div className="flex-grow min-w-0">
-                      <p className="text-sm font-semibold text-[#e5e2e1] truncate">{s.name}</p>
-                      <p className="text-xs text-[#918fa1] truncate">{s.email}</p>
+                      <p className="text-sm font-semibold text-primary-text truncate">{s.name}</p>
+                      <p className="text-xs text-muted truncate">{s.email}</p>
                     </div>
                     <div className="relative flex-shrink-0 w-28">
                       {splitMethod !== "equal" ? (
@@ -415,15 +415,15 @@ export default function NewGroupPage() {
                             max={splitMethod === "percentage" ? "100" : undefined}
                             value={s.value}
                             onChange={(e) => updateShare(i, e.target.value)}
-                            className="w-full bg-[#0e0e0e] border-none rounded-xl py-2 pl-3 pr-7 text-[#e5e2e1] text-sm focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all text-right"
+                            className="w-full bg-card-high border-none rounded-xl py-2 pl-3 pr-7 text-primary-text text-sm focus:outline-none focus:ring-1 focus:ring-primary transition-all text-right"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#918fa1] text-xs font-bold pointer-events-none">
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted text-xs font-bold pointer-events-none">
                             {splitMethod === "percentage" ? "%" : "$"}
                           </span>
                         </>
                       ) : (
-                        <div className="bg-[#0e0e0e] rounded-xl py-2 px-3 text-right">
-                          <span className="text-[#c3c0ff] font-bold text-sm">
+                        <div className="bg-card-high rounded-xl py-2 px-3 text-right">
+                          <span className="text-primary font-bold text-sm">
                             ${s.value.toFixed(2)}
                           </span>
                         </div>
@@ -434,7 +434,7 @@ export default function NewGroupPage() {
               </div>
 
               {/* Balance indicator */}
-              <div className={`flex items-center justify-between px-5 py-3 rounded-2xl text-sm font-semibold ${isBalanced ? "bg-emerald-900/20 text-emerald-400" : "bg-[#93000a]/20 text-[#ffb4ab]"
+              <div className={`flex items-center justify-between px-5 py-3 rounded-2xl text-sm font-semibold ${isBalanced ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" : "bg-error/10 text-error"
                 }`}>
                 <span className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-sm">
@@ -451,11 +451,11 @@ export default function NewGroupPage() {
 
             <div className="flex gap-3">
               <button type="button" onClick={() => setStep(1)}
-                className="flex-1 py-4 bg-[#2a2a2a] hover:bg-[#3a3939] text-[#c7c4d8] font-bold rounded-full transition-all">
+                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all">
                 Back
               </button>
               <button type="button" onClick={() => setStep(3)}
-                className="flex-1 py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                className="flex-1 py-4 bg-primary text-white font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all">
                 Review
               </button>
             </div>
@@ -467,54 +467,54 @@ export default function NewGroupPage() {
           <div className="space-y-6">
 
             {/* Summary card */}
-            <div className="bg-[#1c1b1b] rounded-2xl p-6 space-y-5">
+            <div className="bg-card rounded-2xl p-6 space-y-5">
               {/* Group name */}
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-xs text-[#918fa1] uppercase tracking-widest mb-1">Group</p>
-                  <p className="text-xl font-headline font-bold text-[#e5e2e1]">{name}</p>
-                  {description && <p className="text-sm text-[#c7c4d8] mt-0.5">{description}</p>}
+                  <p className="text-xs text-muted uppercase tracking-widest mb-1">Group</p>
+                  <p className="text-xl font-headline font-bold text-primary-text">{name}</p>
+                  {description && <p className="text-sm text-muted mt-0.5">{description}</p>}
                 </div>
-                <button onClick={() => setStep(0)} className="text-[#c3c0ff] text-xs font-bold hover:underline flex-shrink-0 ml-4">Edit</button>
+                <button onClick={() => setStep(0)} className="text-primary text-xs font-bold hover:underline flex-shrink-0 ml-4">Edit</button>
               </div>
 
-              <div className="h-px bg-[#464555]/20" />
+              <div className="h-px bg-outline/10" />
 
               {/* Members */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs text-[#918fa1] uppercase tracking-widest">Members ({reviewMembers.length})</p>
-                  <button onClick={() => setStep(1)} className="text-[#c3c0ff] text-xs font-bold hover:underline">Edit</button>
+                  <p className="text-xs text-muted uppercase tracking-widest">Members ({reviewMembers.length})</p>
+                  <button onClick={() => setStep(1)} className="text-primary text-xs font-bold hover:underline">Edit</button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {reviewMembers.map((m, index) => (
-                    <div key={m.email} className="flex items-center gap-2 bg-[#2a2a2a] rounded-full px-3 py-1.5">
-                      <div className="w-5 h-5 rounded-full bg-[#4f46e5]/30 flex items-center justify-center text-[9px] font-bold text-[#c3c0ff]">
+                    <div key={m.email} className="flex items-center gap-2 bg-card-high rounded-full px-3 py-1.5">
+                      <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center text-[9px] font-bold text-primary">
                         {(m.name || m.email).slice(0, 2).toUpperCase()}
                       </div>
-                      <span className="text-xs text-[#e5e2e1]">{m.name || m.email.split("@")[0]}</span>
-                      {index === 0 && <span className="text-[9px] uppercase tracking-wider text-[#c3c0ff]">Owner</span>}
+                      <span className="text-xs text-primary-text">{m.name || m.email.split("@")[0]}</span>
+                      {index === 0 && <span className="text-[9px] uppercase tracking-wider text-primary">Owner</span>}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="h-px bg-[#464555]/20" />
+              <div className="h-px bg-outline/10" />
 
               {/* Split */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs text-[#918fa1] uppercase tracking-widest">
+                  <p className="text-xs text-muted uppercase tracking-widest">
                     Split — {splitMethod === "equal" ? "Equal" : splitMethod === "percentage" ? "By %" : "Custom $"}
                     {amt > 0 && ` · $${amt.toFixed(2)} total`}
                   </p>
-                  <button onClick={() => setStep(2)} className="text-[#c3c0ff] text-xs font-bold hover:underline">Edit</button>
+                  <button onClick={() => setStep(2)} className="text-primary text-xs font-bold hover:underline">Edit</button>
                 </div>
                 <div className="space-y-2">
                   {shares.map((s) => (
                     <div key={s.email} className="flex items-center justify-between">
-                      <span className="text-sm text-[#c7c4d8]">{s.name}</span>
-                      <span className="text-sm font-bold text-[#c3c0ff]">
+                      <span className="text-sm text-muted">{s.name}</span>
+                      <span className="text-sm font-bold text-primary">
                         {splitMethod === "percentage"
                           ? `${s.value.toFixed(1)}%${amt > 0 ? ` · $${(amt * s.value / 100).toFixed(2)}` : ""}`
                           : `$${s.value.toFixed(2)}`}
@@ -526,22 +526,22 @@ export default function NewGroupPage() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 bg-[#93000a]/20 border border-[#ffb4ab]/20 rounded-2xl px-4 py-3">
-                <span className="material-symbols-outlined text-[#ffb4ab] text-sm">error</span>
-                <p className="text-[#ffb4ab] text-sm">{error}</p>
+              <div className="flex items-center gap-2 bg-error/10 border border-error/20 rounded-2xl px-4 py-3">
+                <span className="material-symbols-outlined text-error text-sm">error</span>
+                <p className="text-error text-sm">{error}</p>
               </div>
             )}
 
             <div className="flex gap-3">
               <button type="button" onClick={() => setStep(2)}
-                className="flex-1 py-4 bg-[#2a2a2a] hover:bg-[#3a3939] text-[#c7c4d8] font-bold rounded-full transition-all">
+                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all">
                 Back
               </button>
               <button
                 type="button"
                 onClick={handleCreate}
                 disabled={submitting}
-                className="flex-1 py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100"
+                className="flex-1 py-4 bg-primary text-white font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100"
               >
                 {submitting ? "Creating…" : "Create Circle"}
               </button>
