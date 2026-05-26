@@ -622,27 +622,27 @@ export default function AdminPage() {
                 <div className="space-y-3">
                   {broadcasts.map((b) => {
                     const colorMap: Record<string, string> = {
-                      info: "border-blue-500/30 bg-blue-900/20",
-                      success: "border-emerald-500/30 bg-emerald-900/20",
-                      warning: "border-amber-500/30 bg-amber-900/20",
-                      error: "border-red-500/30 bg-red-900/20",
+                      info: "border-blue-500/20 dark:border-blue-500/30 bg-blue-500/10 dark:bg-blue-900/20",
+                      success: "border-emerald-500/20 dark:border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-900/20",
+                      warning: "border-amber-500/20 dark:border-amber-500/30 bg-amber-500/10 dark:bg-amber-900/20",
+                      error: "border-red-500/20 dark:border-red-500/30 bg-red-500/10 dark:bg-red-900/20",
                     };
                     const colorStyle = colorMap[b.color] ?? colorMap.info;
                     return (
                       <div key={b.id} className={`flex items-center justify-between p-5 rounded-2xl border ${colorStyle}`}>
                         <div className="flex items-center gap-3 min-w-0">
-                          <span className={`material-symbols-outlined text-lg flex-shrink-0 ${b.color === "error" ? "text-[#ffb4ab]" : b.color === "warning" ? "text-amber-300" : b.color === "success" ? "text-emerald-300" : "text-[#c3c0ff]"}`}>
+                          <span className={`material-symbols-outlined text-lg flex-shrink-0 ${b.color === "error" ? "text-error" : b.color === "warning" ? "text-amber-500 dark:text-amber-300" : b.color === "success" ? "text-emerald-500 dark:text-emerald-300" : "text-primary"}`}>
                             {b.color === "error" ? "error" : b.color === "warning" ? "warning" : b.color === "success" ? "check_circle" : "info"}
                           </span>
                           <div className="min-w-0">
-                            <p className="text-sm text-[#e5e2e1] truncate">{b.message}</p>
-                            <p className="text-[10px] text-[#c7c4d8] mt-1">
+                            <p className="text-sm text-primary-text truncate">{b.message}</p>
+                            <p className="text-[10px] text-secondary-text mt-1">
                               {b.active ? "Active" : "Inactive"} • {b.dismissible ? "Dismissible" : "Permanent"}
                             </p>
                           </div>
                         </div>
                         <button onClick={() => handleDeleteBroadcast(b.id)}
-                          className="p-2 text-[#c7c4d8] hover:text-[#ffb4ab] hover:bg-[#93000a]/10 rounded-full transition-colors flex-shrink-0 ml-3"
+                          className="p-2 text-secondary-text hover:text-error hover:bg-error/10 rounded-full transition-colors flex-shrink-0 ml-3"
                           title="Delete broadcast">
                           <span className="material-symbols-outlined text-sm">delete</span>
                         </button>
