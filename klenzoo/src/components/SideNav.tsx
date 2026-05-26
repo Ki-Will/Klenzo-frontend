@@ -21,7 +21,7 @@ export default function SideNav() {
       className="fixed left-0 top-0 h-full w-72 hidden lg:flex flex-col p-8 z-40 rounded-r-[3rem]"
       style={{
         backgroundColor: "var(--c-sidenav-bg)",
-        borderRight: "1px solid var(--c-border-subtle)",
+        boxShadow: "var(--c-sidenav-shadow)",
       }}
     >
       {/* Brand */}
@@ -85,8 +85,7 @@ export default function SideNav() {
       {/* CTA */}
       <Link
         href="/expenses/add"
-        className="mt-8 w-full py-4 rounded-full luminous-gradient text-white font-bold text-sm text-center shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2"
-        style={{ boxShadow: "0 4px 20px rgba(79,70,229,0.25)" }}
+        className="mt-8 w-full py-4 rounded-full luminous-gradient text-white font-bold text-sm text-center active:scale-95 transition-transform flex items-center justify-center gap-2"
       >
         <span className="material-symbols-outlined text-sm">add</span>
         Add New Entry

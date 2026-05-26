@@ -260,7 +260,7 @@ export default function TopBar({ showClose = false }: TopBarProps) {
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         backgroundColor: "var(--c-topbar-bg)",
-        borderBottom: "1px solid var(--c-border-subtle)",
+        boxShadow: "var(--c-topbar-shadow)",
       }}
     >
       {/* ── Left ── */}
@@ -454,8 +454,12 @@ export default function TopBar({ showClose = false }: TopBarProps) {
           {unreadCount > 0 && (
             <span
               className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center
-                             bg-[#ffb4ab] text-[#2b0002] text-[10px] font-bold rounded-full
-                             shadow-[0_0_8px_rgba(255,138,128,0.5)]"
+                             rounded-full text-[10px] font-bold"
+              style={{
+                backgroundColor: "var(--color-error-container)",
+                color: "var(--color-on-error-container)",
+                boxShadow: "0 0 8px rgba(var(--color-error), 0.35)",
+              }}
             >
               {unreadCount > 99 ? "99+" : unreadCount}
             </span>
