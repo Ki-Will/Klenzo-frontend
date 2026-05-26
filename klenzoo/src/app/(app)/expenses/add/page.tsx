@@ -68,10 +68,10 @@ function splitEqually(members: GroupMember[], total: number, myId: number): Memb
 export default function AddExpensePage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#131313] flex items-center justify-center">
+      <div className="min-h-screen bg-app-shell flex items-center justify-center">
         <div className="flex space-x-2">
           {[0,1,2].map((i) => (
-            <div key={i} className="w-2 h-2 bg-indigo-500 rounded-full animate-bounce"
+            <div key={i} className="w-2 h-2 bg-primary rounded-full animate-bounce"
               style={{ animationDelay: `${i * 0.15}s` }} />
           ))}
         </div>
@@ -254,9 +254,9 @@ function AddExpenseForm() {
 
       {/* Group context banner */}
       {isGroupMode && group && (
-        <div className="mb-8 flex items-center gap-3 bg-[#4f46e5]/10 border border-[#4f46e5]/20 rounded-2xl px-5 py-3">
-          <span className="material-symbols-outlined text-[#c3c0ff] text-sm">group</span>
-          <p className="text-sm text-[#c3c0ff] font-semibold">
+        <div className="mb-8 flex items-center gap-3 bg-primary/10 border border-primary/20 rounded-2xl px-5 py-3">
+          <span className="material-symbols-outlined text-primary text-sm">group</span>
+          <p className="text-sm text-primary font-semibold">
             Adding to <span className="font-bold">{group.name}</span> — expense will be split among {group.members.length} member{group.members.length !== 1 ? "s" : ""}
           </p>
         </div>
@@ -269,11 +269,11 @@ function AddExpenseForm() {
 
           {/* Type toggle — only for non-group expenses */}
           {!isGroupMode && (
-            <div className="flex bg-[#1c1b1b] p-1 rounded-full w-full max-w-xs">
+            <div className="flex bg-card p-1 rounded-full w-full max-w-xs">
               {(["expense","income"] as TransactionType[]).map((t) => (
                 <button key={t} onClick={() => setTxType(t)}
-                  className={`flex-1 py-2.5 rounded-full text-sm font-bold capitalize transition-all ${
-                    txType === t ? "luminous-gradient text-white shadow-lg" : "text-[#c7c4d8]"
+                  className={`flex-grow py-2.5 rounded-full text-sm font-bold capitalize transition-all ${
+                    txType === t ? "bg-primary text-white shadow-md" : "text-secondary-text"
                   }`}>
                   {t}
                 </button>
@@ -282,11 +282,11 @@ function AddExpenseForm() {
           )}
 
           <div className="text-center w-full">
-            <p className="font-headline uppercase tracking-widest text-[10px] text-[#918fa1] mb-4">
+            <p className="font-headline uppercase tracking-widest text-[10px] text-muted mb-4">
               {isGroupMode ? "Total Amount" : "Enter Amount"}
             </p>
             <div className="flex items-center justify-center space-x-2 w-full max-w-full overflow-hidden">
-              <span className={`text-4xl font-headline font-bold ${txType === "income" ? "text-[#c3c0ff]" : "text-[#4f46e5]"}`}>$</span>
+              <span className={`text-4xl font-headline font-bold text-primary`}>$</span>
               <input 
                 type="text"
                 inputMode="decimal"
@@ -297,13 +297,13 @@ function AddExpenseForm() {
                   if (val.split('.').length > 2) return; // Only one decimal point
                   setAmount(val || "0");
                 }}
-                className="text-6xl md:text-8xl font-headline font-extrabold tracking-tighter text-[#e5e2e1] bg-transparent border-none outline-none text-center placeholder:text-[#e5e2e1]/30 max-w-full min-w-[1ch]"
+                className="text-6xl md:text-8xl font-headline font-extrabold tracking-tighter text-primary-text bg-transparent border-none outline-none text-center placeholder:text-primary-text/30 max-w-full min-w-[1ch]"
                 style={{ width: `${Math.max(1, amount === "0" ? 1 : amount.length)}ch` }}
               />
             </div>
             {isGroupMode && totalAmt > 0 && splits.length > 0 && (
-              <p className="text-[#918fa1] text-xs mt-2">
-                Your share: <span className="text-[#c3c0ff] font-bold">
+              <p className="text-muted text-xs mt-2">
+                Your share: <span className="text-primary font-bold">
                   ${splits.find((s) => s.isMe)?.amount.toFixed(2) ?? "0.00"}
                 </span>
               </p>
@@ -313,8 +313,8 @@ function AddExpenseForm() {
           <div className="hidden sm:grid grid-cols-3 gap-3 w-full max-w-sm">
             {NUMPAD.map((key) => (
               <button key={key} onClick={() => handleNumpad(key)}
-                className={`aspect-square flex items-center justify-center text-2xl font-headline font-bold hover:bg-[#2a2a2a] active:scale-95 transition-all rounded-2xl ${
-                  key === "⌫" ? "text-[#ffb4ab] hover:bg-[#93000a]/20" : "text-[#c7c4d8]"
+                className={`aspect-square flex items-center justify-center text-2xl font-headline font-bold hover:bg-card-high active:scale-95 transition-all rounded-2xl ${
+                  key === "⌫" ? "text-error hover:bg-error/10" : "text-secondary-text"
                 }`}>
                 {key === "⌫"
                   ? <span className="material-symbols-outlined text-3xl">backspace</span>
@@ -329,20 +329,20 @@ function AddExpenseForm() {
 
           {/* Category */}
           <div className="space-y-3">
-            <label className="font-headline uppercase tracking-widest text-[10px] text-[#918fa1] block">Category</label>
+            <label className="font-headline uppercase tracking-widest text-[10px] text-muted block">Category</label>
             <div className="grid grid-cols-3 gap-3">
               {CATEGORIES.slice(0, 5).map((cat) => (
                 <button key={cat.value} onClick={() => { setCategory(cat.value); setShowAllCategories(false); }}
                   className={`flex flex-col items-center justify-center p-4 rounded-2xl transition-all ${
                     category === cat.value && !showAllCategories
-                      ? "bg-[#4f46e5]/20 border border-[#4f46e5]/40"
-                      : "bg-[#1c1b1b] hover:bg-[#2a2a2a]"
+                      ? "bg-primary/20 border border-primary/40"
+                      : "bg-card hover:bg-card-high"
                   }`}>
-                  <span className={`material-symbols-outlined mb-2 ${category === cat.value && !showAllCategories ? "text-[#c3c0ff]" : "text-[#c3c0ff]/60"}`}
+                  <span className={`material-symbols-outlined mb-2 ${category === cat.value && !showAllCategories ? "text-primary" : "text-primary-text/60"}`}
                     style={category === cat.value && !showAllCategories ? { fontVariationSettings: "'FILL' 1" } : {}}>
                     {cat.icon}
                   </span>
-                  <span className={`text-xs font-medium ${category === cat.value && !showAllCategories ? "text-white font-bold" : "text-[#c7c4d8]"}`}>
+                  <span className={`text-xs font-medium ${category === cat.value && !showAllCategories ? "text-primary-text font-bold" : "text-secondary-text"}`}>
                     {cat.label}
                   </span>
                 </button>
@@ -350,28 +350,28 @@ function AddExpenseForm() {
               <button onClick={() => setShowAllCategories(!showAllCategories)}
                 className={`flex flex-col items-center justify-center p-4 rounded-2xl transition-all ${
                   showAllCategories
-                    ? "bg-[#4f46e5]/20 border border-[#4f46e5]/40"
-                    : "bg-[#1c1b1b] hover:bg-[#2a2a2a]"
+                    ? "bg-primary/20 border border-primary/40"
+                    : "bg-card hover:bg-card-high"
                 }`}>
-                <span className={`material-symbols-outlined mb-2 ${showAllCategories ? "text-[#c3c0ff]" : "text-[#c3c0ff]/60"}`}
+                <span className={`material-symbols-outlined mb-2 ${showAllCategories ? "text-primary" : "text-primary-text/60"}`}
                   style={showAllCategories ? { fontVariationSettings: "'FILL' 1" } : {}}>
                   more_horiz
                 </span>
-                <span className={`text-xs font-medium ${showAllCategories ? "text-white font-bold" : "text-[#c7c4d8]"}`}>
+                <span className={`text-xs font-medium ${showAllCategories ? "text-primary-text font-bold" : "text-secondary-text"}`}>
                   Other
                 </span>
               </button>
             </div>
             {showAllCategories && (
-              <div className="mt-4 p-4 bg-[#1c1b1b] rounded-2xl border border-[#464555]/20">
-                <p className="text-xs text-[#918fa1] mb-3 uppercase tracking-widest font-bold">All Categories</p>
+              <div className="mt-4 p-4 bg-card rounded-2xl border border-outline/20">
+                <p className="text-xs text-muted mb-3 uppercase tracking-widest font-bold">All Categories</p>
                 <div className="flex flex-wrap gap-2">
                   {ALL_CATEGORIES.map(cat => (
                     <button key={cat.value} onClick={() => setCategory(cat.value)}
                       className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs transition-all ${
                         category === cat.value
-                          ? "bg-[#c3c0ff] text-[#0f0069] font-bold"
-                          : "bg-[#2a2a2a] text-[#c7c4d8] hover:bg-[#353534]"
+                          ? "bg-primary text-white font-bold shadow-sm"
+                          : "bg-card-high text-secondary-text hover:bg-card-highest"
                       }`}>
                       <span className="material-symbols-outlined text-[14px]">{cat.icon}</span>
                       {cat.label}
@@ -384,26 +384,26 @@ function AddExpenseForm() {
 
           {/* Date */}
           <div className="space-y-2">
-            <label className="font-headline uppercase tracking-widest text-[10px] text-[#918fa1] block">Date</label>
+            <label className="font-headline uppercase tracking-widest text-[10px] text-muted block">Date</label>
             <CustomDatePicker value={date} onChange={(val) => setDate(val)} />
           </div>
 
           {/* Description */}
           <div className="space-y-2">
-            <label className="font-headline uppercase tracking-widest text-[10px] text-[#918fa1] block">Description</label>
+            <label className="font-headline uppercase tracking-widest text-[10px] text-muted block">Description</label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)}
-              className="w-full bg-[#1c1b1b] border-none rounded-2xl p-4 text-[#e5e2e1] placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#4f46e5] transition-all resize-none"
+              className="w-full bg-card border-none rounded-2xl p-4 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none"
               placeholder="Merchant name or note..." rows={2} />
           </div>
 
           {/* Budget Selection */}
           {!isGroupMode && budgets.length > 0 && (
             <div className="space-y-3">
-              <label className="font-headline uppercase tracking-widest text-[10px] text-[#918fa1] block">Link to Budget</label>
+              <label className="font-headline uppercase tracking-widest text-[10px] text-muted block">Link to Budget</label>
               <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                 <button
                   onClick={() => setBudgetId(undefined)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex-shrink-0 ${!budgetId ? "bg-[#c3c0ff] text-[#0f0069]" : "bg-[#1c1b1b] text-[#c7c4d8]"}`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex-shrink-0 ${!budgetId ? "bg-primary text-white" : "bg-card text-secondary-text"}`}
                 >
                   Auto-match
                 </button>
@@ -411,8 +411,8 @@ function AddExpenseForm() {
                   <button
                     key={b.id}
                     onClick={() => setBudgetId(b.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all flex-shrink-0 ${budgetId === b.id ? "bg-[#c3c0ff] text-[#0f0069]" : "bg-[#1c1b1b] text-[#c7c4d8]"}`}
-                    style={budgetId === b.id ? {} : { borderLeft: `3px solid ${b.color || "#4f46e5"}` }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all flex-shrink-0 ${budgetId === b.id ? "bg-primary text-white" : "bg-card text-secondary-text"}`}
+                    style={budgetId === b.id ? {} : { borderLeft: `3px solid ${b.color || "var(--color-primary)"}` }}
                   >
                     <span className="material-symbols-outlined text-sm">{b.icon || "category"}</span>
                     {b.name}
@@ -424,9 +424,9 @@ function AddExpenseForm() {
 
           {/* ── Group Split Section ── */}
           {isGroupMode && (
-            <div className="space-y-4 bg-[#1c1b1b] rounded-2xl p-5 border border-[#4f46e5]/20">
+            <div className="space-y-4 bg-card rounded-2xl p-5 border border-primary/20">
               <div className="flex items-center justify-between">
-                <label className="font-headline uppercase tracking-widest text-[10px] text-[#c3c0ff] block">
+                <label className="font-headline uppercase tracking-widest text-[10px] text-primary block">
                   Split Method
                 </label>
                 <div className="flex gap-2">
@@ -434,8 +434,8 @@ function AddExpenseForm() {
                     <button key={m} onClick={() => changeSplitMethod(m)}
                       className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                         splitMethod === m
-                          ? "bg-[#4f46e5] text-white"
-                          : "bg-[#2a2a2a] text-[#c7c4d8] hover:bg-[#353534]"
+                          ? "bg-primary text-white"
+                          : "bg-card-high text-secondary-text hover:bg-card-highest"
                       }`}>
                       {m === "equal" ? "Equal" : m === "percentage" ? "By %" : "Custom $"}
                     </button>
@@ -445,31 +445,31 @@ function AddExpenseForm() {
 
               {loadingGroup ? (
                 <div className="space-y-2">
-                  {[1,2].map((i) => <div key={i} className="h-12 bg-[#0e0e0e] rounded-xl animate-pulse" />)}
+                  {[1,2].map((i) => <div key={i} className="h-12 bg-card-deep rounded-xl animate-pulse" />)}
                 </div>
               ) : splits.length === 0 ? (
-                <p className="text-[#918fa1] text-xs text-center py-2">No members in this group yet.</p>
+                <p className="text-muted text-xs text-center py-2">No members in this group yet.</p>
               ) : (
                 <div className="space-y-2">
                   {splits.map((s, i) => (
                     <div key={s.member.id}
                       className={`flex items-center gap-3 p-3 rounded-xl ${
-                        s.isMe ? "bg-[#4f46e5]/10 border border-[#4f46e5]/20" : "bg-[#0e0e0e]"
+                        s.isMe ? "bg-primary/10 border border-primary/20" : "bg-card-deep"
                       }`}>
                       {/* Avatar */}
-                      <div className="w-8 h-8 rounded-full bg-[#353534] flex items-center justify-center text-xs font-bold text-[#c7c4d8] flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-card-highest flex items-center justify-center text-xs font-bold text-secondary-text flex-shrink-0">
                         {(s.member.name || s.member.email).slice(0, 2).toUpperCase()}
                       </div>
 
                       {/* Name */}
                       <div className="flex-grow min-w-0">
-                        <p className="text-sm font-semibold text-[#e5e2e1] truncate">
+                        <p className="text-sm font-semibold text-primary-text truncate">
                           {s.member.name || s.member.email.split("@")[0]}
-                          {s.isMe && <span className="text-[#c3c0ff] text-xs ml-1">(you)</span>}
+                          {s.isMe && <span className="text-primary text-xs ml-1">(you)</span>}
                         </p>
                         {/* Approval badge */}
                         <p className={`text-[10px] font-bold uppercase tracking-wider ${
-                          s.isMe ? "text-emerald-400" : "text-[#ffb695]"
+                          s.isMe ? "text-emerald-400" : "text-tertiary"
                         }`}>
                           {s.isMe ? "✓ auto-approved" : "pending approval"}
                         </p>
@@ -478,8 +478,8 @@ function AddExpenseForm() {
                       {/* Amount input */}
                       {splitMethod === "equal" ? (
                         <div className="text-right flex-shrink-0">
-                          <p className="text-sm font-bold text-[#c3c0ff]">${s.amount.toFixed(2)}</p>
-                          <p className="text-[10px] text-[#918fa1]">{s.percentage.toFixed(1)}%</p>
+                          <p className="text-sm font-bold text-primary">${s.amount.toFixed(2)}</p>
+                          <p className="text-[10px] text-muted">{s.percentage.toFixed(1)}%</p>
                         </div>
                       ) : (
                         <div className="relative flex-shrink-0 w-24">
@@ -488,9 +488,9 @@ function AddExpenseForm() {
                             step={splitMethod === "percentage" ? "0.1" : "0.01"}
                             value={splitMethod === "percentage" ? s.percentage : s.amount}
                             onChange={(e) => updateSplit(i, e.target.value)}
-                            className="w-full bg-[#131313] border-none rounded-xl py-1.5 pl-2 pr-6 text-[#e5e2e1] text-sm focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] text-right"
+                            className="w-full bg-card-deep border-none rounded-xl py-1.5 pl-2 pr-6 text-primary-text text-sm focus:outline-none focus:ring-1 focus:ring-primary text-right"
                           />
-                          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[#918fa1] text-xs pointer-events-none">
+                          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-muted text-xs pointer-events-none">
                             {splitMethod === "percentage" ? "%" : "$"}
                           </span>
                         </div>
@@ -500,7 +500,7 @@ function AddExpenseForm() {
 
                   {/* Balance check */}
                   <div className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold ${
-                    splitOk ? "bg-emerald-900/20 text-emerald-400" : "bg-[#93000a]/20 text-[#ffb4ab]"
+                    splitOk ? "bg-emerald-900/20 text-emerald-400" : "bg-error/10 text-error"
                   }`}>
                     <span className="material-symbols-outlined text-sm">
                       {splitOk ? "check_circle" : "warning"}
@@ -513,10 +513,10 @@ function AddExpenseForm() {
                   </div>
 
                   {/* Approval note */}
-                  <div className="flex items-start gap-2 px-3 py-2 bg-[#2a2a2a] rounded-xl">
-                    <span className="material-symbols-outlined text-[#ffb695] text-sm flex-shrink-0 mt-0.5">info</span>
-                    <p className="text-[10px] text-[#c7c4d8] leading-relaxed">
-                      Other members will see a <span className="text-[#ffb695] font-bold">pending approval</span> notification in the group. Their split only counts toward their personal expenses once they approve it.
+                  <div className="flex items-start gap-2 px-3 py-2 bg-card-high rounded-xl">
+                    <span className="material-symbols-outlined text-tertiary text-sm flex-shrink-0 mt-0.5">info</span>
+                    <p className="text-[10px] text-secondary-text leading-relaxed">
+                      Other members will see a <span className="text-tertiary font-bold">pending approval</span> notification in the group. Their split only counts toward their personal expenses once they approve it.
                     </p>
                   </div>
                 </div>
@@ -525,15 +525,15 @@ function AddExpenseForm() {
           )}
 
           {error && (
-            <div className="flex items-center gap-2 bg-[#93000a]/20 border border-[#ffb4ab]/20 rounded-2xl px-4 py-3">
-              <span className="material-symbols-outlined text-[#ffb4ab] text-sm">error</span>
-              <p className="text-[#ffb4ab] text-sm">{error}</p>
+            <div className="flex items-center gap-2 bg-error/10 border border-error/20 rounded-2xl px-4 py-3">
+              <span className="material-symbols-outlined text-error text-sm">error</span>
+              <p className="text-error text-sm">{error}</p>
             </div>
           )}
 
           <button onClick={handleConfirm}
             disabled={submitting || parseFloat(amount) <= 0 || (isGroupMode && !splitOk && totalAmt > 0)}
-            className="w-full h-16 bg-gradient-to-r from-[#4f46e5] to-indigo-700 rounded-full text-white font-headline font-bold text-lg shadow-[0_20px_40px_rgba(79,70,229,0.3)] hover:shadow-[0_25px_50px_rgba(79,70,229,0.5)] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
+            className="w-full h-16 bg-primary text-white rounded-full font-headline font-bold text-lg shadow-md hover:shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
             <span className="material-symbols-outlined">
               {submitting ? "hourglass_empty" : isGroupMode ? "group" : "check_circle"}
             </span>

@@ -95,15 +95,15 @@ export default function ExpensesPage() {
       <section className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="flex items-end justify-between">
           <div>
-            <span className="text-[#c3c0ff] uppercase tracking-[0.3em] text-[10px] mb-2 block">Monthly Oversight</span>
-            <h2 className="text-5xl lg:text-7xl font-black tracking-[-0.04em] leading-none text-[#f5f5f5] flex items-center gap-6">
+            <span className="text-primary uppercase tracking-[0.3em] text-[10px] mb-2 block">Monthly Oversight</span>
+            <h2 className="text-5xl lg:text-7xl font-black tracking-[-0.04em] leading-none text-primary-text flex items-center gap-6">
               <span className="drop-shadow-[0_0_25px_rgba(255,255,255,0.08)]">
                 Activity
               </span>
               <span className="h-3 w-3 rounded-full bg-primary shadow-[0_0_18px_rgba(139,127,255,0.9)]"></span>
             </h2>
           </div>
-          <div className="bg-surface p-6 rounded-2xl border-l-4 border-[#c3c0ff]">
+          <div className="bg-surface p-6 rounded-2xl border-l-4 border-primary">
             <p className="text-on-surface-variant text-xs uppercase tracking-widest mb-1">Total Outflow</p>
             <p className="text-2xl font-headline font-bold">${totalOutflow.toFixed(2)}</p>
           </div>
@@ -115,17 +115,17 @@ export default function ExpensesPage() {
 
       {/* Search + Filters */}
       <section className="mb-8 space-y-4">
-        <div className="bg-surface px-4 py-3 rounded-2xl flex items-center border border-[#464555]/10">
-          <span className="material-symbols-outlined text-[#918fa1] mr-3">search</span>
+        <div className="bg-surface px-4 py-3 rounded-2xl flex items-center border border-outline/10">
+          <span className="material-symbols-outlined text-muted mr-3">search</span>
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search merchants, categories..."
-            className="bg-transparent border-none focus:outline-none text-sm text-on-surface w-full placeholder:text-[#918fa1]/60"
+            className="bg-transparent border-none focus:outline-none text-sm text-on-surface w-full placeholder:text-muted/60"
           />
           {search && (
-            <button onClick={() => setSearch("")} className="text-[#918fa1] hover:text-[#c3c0ff] transition-colors">
+            <button onClick={() => setSearch("")} className="text-muted hover:text-primary transition-colors">
               <span className="material-symbols-outlined text-sm">close</span>
             </button>
           )}
@@ -136,8 +136,8 @@ export default function ExpensesPage() {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm whitespace-nowrap transition-all flex-shrink-0 ${activeCategory === cat
-                ? "bg-[#c3c0ff] text-[#0f0069] font-semibold shadow-[0_0_20px_rgba(195,192,255,0.2)]"
-                : "bg-[#2a2a2a] text-on-surface-variant hover:bg-[#3a3939]"
+                ? "bg-primary text-on-primary font-semibold shadow-[0_0_20px_rgba(90,77,255,0.2)]"
+                : "bg-card-high text-on-surface-variant hover:bg-card-highest"
                 }`}
             >
               <span className="material-symbols-outlined text-sm">{CAT_ICONS[cat]}</span>
@@ -159,7 +159,7 @@ export default function ExpensesPage() {
           <p className="text-sm mb-6">
             {search ? "Try a different search term." : "Start tracking your spending."}
           </p>
-          <Link href="/expenses/add" className="px-8 py-3 luminous-gradient text-white rounded-full font-bold text-sm">
+          <Link href="/expenses/add" className="px-8 py-3 bg-primary text-white rounded-full font-bold text-sm shadow-md hover:shadow-lg">
             Add First Expense
           </Link>
         </div>
@@ -168,16 +168,16 @@ export default function ExpensesPage() {
           {grouped.map(([date, txs]) => (
             <div key={date}>
               <div className="flex items-center gap-4 py-3">
-                <span className="text-xs font-bold text-[#464555] uppercase tracking-widest whitespace-nowrap">{date}</span>
-                <div className="h-px w-full bg-[#464555]/10" />
+                <span className="text-xs font-bold text-secondary-text uppercase tracking-widest whitespace-nowrap">{date}</span>
+                <div className="h-px w-full bg-outline/10" />
               </div>
               <div className="space-y-2">
                 {txs.map((tx) => (
                   <Link key={tx.id} href={`/expenses/${tx.id}`}
-                    className="group bg-surface hover:bg-[#2a2a2a] p-4 lg:p-5 rounded-2xl transition-all flex items-center justify-between"
+                    className="group bg-surface hover:bg-card-high p-4 lg:p-5 rounded-2xl transition-all flex items-center justify-between"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-[#353534] flex items-center justify-center text-[#c3c0ff] group-hover:scale-110 transition-transform flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-card-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform flex-shrink-0">
                         <span className="material-symbols-outlined">{txIcon(tx)}</span>
                       </div>
                       <div className="min-w-0">
@@ -186,8 +186,8 @@ export default function ExpensesPage() {
                           <p className="text-xs text-on-surface-variant uppercase tracking-wider">{tx.category ?? tx.transactionType}</p>
                           {tx.budgetId && budgets.find(b => b.id === tx.budgetId) && (
                             <>
-                              <span className="w-1 h-1 rounded-full bg-[#464555]" />
-                              <div className="flex items-center gap-1 bg-[#4f46e5]/10 px-1.5 py-0.5 rounded text-[9px] font-bold text-primary border border-primary/20">
+                              <span className="w-1 h-1 rounded-full bg-card-highest" />
+                              <div className="flex items-center gap-1 bg-primary/10 px-1.5 py-0.5 rounded text-[9px] font-bold text-primary border border-primary/20">
                                 <span className="material-symbols-outlined text-[10px]">account_balance_wallet</span>
                                 {budgets.find(b => b.id === tx.budgetId)?.name}
                               </div>
@@ -197,10 +197,10 @@ export default function ExpensesPage() {
                       </div>
                     </div>
                     <div className="text-right flex-shrink-0 ml-4">
-                      <p className={`font-headline font-bold text-lg ${tx.transactionType === "income" ? "text-[#c3c0ff]" : "text-[#ffb4ab]"}`}>
+                      <p className={`font-headline font-bold text-lg ${tx.transactionType === "income" ? "text-primary" : "text-error"}`}>
                         {tx.transactionType === "income" ? "+" : "-"}${tx.amount.toFixed(2)}
                       </p>
-                      <p className="text-[10px] text-[#464555] uppercase tracking-widest">{formatTime(tx.date)}</p>
+                      <p className="text-[10px] text-secondary-text uppercase tracking-widest">{formatTime(tx.date)}</p>
                     </div>
                   </Link>
                 ))}
@@ -211,7 +211,7 @@ export default function ExpensesPage() {
       )}
 
       {/* Add FAB on mobile */}
-      <Link href="/expenses/add" className="lg:hidden fixed right-6 bottom-28 w-14 h-14 rounded-full luminous-gradient text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40">
+      <Link href="/expenses/add" className="lg:hidden fixed right-6 bottom-28 w-14 h-14 rounded-full bg-primary text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40">
         <span className="material-symbols-outlined text-2xl">add</span>
       </Link>
     </main>
