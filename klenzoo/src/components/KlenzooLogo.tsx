@@ -9,7 +9,7 @@ export default function KlenzooLogo({
   if (variant === "symbol" || variant === "small") {
     return (
       <svg
-        className={`fill-current text-white ${className || ""}`}
+        className={`fill-current text-primary-text ${className || ""}`}
         viewBox="0 0 149 84"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -22,16 +22,14 @@ export default function KlenzooLogo({
   if (variant === "wordmark") {
     return (
       <svg
-        className={className}
+        className={`fill-current text-primary-text ${className || ""}`}
         viewBox="0 0 3160 878"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M490.755 576.183L525.701 654L538.281 652.412C473.592 516.312 486.166 524.067 616.715 604.587C629.458 612.446 643.325 620.999 658.353 630.178C650.445 619.325 793.944 546.608 793.944 555.538C793.944 560.631 851.398 601.732 851.398 598.793C865.942 602.527 907.168 612.862 923.154 616.262C952.361 622.475 980 608.321 980 608.321C980 608.321 899.834 459.082 838.76 357.144C809.422 308.187 802.864 301.81 768.702 289.042C747.972 281.303 724.843 271.532 717.305 267.328C709.767 263.131 683.554 251.663 659.055 241.845L614.511 224L537.798 259.184C463.444 293.293 426.054 321.15 426.054 342.444C426.054 350.401 443.755 352.799 503.15 352.9H685.603L628.775 357.144C590.145 390.751 534.427 384.752 518.72 373.058C487.313 349.685 316.406 383.911 316.406 383.911C316.406 386.815 307.929 393.55 297.561 398.867C287.199 404.185 261.918 421.158 241.387 436.589C206.005 463.177 204.929 464.921 220.828 470.091C230.052 473.088 288.433 479.574 350.562 484.494C412.691 489.415 465.691 495.947 468.35 499.015C469.187 499.982 469.969 503.971 471.202 510.255C473.879 523.898 478.677 548.357 490.755 576.183Z"
-          fill="white"
+          fill="currentColor"
         />
-
         {/* KEEPING REST OF YOUR SVG PATHS EXACTLY AS PROVIDED */}
       </svg>
     );
@@ -40,7 +38,7 @@ export default function KlenzooLogo({
   // DEFAULT FULL LOGO
   return (
     <svg
-      className={`fill-current text-white ${className || ""}`}
+      className={`fill-current text-primary-text ${className || ""}`}
       width="100%"
       height="100%"
       viewBox="0 0 420 84"

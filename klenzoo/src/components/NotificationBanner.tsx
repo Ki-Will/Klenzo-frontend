@@ -24,23 +24,37 @@ export default function NotificationBanner() {
   return (
     <div className="sticky top-16 md:top-20 z-30 flex flex-col">
       {banners.map((banner) => {
-        const hex = banner.color ?? "#6366f1";
+        let hex = banner.color ?? "#6366f1";
+        // Map common color names to theme-friendly hex values if needed
+        if (hex === "info") hex = "#5a4dff";
+        if (hex === "success") hex = "#10b981";
+        if (hex === "warning") hex = "#f59e0b";
+        if (hex === "error") hex = "#ef4444";
 
         return (
           <div
             key={banner.id}
-            className="relative w-full flex items-center gap-3 px-4 md:px-6 py-2.5 overflow-hidden"
+            className="relative w-full flex items-center gap-3 px-4 md:px-6 py-2.5 overflow-hidden border-b border-l-[3px]"
             style={{
-              backgroundColor: `${hex}18`,   // 10% opacity fill
-              borderBottom: `1px solid ${hex}30`,
-              borderLeft: `3px solid ${hex}`,
+              backgroundColor: "var(--c-card)",
+              borderBottomColor: `${hex}20`,
+              borderLeftColor: hex,
             }}
           >
+            {/* Solid accent fill layer with opacity */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundColor: hex,
+                opacity: 0.08,
+              }}
+            />
+
             {/* Subtle radial glow from left */}
             <div
               className="absolute inset-y-0 left-0 w-40 pointer-events-none"
               style={{
-                background: `linear-gradient(to right, ${hex}20, transparent)`,
+                background: `linear-gradient(to right, ${hex}15, transparent)`,
               }}
             />
 
@@ -50,7 +64,7 @@ export default function NotificationBanner() {
               style={{ backgroundColor: hex }}
             />
 
-            {/* Title + message — both use the hex color for title, muted for body */}
+            {/* Title + message */}
             <div className="relative flex-1 min-w-0 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
               {banner.title && (
                 <span
@@ -60,10 +74,7 @@ export default function NotificationBanner() {
                   {banner.title}
                 </span>
               )}
-              <p
-                className="text-sm leading-snug min-w-0"
-                style={{ color: `${hex}cc` }}   // 80% opacity of the same hex
-              >
+              <p className="text-sm leading-snug min-w-0 text-primary-text">
                 {banner.message}
               </p>
             </div>
@@ -75,8 +86,8 @@ export default function NotificationBanner() {
                 className="relative flex-shrink-0 text-[11px] font-bold px-3 py-1 rounded-full whitespace-nowrap transition-opacity hover:opacity-80"
                 style={{
                   color: hex,
-                  border: `1px solid ${hex}50`,
-                  backgroundColor: `${hex}15`,
+                  border: `1px solid ${hex}40`,
+                  backgroundColor: `${hex}10`,
                 }}
               >
                 {banner.linkText ?? "Learn more"}
@@ -87,8 +98,7 @@ export default function NotificationBanner() {
             {banner.dismissible && (
               <button
                 onClick={() => handleDismiss(banner.id)}
-                className="relative flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full transition-all hover:bg-white/10"
-                style={{ color: `${hex}99` }}
+                className="relative flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full transition-all hover:bg-black/5 dark:hover:bg-white/10 text-secondary-text hover:text-primary-text"
                 aria-label="Dismiss"
               >
                 <span className="material-symbols-outlined text-sm">close</span>

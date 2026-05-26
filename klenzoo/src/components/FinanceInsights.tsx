@@ -226,32 +226,32 @@ export default function FinanceInsights({
     <div className="space-y-8">
       {/* Smart Insights Section */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-[#1c1b1b] to-[#252424] p-8 rounded-[2rem] border border-white/5 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-surface-container-low to-surface-container-high p-8 rounded-[2rem] border border-outline/10 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-10">
             <span className="material-symbols-outlined text-6xl text-primary">
               auto_graph
             </span>
           </div>
-          <h3 className="text-xl font-headline font-black text-white mb-6 flex items-center gap-3">
+          <h3 className="text-xl font-headline font-black text-primary-text mb-6 flex items-center gap-3">
             <span className="w-2 h-6 bg-primary rounded-full" />
             Spending Velocity
           </h3>
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#918fa1] text-xs uppercase tracking-widest font-bold mb-1">
+                <p className="text-secondary-text text-xs uppercase tracking-widest font-bold mb-1">
                   Month Progress
                 </p>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-2xl font-bold text-primary-text">
                   {Math.round((new Date().getDate() / 30) * 100)}%
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-[#918fa1] text-xs uppercase tracking-widest font-bold mb-1">
+                <p className="text-secondary-text text-xs uppercase tracking-widest font-bold mb-1">
                   Budget Used
                 </p>
                 <p
-                  className={`text-2xl font-bold ${stats.savingsRate < 10 ? "text-[#ffb4ab]" : "text-[#c3c0ff]"}`}
+                  className={`text-2xl font-bold ${stats.savingsRate < 10 ? "text-error" : "text-primary"}`}
                 >
                   {Math.round(
                     (stats.totalExpenses /
@@ -263,16 +263,16 @@ export default function FinanceInsights({
                 </p>
               </div>
             </div>
-            <div className="bg-[#2a2a2a] p-4 rounded-2xl border border-white/5">
-              <p className="text-sm text-[#c7c4d8] leading-relaxed flex items-start gap-2">
+            <div className="bg-card-high p-4 rounded-2xl border border-outline/10">
+              <p className="text-sm text-secondary-text leading-relaxed flex items-start gap-2">
                 {stats.dailyAverage * 30 > stats.totalIncome ? (
                   <>
-                    <span className="material-symbols-outlined text-[#ffb4ab] text-base flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>warning</span>
+                    <span className="material-symbols-outlined text-error text-base flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>warning</span>
                     <span>Your current spending pace exceeds your monthly income. Consider reducing &apos;Other&apos; expenses.</span>
                   </>
                 ) : (
                   <>
-                    <span className="material-symbols-outlined text-[#a5d6b0] text-base flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    <span className="material-symbols-outlined text-emerald-500 dark:text-emerald-400 text-base flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                     <span>You are spending within your means. Great job on maintaining a healthy burn rate!</span>
                   </>
                 )}
@@ -281,25 +281,25 @@ export default function FinanceInsights({
           </div>
         </div>
 
-        <div className="bg-[#1c1b1b] p-8 rounded-[2rem] border border-[#464555]/10 flex flex-col justify-between">
+        <div className="bg-card p-8 rounded-[2rem] border border-outline/10 flex flex-col justify-between">
           <div>
-            <h3 className="text-xl font-headline font-black text-white mb-6">
+            <h3 className="text-xl font-headline font-black text-primary-text mb-6">
               Savings Potential
             </h3>
             <div className="space-y-4">
               {budgetTable.slice(0, 2).map((b) => (
                 <div key={b.id} className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#2a2a2a] flex items-center justify-center text-[#c3c0ff]">
+                  <div className="w-10 h-10 rounded-xl bg-card-high flex items-center justify-center text-primary">
                     <span className="material-symbols-outlined">{b.icon}</span>
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-end">
-                      <p className="text-sm font-bold text-white">{b.name}</p>
-                      <p className="text-xs text-[#918fa1]">
+                      <p className="text-sm font-bold text-primary-text">{b.name}</p>
+                      <p className="text-xs text-secondary-text">
                         ${b.spent.toFixed(0)} spent
                       </p>
                     </div>
-                    <div className="h-1.5 w-full bg-[#2a2a2a] rounded-full mt-1 overflow-hidden">
+                    <div className="h-1.5 w-full bg-card-high rounded-full mt-1 overflow-hidden">
                       <div
                         className="h-full bg-primary"
                         style={{ width: `${b.percent}%` }}
@@ -312,7 +312,7 @@ export default function FinanceInsights({
           </div>
           <Link
             href="/insights"
-            className="mt-8 flex items-center justify-center gap-2 text-xs font-bold text-[#c3c0ff] hover:gap-4 transition-all"
+            className="mt-8 flex items-center justify-center gap-2 text-xs font-bold text-primary hover:gap-4 transition-all"
           >
             VIEW FULL ANALYTICS{" "}
             <span className="material-symbols-outlined text-sm">
@@ -325,7 +325,7 @@ export default function FinanceInsights({
       {/* Budget vs Actual Table */}
       <section>
         <div className="flex items-center justify-between mb-4 px-2">
-          <h3 className="text-xl font-headline font-black text-white flex items-center gap-2">
+          <h3 className="text-xl font-headline font-black text-primary-text flex items-center gap-2">
             <span className="material-symbols-outlined text-primary">
               account_balance_wallet
             </span>
@@ -336,35 +336,35 @@ export default function FinanceInsights({
               resetForm();
               setShowModal(true);
             }}
-            className="px-6 py-2 bg-primary text-[#0f0069] rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+            className="px-6 py-2 bg-primary text-on-primary rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
           >
             <span className="material-symbols-outlined text-sm">add</span> New
             Budget
           </button>
         </div>
-        <div className="bg-[#1c1b1b] rounded-[2.5rem] overflow-hidden border border-[#464555]/10 shadow-2xl">
+        <div className="bg-card rounded-[2.5rem] overflow-hidden border border-outline/10 shadow-2xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-[#2a2a2a]/30">
-                  <th className="p-6 text-[10px] font-black text-[#918fa1] uppercase tracking-[0.2em]">
+                <tr className="bg-card-high/30">
+                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em]">
                     Item
                   </th>
-                  <th className="p-6 text-[10px] font-black text-[#918fa1] uppercase tracking-[0.2em] text-right">
+                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
                     Limit
                   </th>
-                  <th className="p-6 text-[10px] font-black text-[#918fa1] uppercase tracking-[0.2em] text-right">
+                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
                     Actual
                   </th>
-                  <th className="p-6 text-[10px] font-black text-[#918fa1] uppercase tracking-[0.2em] text-center w-48">
+                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-center w-48">
                     Utilization
                   </th>
-                  <th className="p-6 text-[10px] font-black text-[#918fa1] uppercase tracking-[0.2em] text-right">
+                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
                     Left
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-outline/5">
                 {budgetTable.map((row) => (
                   <>
                     <tr
@@ -372,12 +372,12 @@ export default function FinanceInsights({
                       onClick={() =>
                         setExpandedRow(expandedRow === row.id ? null : row.id)
                       }
-                      className="hover:bg-white/[0.04] cursor-pointer transition-colors group relative"
+                      className="hover:bg-card-high/40 cursor-pointer transition-colors group relative"
                     >
                       <td className="p-6">
                         <div className="flex items-center gap-4">
                           <div
-                            className="w-10 h-10 rounded-2xl bg-[#2a2a2a] flex items-center justify-center group-hover:scale-110 transition-all duration-500 shadow-lg"
+                            className="w-10 h-10 rounded-2xl bg-card-high flex items-center justify-center group-hover:scale-110 transition-all duration-500 shadow-lg"
                             style={{ color: row.color }}
                           >
                             <span className="material-symbols-outlined text-xl">
@@ -400,11 +400,11 @@ export default function FinanceInsights({
                                     e.key === "Enter" &&
                                     handleInlineSave(row.id)
                                   }
-                                  className="bg-[#0e0e0e] border-none rounded-lg py-1 px-2 text-sm text-white focus:ring-1 focus:ring-primary w-32"
+                                  className="bg-card-deep border border-outline/20 rounded-lg py-1 px-2 text-sm text-primary-text focus:ring-1 focus:ring-primary w-32"
                                 />
                                 <button
                                   onClick={() => handleInlineSave(row.id)}
-                                  className="text-primary hover:text-white transition-colors"
+                                  className="text-primary hover:text-primary-text transition-colors"
                                 >
                                   <span className="material-symbols-outlined text-sm">
                                     check
@@ -413,7 +413,7 @@ export default function FinanceInsights({
                               </div>
                             ) : (
                               <div className="flex items-center gap-2 group/title">
-                                <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">
+                                <span className="text-sm font-bold text-primary-text group-hover:text-primary transition-colors">
                                   {row.name}
                                 </span>
                                 <button
@@ -422,7 +422,7 @@ export default function FinanceInsights({
                                     setInlineEditingId(row.id);
                                     setInlineName(row.name);
                                   }}
-                                  className="opacity-0 group-hover/title:opacity-100 text-[#918fa1] hover:text-white transition-all"
+                                  className="opacity-0 group-hover/title:opacity-100 text-secondary-text hover:text-primary-text transition-all"
                                 >
                                   <span className="material-symbols-outlined text-[14px]">
                                     edit
@@ -430,16 +430,16 @@ export default function FinanceInsights({
                                 </button>
                               </div>
                             )}
-                            <span className="text-[9px] uppercase tracking-[0.1em] text-[#918fa1] font-black">
+                            <span className="text-[9px] uppercase tracking-[0.1em] text-secondary-text font-black">
                               {row.period}
                             </span>
                           </div>
                         </div>
                       </td>
-                      <td className="p-6 text-sm font-bold text-[#c7c4d8] text-right">
+                      <td className="p-6 text-sm font-bold text-secondary-text text-right">
                         ${row.budget.toLocaleString()}
                       </td>
-                      <td className="p-6 text-sm font-black text-white text-right">
+                      <td className="p-6 text-sm font-black text-primary-text text-right">
                         $
                         {row.spent.toLocaleString(undefined, {
                           minimumFractionDigits: 2,
@@ -447,23 +447,23 @@ export default function FinanceInsights({
                       </td>
                       <td className="p-6">
                         <div className="flex flex-col gap-2">
-                          <div className="h-2 w-full bg-[#2a2a2a] rounded-full overflow-hidden p-[2px]">
+                          <div className="h-2 w-full bg-card-high rounded-full overflow-hidden p-[2px]">
                             <div
-                              className="h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                              className="h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(0,0,0,0.05)]"
                               style={{
                                 width: `${row.percent}%`,
                                 backgroundColor:
-                                  row.percent > 90 ? "#ffb4ab" : row.color,
+                                  row.percent > 90 ? "var(--color-error)" : row.color,
                               }}
                             />
                           </div>
-                          <span className="text-[9px] font-black text-[#918fa1] text-right tracking-widest">
+                          <span className="text-[9px] font-black text-secondary-text text-right tracking-widest">
                             {row.percent.toFixed(0)}%
                           </span>
                         </div>
                       </td>
                       <td
-                        className={`p-6 text-sm font-black text-right ${row.remaining < 0 ? "text-[#ffb4ab]" : "text-primary"}`}
+                        className={`p-6 text-sm font-black text-right ${row.remaining < 0 ? "text-error" : "text-primary"}`}
                       >
                         <div className="flex items-center justify-end gap-3">
                           <span>
@@ -471,7 +471,7 @@ export default function FinanceInsights({
                             {Math.abs(row.remaining).toLocaleString()}
                           </span>
                           <span
-                            className={`material-symbols-outlined text-xs text-[#918fa1] transition-transform ${expandedRow === row.id ? "rotate-180" : ""}`}
+                            className={`material-symbols-outlined text-xs text-secondary-text transition-transform ${expandedRow === row.id ? "rotate-180" : ""}`}
                           >
                             expand_more
                           </span>
@@ -484,11 +484,11 @@ export default function FinanceInsights({
                       <tr>
                         <td
                           colSpan={5}
-                          className="p-0 bg-[#131313]/30 border-t border-white/5"
+                          className="p-0 bg-card-deep/40 border-t border-outline/10"
                         >
                           <div className="p-6 space-y-4 animate-in slide-in-from-top-2 duration-300">
                             <div className="flex items-center justify-between mb-2">
-                              <h5 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#c3c0ff]">
+                              <h5 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
                                 Linked Items
                               </h5>
                               <div className="flex gap-2">
@@ -499,7 +499,7 @@ export default function FinanceInsights({
                                       showAssignor === row.id ? null : row.id,
                                     );
                                   }}
-                                  className="px-3 py-1 bg-white/5 rounded-full text-[9px] font-black text-[#c7c4d8] hover:bg-white/10 transition-all flex items-center gap-2"
+                                  className="px-3 py-1 bg-card-high rounded-full text-[9px] font-black text-secondary-text hover:bg-card-highest transition-all flex items-center gap-2"
                                 >
                                   <span className="material-symbols-outlined text-sm">
                                     add_link
@@ -513,7 +513,7 @@ export default function FinanceInsights({
                                       budgets.find((b) => b.id === row.id)!,
                                     );
                                   }}
-                                  className="w-8 h-8 rounded-full bg-[#2a2a2a] flex items-center justify-center text-[#c7c4d8] hover:text-white transition-colors"
+                                  className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-secondary-text hover:text-primary-text transition-colors"
                                 >
                                   <span className="material-symbols-outlined text-sm">
                                     settings
@@ -529,7 +529,7 @@ export default function FinanceInsights({
                                     setDeleting(null);
                                   }}
                                   disabled={deleting === row.id}
-                                  className="w-8 h-8 rounded-full bg-[#2a2a2a] flex items-center justify-center text-[#ffb4ab] hover:bg-[#ffb4ab] hover:text-[#0f0069] transition-all"
+                                  className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-error hover:bg-error hover:text-on-primary transition-all"
                                 >
                                   <span className="material-symbols-outlined text-sm">
                                     delete
@@ -540,7 +540,7 @@ export default function FinanceInsights({
 
                             {/* Assignor Popover */}
                             {showAssignor === row.id && (
-                              <div className="bg-[#1c1b1b] p-4 rounded-2xl border border-primary/20 space-y-3 animate-in fade-in duration-200">
+                              <div className="bg-card p-4 rounded-2xl border border-primary/20 space-y-3 animate-in fade-in duration-200 shadow-lg">
                                 <p className="text-[9px] font-black text-primary uppercase tracking-widest mb-2">
                                   Select unassigned items
                                 </p>
@@ -550,7 +550,7 @@ export default function FinanceInsights({
                                       !t.budgetId &&
                                       t.transactionType === "expense",
                                   ).length === 0 ? (
-                                    <p className="text-[9px] text-[#918fa1] italic py-2">
+                                    <p className="text-[9px] text-secondary-text italic py-2">
                                       No unassigned items available
                                     </p>
                                   ) : (
@@ -563,21 +563,21 @@ export default function FinanceInsights({
                                       .map((t) => (
                                         <div
                                           key={t.id}
-                                          className="flex items-center justify-between p-2 bg-white/5 rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
+                                          className="flex items-center justify-between p-2 bg-card-high rounded-xl hover:bg-card-highest transition-colors cursor-pointer"
                                           onClick={() =>
                                             assignTransaction(row.id, t.id)
                                           }
                                         >
                                           <div className="flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-xs text-[#918fa1]">
+                                            <span className="material-symbols-outlined text-xs text-secondary-text">
                                               receipt
                                             </span>
-                                            <span className="text-[10px] font-bold text-white truncate max-w-[150px]">
+                                            <span className="text-[10px] font-bold text-primary-text truncate max-w-[150px]">
                                               {t.description || t.category}
                                             </span>
                                           </div>
                                           <div className="flex items-center gap-2">
-                                            <span className="text-[10px] text-white">
+                                            <span className="text-[10px] text-primary-text">
                                               -${Number(t.amount).toFixed(0)}
                                             </span>
                                             <span className="material-symbols-outlined text-xs text-primary">
@@ -611,19 +611,19 @@ export default function FinanceInsights({
                                 .map((t) => (
                                   <div
                                     key={t.id}
-                                    className="bg-[#1c1b1b] p-4 rounded-2xl border border-white/5 flex items-center justify-between group/item hover:border-white/20 transition-all"
+                                    className="bg-card p-4 rounded-2xl border border-outline/10 flex items-center justify-between group/item hover:border-outline/30 transition-all shadow-sm"
                                   >
                                     <div className="flex items-center gap-3">
-                                      <div className="w-8 h-8 rounded-full bg-[#2a2a2a] flex items-center justify-center text-[#c3c0ff]">
+                                      <div className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-primary">
                                         <span className="material-symbols-outlined text-sm">
                                           receipt_long
                                         </span>
                                       </div>
                                       <div>
-                                        <p className="text-[11px] font-bold text-white truncate max-w-[120px]">
+                                        <p className="text-[11px] font-bold text-primary-text truncate max-w-[120px]">
                                           {t.description || t.category}
                                         </p>
-                                        <p className="text-[9px] text-[#918fa1] uppercase tracking-widest">
+                                        <p className="text-[9px] text-secondary-text uppercase tracking-widest">
                                           {new Date(
                                             t.date,
                                           ).toLocaleDateString()}
@@ -631,7 +631,7 @@ export default function FinanceInsights({
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                      <p className="text-xs font-black text-white">
+                                      <p className="text-xs font-black text-primary-text">
                                         -${Number(t.amount).toFixed(0)}
                                       </p>
                                       {t.budgetId === row.id && (
@@ -640,7 +640,7 @@ export default function FinanceInsights({
                                             e.stopPropagation();
                                             unassignTransaction(t.id);
                                           }}
-                                          className="opacity-0 group-hover/item:opacity-100 text-[#ffb4ab] hover:scale-110 transition-all"
+                                          className="opacity-0 group-hover/item:opacity-100 text-error hover:scale-110 transition-all"
                                           title="Unlink from budget"
                                         >
                                           <span className="material-symbols-outlined text-sm">
@@ -660,7 +660,7 @@ export default function FinanceInsights({
                                         ?.category &&
                                     !t.budgetId),
                               ).length === 0 && (
-                                <p className="text-[10px] text-[#918fa1] italic col-span-full py-4 uppercase tracking-widest text-center">
+                                <p className="text-[10px] text-secondary-text italic col-span-full py-4 uppercase tracking-widest text-center">
                                   No underlying items found
                                 </p>
                               )}
@@ -678,10 +678,10 @@ export default function FinanceInsights({
                         <span className="material-symbols-outlined text-6xl mb-4">
                           analytics
                         </span>
-                        <p className="text-lg font-bold text-white mb-2">
+                        <p className="text-lg font-bold text-primary-text mb-2">
                           Ready to optimize?
                         </p>
-                        <p className="text-sm text-[#918fa1] max-w-xs mx-auto mb-8">
+                        <p className="text-sm text-secondary-text max-w-xs mx-auto mb-8">
                           Create custom budgets to track specific goals or
                           recurring expenses.
                         </p>
@@ -706,11 +706,11 @@ export default function FinanceInsights({
 
       {/* Modal & Toast */}
       {showModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md">
-          <div className="bg-[#1c1b1b] w-full max-w-xl rounded-[40px] overflow-hidden border border-white/5 shadow-2xl animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/75 backdrop-blur-md">
+          <div className="bg-card w-full max-w-xl rounded-[40px] overflow-hidden border border-outline/15 shadow-2xl animate-in zoom-in-95 duration-200">
             <div className="p-8 lg:p-10">
               <div className="flex items-center justify-between mb-8">
-                <h3 className="text-3xl font-black text-white">
+                <h3 className="text-3xl font-black text-primary-text">
                   {editingBudget ? "Edit Budget" : "New Budget"}
                 </h3>
                 <button
@@ -718,7 +718,7 @@ export default function FinanceInsights({
                     setShowModal(false);
                     resetForm();
                   }}
-                  className="w-10 h-10 rounded-full bg-[#2a2a2a] flex items-center justify-center text-[#c7c4d8] hover:text-white transition-colors"
+                  className="w-10 h-10 rounded-full bg-card-high flex items-center justify-center text-secondary-text hover:text-primary-text transition-colors"
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
@@ -727,7 +727,7 @@ export default function FinanceInsights({
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
-                    <label className="text-[10px] uppercase tracking-widest text-[#918fa1] font-bold mb-2 block">
+                    <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
                       Budget Name
                     </label>
                     <input
@@ -735,11 +735,11 @@ export default function FinanceInsights({
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Summer Vacation"
-                      className="w-full bg-[#0e0e0e] border-none rounded-2xl p-4 text-[#e5e2e1] focus:ring-2 focus:ring-[#c3c0ff] transition-all"
+                      className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase tracking-widest text-[#918fa1] font-bold mb-2 block">
+                    <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
                       Limit Amount ($)
                     </label>
                     <input
@@ -747,24 +747,29 @@ export default function FinanceInsights({
                       value={limit}
                       onChange={(e) => setLimit(e.target.value)}
                       placeholder="1000"
-                      className="w-full bg-[#0e0e0e] border-none rounded-2xl p-4 text-[#e5e2e1] focus:ring-2 focus:ring-[#c3c0ff] transition-all"
+                      className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase tracking-widest text-[#918fa1] font-bold mb-2 block">
+                    <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
                       Period
                     </label>
-                    <select
-                      value={period}
-                      onChange={(e) => setPeriod(e.target.value)}
-                      className="w-full bg-[#0e0e0e] border-none rounded-2xl p-4 text-[#e5e2e1] focus:ring-2 focus:ring-[#c3c0ff] transition-all appearance-none"
-                    >
-                      {PERIODS.map((p) => (
-                        <option key={p.value} value={p.value}>
-                          {p.label}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="relative">
+                      <select
+                        value={period}
+                        onChange={(e) => setPeriod(e.target.value)}
+                        className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all appearance-none"
+                      >
+                        {PERIODS.map((p) => (
+                          <option key={p.value} value={p.value} className="bg-card text-primary-text">
+                            {p.label}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-secondary-text">
+                        unfold_more
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -774,19 +779,19 @@ export default function FinanceInsights({
                       type="date"
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full bg-[#0e0e0e] border-none rounded-2xl p-4 text-[#e5e2e1]"
+                      className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none"
                     />
                     <input
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
-                      className="w-full bg-[#0e0e0e] border-none rounded-2xl p-4 text-[#e5e2e1]"
+                      className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none"
                     />
                   </div>
                 )}
 
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-[#918fa1] font-bold mb-2 block">
+                  <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
                     Auto-match Category
                   </label>
                   <input
@@ -794,12 +799,12 @@ export default function FinanceInsights({
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     placeholder="e.g. food"
-                    className="w-full bg-[#0e0e0e] border-none rounded-2xl p-4 text-[#e5e2e1] focus:ring-2 focus:ring-[#c3c0ff] transition-all"
+                    className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-[#918fa1] font-bold mb-2 block">
+                  <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
                     Style
                   </label>
                   <div className="flex gap-4 items-center">
@@ -808,7 +813,7 @@ export default function FinanceInsights({
                         <button
                           key={c}
                           onClick={() => setColor(c)}
-                          className={`w-6 h-6 rounded-full ${color === c ? "ring-2 ring-white ring-offset-2 ring-offset-[#1c1b1b]" : "opacity-40"}`}
+                          className={`w-6 h-6 rounded-full transition-all ${color === c ? "ring-2 ring-primary ring-offset-2 ring-offset-[var(--c-card)] scale-110" : "opacity-40 hover:opacity-70"}`}
                           style={{ backgroundColor: c }}
                         />
                       ))}
@@ -818,7 +823,7 @@ export default function FinanceInsights({
                         <button
                           key={i}
                           onClick={() => setIcon(i)}
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center ${icon === i ? "bg-white text-[#0f0069]" : "bg-[#2a2a2a] text-[#c7c4d8]"}`}
+                          className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${icon === i ? "bg-primary text-on-primary scale-110" : "bg-card-high text-secondary-text hover:bg-card-highest"}`}
                         >
                           <span className="material-symbols-outlined text-[16px]">
                             {i}
@@ -844,7 +849,7 @@ export default function FinanceInsights({
 
       {toast && (
         <div
-          className={`fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-bottom-4 ${toast.type === "success" ? "bg-[#c3c0ff] text-[#0f0069]" : "bg-[#ffb4ab] text-[#0f0069]"}`}
+          className={`fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-bottom-4 ${toast.type === "success" ? "bg-primary-container text-on-primary-container" : "bg-error-container text-on-error-container"}`}
         >
           <span className="material-symbols-outlined">
             {toast.type === "success" ? "check_circle" : "error"}
