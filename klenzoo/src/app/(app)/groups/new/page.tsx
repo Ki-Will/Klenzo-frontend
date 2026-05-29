@@ -32,8 +32,8 @@ function Steps({ current }: { current: number }) {
         return (
           <div key={label} className="flex items-center gap-2 flex-1 last:flex-none">
             <div className="flex items-center gap-2 flex-shrink-0">
-              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${done ? "bg-primary text-white" :
-                active ? "bg-primary text-white" :
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${done ? "bg-primary text-on-primary" :
+                active ? "bg-primary text-on-primary" :
                   "bg-card-high text-muted"
                 }`}>
                 {done ? <span className="material-symbols-outlined text-sm">check</span> : i + 1}
@@ -89,6 +89,7 @@ export default function NewGroupPage() {
     setMembers((prev) => [...prev, { email: "", name: "" }]);
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function removeMemberRow(i: number) {
     setMembers((prev) => prev.filter((_, idx) => idx !== i));
   }
@@ -228,7 +229,7 @@ export default function NewGroupPage() {
             <button
               type="submit"
               disabled={!name.trim()}
-              className="w-full py-4 bg-primary text-white font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-primary text-on-primary font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed cursor-pointer"
             >
               Next — Add Members
             </button>
@@ -242,7 +243,7 @@ export default function NewGroupPage() {
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-muted uppercase tracking-widest">Members</label>
                 <button type="button" onClick={addMemberRow}
-                  className="flex items-center gap-1 text-primary text-xs font-bold hover:underline">
+                  className="flex items-center gap-1 text-primary text-xs font-bold hover:underline cursor-pointer">
                   <span className="material-symbols-outlined text-sm">add</span>
                   Add row
                 </button>
@@ -286,7 +287,7 @@ export default function NewGroupPage() {
                     </div>
                     {members.length > 1 && (
                       <button type="button" onClick={() => removeMemberRow(i)}
-                        className="p-2 text-muted hover:text-error transition-colors flex-shrink-0">
+                        className="p-2 text-muted hover:text-error transition-colors flex-shrink-0 cursor-pointer">
                         <span className="material-symbols-outlined text-sm">delete</span>
                       </button>
                     )}
@@ -298,11 +299,11 @@ export default function NewGroupPage() {
 
             <div className="flex gap-3">
               <button type="button" onClick={() => setStep(0)}
-                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all">
+                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all cursor-pointer">
                 Back
               </button>
               <button type="submit"
-                className="flex-1 py-4 bg-primary text-white font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all">
+                className="flex-1 py-4 bg-primary text-on-primary font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
                 Next — Split Method
               </button>
             </div>
@@ -339,7 +340,7 @@ export default function NewGroupPage() {
                         setShares((prev) => prev.map((s) => ({ ...s, value: share })));
                       }
                     }}
-                    className={`flex flex-col items-center p-4 rounded-2xl transition-all border ${splitMethod === key
+                    className={`flex flex-col items-center p-4 rounded-2xl transition-all border cursor-pointer ${splitMethod === key
                       ? "bg-primary/20 border-primary/50 text-primary-text"
                       : "bg-card border-outline/10 text-muted hover:bg-card-high"
                       }`}
@@ -360,7 +361,7 @@ export default function NewGroupPage() {
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-muted uppercase tracking-widest">Total Amount</label>
                 <button type="button" onClick={distributeEqually}
-                  className="text-primary text-xs font-bold hover:underline flex items-center gap-1">
+                  className="text-primary text-xs font-bold hover:underline flex items-center gap-1 cursor-pointer">
                   <span className="material-symbols-outlined text-sm">auto_fix_high</span>
                   Distribute equally
                 </button>
@@ -451,11 +452,11 @@ export default function NewGroupPage() {
 
             <div className="flex gap-3">
               <button type="button" onClick={() => setStep(1)}
-                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all">
+                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all cursor-pointer">
                 Back
               </button>
               <button type="button" onClick={() => setStep(3)}
-                className="flex-1 py-4 bg-primary text-white font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all">
+                className="flex-1 py-4 bg-primary text-on-primary font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
                 Review
               </button>
             </div>
@@ -475,7 +476,7 @@ export default function NewGroupPage() {
                   <p className="text-xl font-headline font-bold text-primary-text">{name}</p>
                   {description && <p className="text-sm text-muted mt-0.5">{description}</p>}
                 </div>
-                <button onClick={() => setStep(0)} className="text-primary text-xs font-bold hover:underline flex-shrink-0 ml-4">Edit</button>
+                <button onClick={() => setStep(0)} className="text-primary text-xs font-bold hover:underline flex-shrink-0 ml-4 cursor-pointer">Edit</button>
               </div>
 
               <div className="h-px bg-outline/10" />
@@ -484,7 +485,7 @@ export default function NewGroupPage() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-xs text-muted uppercase tracking-widest">Members ({reviewMembers.length})</p>
-                  <button onClick={() => setStep(1)} className="text-primary text-xs font-bold hover:underline">Edit</button>
+                  <button onClick={() => setStep(1)} className="text-primary text-xs font-bold hover:underline cursor-pointer">Edit</button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {reviewMembers.map((m, index) => (
@@ -508,7 +509,7 @@ export default function NewGroupPage() {
                     Split — {splitMethod === "equal" ? "Equal" : splitMethod === "percentage" ? "By %" : "Custom $"}
                     {amt > 0 && ` · $${amt.toFixed(2)} total`}
                   </p>
-                  <button onClick={() => setStep(2)} className="text-primary text-xs font-bold hover:underline">Edit</button>
+                  <button onClick={() => setStep(2)} className="text-primary text-xs font-bold hover:underline cursor-pointer">Edit</button>
                 </div>
                 <div className="space-y-2">
                   {shares.map((s) => (
@@ -534,14 +535,14 @@ export default function NewGroupPage() {
 
             <div className="flex gap-3">
               <button type="button" onClick={() => setStep(2)}
-                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all">
+                className="flex-1 py-4 bg-card-high hover:bg-card-highest text-primary-text font-bold rounded-full transition-all cursor-pointer">
                 Back
               </button>
               <button
                 type="button"
                 onClick={handleCreate}
                 disabled={submitting}
-                className="flex-1 py-4 bg-primary text-white font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100"
+                className="flex-grow py-4 bg-primary text-on-primary font-headline font-bold rounded-full shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:scale-100 cursor-pointer"
               >
                 {submitting ? "Creating…" : "Create Circle"}
               </button>
