@@ -65,11 +65,15 @@ export default function NotificationBanner() {
             />
 
             {/* Title + message */}
-            <div className="relative flex-1 min-w-0 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <div className="relative flex-1 min-w-0 flex flex-wrap items-center gap-x-3 gap-y-1">
               {banner.title && (
                 <span
-                  className="text-[11px] font-bold uppercase tracking-widest whitespace-nowrap flex-shrink-0"
-                  style={{ color: hex }}
+                  className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0"
+                  style={{
+                    backgroundColor: `${hex}20`,
+                    color: hex,
+                    border: `1px solid ${hex}30`,
+                  }}
                 >
                   {banner.title}
                 </span>
@@ -110,4 +114,3 @@ export default function NotificationBanner() {
     </div>
   );
 }
-

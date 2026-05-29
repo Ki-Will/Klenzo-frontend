@@ -35,13 +35,13 @@ export default function NotificationsPage() {
         {/* Header */}
         <div className="flex justify-between items-end">
           <div>
-            <span className="text-[#c3c0ff] uppercase tracking-[0.3em] text-[10px] mb-2 block">Activity</span>
+            <span className="text-primary uppercase tracking-[0.3em] text-[10px] mb-2 block">Activity</span>
             <h1 className="text-5xl font-headline font-extrabold tracking-tighter text-on-surface">Notifications</h1>
           </div>
           {unread.length > 0 && (
             <button
               onClick={markAllRead}
-              className="text-[#c3c0ff] text-sm font-semibold hover:underline"
+              className="text-primary text-sm font-semibold hover:underline cursor-pointer"
             >
               Mark all read
             </button>
@@ -75,10 +75,10 @@ export default function NotificationsPage() {
                   {unread.map((n) => (
                     <div
                       key={n.id}
-                      className="flex items-start gap-4 p-5 bg-surface rounded-2xl border border-[#c3c0ff]/10 hover:bg-[#2a2a2a] transition-all group"
+                      className="flex items-start gap-4 p-5 bg-surface rounded-2xl border border-primary/10 hover:bg-card-high transition-all group"
                     >
                       {/* Icon — default dark style for all notification types */}
-                      <div className="w-11 h-11 rounded-full bg-[#353534] flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-full bg-card-highest flex items-center justify-center flex-shrink-0">
                         <span className="material-symbols-outlined text-on-surface-variant text-[18px]">
                           {TYPE_ICON[n.type ?? "default"] ?? TYPE_ICON.default}
                         </span>
@@ -95,11 +95,11 @@ export default function NotificationsPage() {
                         </span>
                         <div className="flex items-center gap-1">
                           {/* Unread dot */}
-                          <div className="w-2 h-2 rounded-full bg-[#c3c0ff]" />
+                          <div className="w-2 h-2 rounded-full bg-primary" />
                           {/* Mark read — visible on hover */}
                           <button
                             onClick={() => markRead(n.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-[#c3c0ff] p-0.5"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-primary p-0.5 cursor-pointer"
                             title="Mark as read"
                           >
                             <span className="material-symbols-outlined text-sm">check</span>
@@ -107,7 +107,7 @@ export default function NotificationsPage() {
                           {/* Dismiss */}
                           <button
                             onClick={() => dismiss(n.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-[#ffb4ab] p-0.5"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-error p-0.5 cursor-pointer"
                             title="Dismiss"
                           >
                             <span className="material-symbols-outlined text-sm">close</span>
@@ -128,10 +128,10 @@ export default function NotificationsPage() {
                   {read.map((n) => (
                     <div
                       key={n.id}
-                      className="flex items-start gap-4 p-5 bg-surface rounded-2xl hover:bg-[#2a2a2a] transition-all opacity-50 hover:opacity-100 group"
+                      className="flex items-start gap-4 p-5 bg-surface rounded-2xl hover:bg-card-high transition-all opacity-50 hover:opacity-100 group"
                     >
-                      <div className="w-11 h-11 rounded-full bg-[#2a2a2a] flex items-center justify-center flex-shrink-0">
-                        <span className="material-symbols-outlined text-[#918fa1] text-[18px]">
+                      <div className="w-11 h-11 rounded-full bg-card-high flex items-center justify-center flex-shrink-0">
+                        <span className="material-symbols-outlined text-muted text-[18px]">
                           {TYPE_ICON[n.type ?? "default"] ?? TYPE_ICON.default}
                         </span>
                       </div>
@@ -147,7 +147,7 @@ export default function NotificationsPage() {
                         </span>
                         <button
                           onClick={() => dismiss(n.id)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-[#ffb4ab] p-0.5"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-error p-0.5 cursor-pointer"
                           title="Dismiss"
                         >
                           <span className="material-symbols-outlined text-sm">close</span>
@@ -164,4 +164,3 @@ export default function NotificationsPage() {
     </main>
   );
 }
-
