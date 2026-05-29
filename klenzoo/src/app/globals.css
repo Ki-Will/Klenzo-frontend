@@ -45,6 +45,10 @@
   --color-on-error: #2b0002;
   --color-on-error-container: #ffd6d2;
 
+  /* Success & Warning */
+  --color-success: #81c784;
+  --color-warning: #ffb74d;
+
   /* Surfaces */
   --color-background: #0b0b0f;
   --color-surface: #111116;
@@ -134,6 +138,10 @@
   --color-error-container: #ffdad6;
   --color-on-error: #ffffff;
   --color-on-error-container: #410002;
+
+  /* Success & Warning */
+  --color-success: #2e7d32;
+  --color-warning: #b58100;
 
   /* Surfaces — light */
   --color-background: #f5f5fa;
