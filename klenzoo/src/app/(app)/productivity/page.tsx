@@ -3,16 +3,16 @@ import { useState, useEffect, useCallback } from "react";
 import { productivity as productivityApi, type Task, type TaskStatus } from "@/lib/api";
 
 const PRIORITY_LABELS: Record<number, { label: string; color: string; bg: string }> = {
-  4: { label: "Critical",  color: "text-[#dad7ff]",  bg: "bg-[#4f46e5]" },
-  3: { label: "High",      color: "text-[#c3c0ff]",  bg: "bg-[#4f46e5]/20" },
-  2: { label: "Standard",  color: "text-on-surface-variant",  bg: "bg-[#353534]" },
-  1: { label: "Low",       color: "text-[#918fa1]",  bg: "bg-[#2a2a2a]" },
+  4: { label: "Critical",  color: "text-on-primary",  bg: "bg-primary" },
+  3: { label: "High",      color: "text-primary",  bg: "bg-primary/20" },
+  2: { label: "Standard",  color: "text-on-surface-variant",  bg: "bg-card-highest" },
+  1: { label: "Low",       color: "text-muted",  bg: "bg-card-high" },
 };
 
 const COLUMNS: { status: TaskStatus; label: string; dot: string; count?: number }[] = [
-  { status: "todo",        label: "Todo",        dot: "bg-[#4f46e5]" },
-  { status: "in_progress", label: "In Progress", dot: "bg-[#c3c0ff]" },
-  { status: "done",        label: "Done",        dot: "bg-[#ffb695]" },
+  { status: "todo",        label: "Todo",        dot: "bg-primary" },
+  { status: "in_progress", label: "In Progress", dot: "bg-secondary" },
+  { status: "done",        label: "Done",        dot: "bg-tertiary" },
 ];
 
 // ─── Add Task Modal ───────────────────────────────────────────────────────────
@@ -64,10 +64,10 @@ function AddTaskModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      <div className="w-full max-w-md bg-surface rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-[#464555]/20">
+      <div className="w-full max-w-md bg-surface rounded-2xl p-8 shadow-2xl border border-[var(--c-border)]">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-headline font-bold">New Task</h2>
-          <button onClick={onClose} className="text-on-surface-variant hover:text-white transition-colors">
+          <button onClick={onClose} className="text-on-surface-variant hover:text-primary-text transition-colors cursor-pointer">
             <span className="material-symbols-outlined">close</span>
           </button>
         </div>
@@ -82,7 +82,7 @@ function AddTaskModal({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Design System Overhaul"
               required
-              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -94,7 +94,7 @@ function AddTaskModal({
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Optional details..."
               rows={2}
-              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all resize-none"
+              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -105,7 +105,7 @@ function AddTaskModal({
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as TaskStatus)}
-                className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary transition-all"
               >
                 <option value="todo">Todo</option>
                 <option value="in_progress">In Progress</option>
@@ -120,7 +120,7 @@ function AddTaskModal({
               <select
                 value={priority}
                 onChange={(e) => setPriority(Number(e.target.value))}
-                className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary transition-all"
               >
                 <option value={4}>Critical</option>
                 <option value={3}>High</option>
@@ -137,13 +137,13 @@ function AddTaskModal({
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full bg-[#0e0e0e] border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
+            className="w-full py-4 luminous-gradient text-white font-headline font-bold rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
           >
             {loading ? "Creating…" : "Create Task"}
           </button>
@@ -179,12 +179,12 @@ function TaskCard({
     <div
       className={`bg-surface p-6 rounded-2xl border transition-all group cursor-pointer relative overflow-hidden ${
         task.status === "in_progress"
-          ? "border-[#c3c0ff]/20 shadow-xl shadow-black/40"
-          : "border-[#464555]/5 hover:border-[#c3c0ff]/20"
+          ? "border-primary/20 shadow-xl shadow-black/10"
+          : "border-[var(--c-border)] hover:border-primary/20"
       }`}
     >
       {task.status === "in_progress" && (
-        <div className="absolute top-0 left-0 w-1 h-full bg-[#c3c0ff] rounded-l-2xl" />
+        <div className="absolute top-0 left-0 w-1 h-full bg-primary rounded-l-2xl" />
       )}
       <div className="flex justify-between items-start mb-4">
         <span className={`px-2 py-0.5 rounded-lg text-[10px] font-bold uppercase tracking-tighter ${p.bg} ${p.color}`}>
@@ -193,14 +193,14 @@ function TaskCard({
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={() => onStatusChange(task.id, nextStatus[task.status])}
-            className="p-1 hover:text-[#c3c0ff] transition-colors text-on-surface-variant"
+            className="p-1 hover:text-primary transition-colors text-on-surface-variant cursor-pointer"
             title="Advance status"
           >
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
           <button
             onClick={() => onDelete(task.id)}
-            className="p-1 hover:text-[#ffb4ab] transition-colors text-on-surface-variant"
+            className="p-1 hover:text-error transition-colors text-on-surface-variant cursor-pointer"
             title="Delete"
           >
             <span className="material-symbols-outlined text-sm">delete</span>
@@ -221,19 +221,19 @@ function TaskCard({
       )}
 
       {task.status === "in_progress" && (
-        <div className="w-full bg-[#0e0e0e] h-1.5 rounded-full mb-4">
-          <div className="bg-[#c3c0ff] h-full rounded-full w-3/4" />
+        <div className="w-full bg-card-deep h-1.5 rounded-full mb-4">
+          <div className="bg-primary h-full rounded-full w-3/4" />
         </div>
       )}
 
       <div className="flex items-center justify-between mt-2">
-        <div className="w-6 h-6 rounded-full bg-[#353534] flex items-center justify-center text-[10px] font-bold text-on-surface-variant">
+        <div className="w-6 h-6 rounded-full bg-card-highest flex items-center justify-center text-[10px] font-bold text-on-surface-variant">
           U
         </div>
         {task.dueDate && (
           <div
             className={`flex items-center gap-1 text-[10px] font-bold ${
-              isOverdue ? "text-[#ffb4ab]" : "text-on-surface-variant"
+              isOverdue ? "text-error" : "text-on-surface-variant"
             }`}
           >
             <span className="material-symbols-outlined text-xs">
@@ -251,7 +251,7 @@ function TaskCard({
         )}
         {isDone && (
           <span
-            className="material-symbols-outlined text-[#ffb695] text-lg"
+            className="material-symbols-outlined text-tertiary text-lg"
             style={{ fontVariationSettings: "'FILL' 1" }}
           >
             check_circle
@@ -319,7 +319,7 @@ export default function ProductivityPage() {
               </h1>
               <p className="text-on-surface-variant max-w-lg">
                 Your productivity is at{" "}
-                <span className="text-[#c3c0ff] font-bold">{pct}%</span> today. You&apos;ve
+                <span className="text-primary font-bold">{pct}%</span> today. You&apos;ve
                 completed {done} tasks across {COLUMNS.length} stages.
               </p>
             </div>
@@ -329,7 +329,7 @@ export default function ProductivityPage() {
                   label: "Efficiency Score",
                   value: pct >= 80 ? "A+" : pct >= 60 ? "B" : "C",
                   sub: `${pct}% completion rate`,
-                  color: "text-[#c3c0ff]",
+                  color: "text-primary",
                 },
                 {
                   label: "In Progress",
@@ -346,7 +346,7 @@ export default function ProductivityPage() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="bg-surface p-8 rounded-2xl border border-[#464555]/5 flex flex-col gap-4 relative overflow-hidden group"
+                  className="bg-surface p-8 rounded-2xl border border-[var(--c-border)] flex flex-col gap-4 relative overflow-hidden group"
                 >
                   <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
                     <span className="material-symbols-outlined text-9xl">trending_up</span>
@@ -370,14 +370,14 @@ export default function ProductivityPage() {
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-4">
                 <h2 className="text-2xl font-bold font-headline">Kanban Board</h2>
-                <span className="px-3 py-1 bg-[#2a2a2a] rounded-full text-xs font-bold text-on-surface-variant">
+                <span className="px-3 py-1 bg-card-high rounded-full text-xs font-bold text-on-surface-variant">
                   {total} tasks
                 </span>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowModal(true)}
-                  className="px-5 py-2.5 rounded-full luminous-gradient text-white text-sm font-bold flex items-center gap-2 active:scale-95 transition-transform shadow-[0_0_20px_rgba(79,70,229,0.3)]"
+                  className="px-5 py-2.5 rounded-full luminous-gradient text-white text-sm font-bold flex items-center gap-2 active:scale-95 transition-transform cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-sm">add</span>
                   New Task
@@ -399,7 +399,7 @@ export default function ProductivityPage() {
                       </div>
                       <button
                         onClick={() => setShowModal(true)}
-                        className="text-on-surface-variant hover:text-[#c3c0ff] transition-colors"
+                        className="text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
                       >
                         <span className="material-symbols-outlined text-sm">add</span>
                       </button>
@@ -412,7 +412,7 @@ export default function ProductivityPage() {
                       }`}
                     >
                       {colTasks.length === 0 ? (
-                        <div className="border-2 border-dashed border-[#464555]/20 rounded-2xl p-8 text-center text-on-surface-variant/40 text-sm">
+                        <div className="border-2 border-dashed border-[var(--c-border)] rounded-2xl p-8 text-center text-on-surface-variant/40 text-sm">
                           No tasks here
                         </div>
                       ) : (
@@ -435,7 +435,7 @@ export default function ProductivityPage() {
           {/* Activity + Insights */}
           <section className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12">
             {/* Activity chart */}
-            <div className="md:col-span-8 bg-surface rounded-2xl p-8 border border-[#464555]/5 overflow-hidden relative">
+            <div className="md:col-span-8 bg-surface rounded-2xl p-8 border border-[var(--c-border)] overflow-hidden relative">
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <h3 className="text-xl font-bold font-headline">Activity Locus</h3>
@@ -445,11 +445,11 @@ export default function ProductivityPage() {
                 </div>
                 <div className="flex gap-4">
                   <span className="flex items-center gap-2 text-[10px] font-bold text-on-surface-variant uppercase">
-                    <div className="w-2 h-2 rounded-full bg-[#c3c0ff]" />
+                    <div className="w-2 h-2 rounded-full bg-primary" />
                     Deep Work
                   </span>
                   <span className="flex items-center gap-2 text-[10px] font-bold text-on-surface-variant uppercase">
-                    <div className="w-2 h-2 rounded-full bg-[#413f82]" />
+                    <div className="w-2 h-2 rounded-full bg-secondary" />
                     Admin
                   </span>
                 </div>
@@ -460,8 +460,8 @@ export default function ProductivityPage() {
                     key={i}
                     className={`flex-1 rounded-t-lg transition-colors ${
                       [2, 5, 8].includes(i)
-                        ? "bg-[#c3c0ff]/40 shadow-[0_-8px_20px_-2px_rgba(195,192,255,0.2)]"
-                        : "bg-[#353534]/20 hover:bg-[#c3c0ff]/20"
+                        ? "bg-primary/40 shadow-sm"
+                        : "bg-card-highest/20 hover:bg-primary/20"
                     }`}
                     style={{ height: `${h}%` }}
                   />
@@ -470,8 +470,8 @@ export default function ProductivityPage() {
             </div>
 
             {/* Void Insights */}
-            <div className="md:col-span-4 bg-[#4f46e5] rounded-2xl p-8 text-[#dad7ff] relative overflow-hidden flex flex-col justify-between">
-              <div className="absolute -right-12 -top-12 w-48 h-48 bg-[#c3c0ff] rounded-full opacity-10 blur-3xl" />
+            <div className="md:col-span-4 bg-primary rounded-2xl p-8 text-on-primary relative overflow-hidden flex flex-col justify-between">
+              <div className="absolute -right-12 -top-12 w-48 h-48 bg-secondary rounded-full opacity-10 blur-3xl" />
               <div className="relative z-10">
                 <span
                   className="material-symbols-outlined text-4xl mb-6 block"
@@ -479,16 +479,16 @@ export default function ProductivityPage() {
                 >
                   auto_awesome
                 </span>
-                <h3 className="text-3xl font-black font-headline tracking-tight leading-none mb-4">
+                <h3 className="text-3xl font-black font-headline tracking-tight leading-none mb-4 text-on-primary">
                   Void Insights
                 </h3>
-                <p className="text-[#dad7ff]/80 text-sm leading-relaxed">
+                <p className="text-on-primary/80 text-sm leading-relaxed">
                   Based on your current velocity, you&apos;ll complete all{" "}
-                  <span className="font-bold text-white">{inProgress} in-progress</span> tasks 2
+                  <span className="font-bold text-on-primary">{inProgress} in-progress</span> tasks 2
                   days ahead of schedule.
                 </p>
               </div>
-              <button className="relative z-10 w-fit mt-8 flex items-center gap-2 font-bold text-xs uppercase tracking-widest hover:gap-4 transition-all group">
+              <button className="relative z-10 w-fit mt-8 flex items-center gap-2 font-bold text-xs uppercase tracking-widest hover:gap-4 transition-all group cursor-pointer text-on-primary">
                 See Intelligence Report
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
@@ -500,11 +500,10 @@ export default function ProductivityPage() {
       {/* FAB */}
       <button
         onClick={() => setShowModal(true)}
-        className="lg:hidden fixed right-6 bottom-28 w-14 h-14 rounded-full luminous-gradient text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40"
+        className="lg:hidden fixed right-6 bottom-28 w-14 h-14 rounded-full luminous-gradient text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40 cursor-pointer"
       >
         <span className="material-symbols-outlined text-2xl">add</span>
       </button>
     </>
   );
 }
-
