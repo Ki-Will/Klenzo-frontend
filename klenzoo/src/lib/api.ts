@@ -419,9 +419,9 @@ export const auth = {
    * POST /auth/profile  (backend uses POST for update, same route as GET)
    * Only sends fields that are present.
    */
-  updateProfile: (data: { 
-    name?: string; 
-    phone?: string; 
+  updateProfile: (data: {
+    name?: string;
+    phone?: string;
     avatar?: string;
     notificationSettings?: UserProfile["notificationSettings"];
   }) =>
@@ -707,7 +707,9 @@ export const finance = {
 
   /** GET /finance/budgets */
   getBudgets: () =>
-    apiFetch<Budget[]>("/finance/budgets").then((bgs) => bgs.map(normaliseBudget)),
+    apiFetch<Budget[]>("/finance/budgets").then((bgs) =>
+      bgs.map(normaliseBudget),
+    ),
 
   /** POST /finance/budgets */
   createBudget: (dto: CreateBudgetDto) =>
@@ -764,9 +766,30 @@ export const habits = {
 
 // ─── Notifications ────────────────────────────────────────────────────────────
 
+function normaliseNotification(raw: Record<string, any>): Notification {
+  let mappedType = "default";
+  if (raw.category === "group") mappedType = "group";
+  else if (raw.category === "transaction") mappedType = "spending";
+  else if (raw.category === "security") mappedType = "security";
+  else if (raw.category === "insight") mappedType = "ai";
+  else if (raw.type === "warning") mappedType = "warning";
+
+  return {
+    id: raw.id,
+    title: raw.title,
+    body: raw.message || "",
+    type: mappedType,
+    read: raw.isRead === true,
+    createdAt: raw.createdAt,
+  };
+}
+
 export const notifications = {
   /** GET /notifications */
-  getAll: () => apiFetch<Notification[]>("/notifications"),
+  getAll: () =>
+    apiFetch<Record<string, any>[]>("/notifications").then((data) =>
+      data.map(normaliseNotification)
+    ),
 
   /** POST /notifications/:id/read */
   markRead: (id: number | string) =>
@@ -923,13 +946,16 @@ export interface CreateAdminDto {
 }
 
 export interface BroadcastDto {
+  title?: string;
   message: string;
-  color: BannerColor;
+  color: string;
   dismissible: boolean;
   link?: string;
   linkText?: string;
   startDate?: string;
   endDate?: string;
+  sendEmail?: boolean;
+  priority?: "low" | "normal" | "high";
 }
 
 export const adminApi = {
