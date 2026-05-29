@@ -10,12 +10,12 @@ const PERIODS = [
 ];
 
 const COLORS = [
-  "#c3c0ff",
-  "#ffb4ab",
-  "#b2eeff",
-  "#d0bcff",
-  "#f2b8b5",
-  "#80deea",
+  "var(--color-primary)",
+  "var(--color-secondary)",
+  "var(--color-tertiary)",
+  "var(--color-error)",
+  "#10b981", // emerald
+  "#f59e0b", // amber
 ];
 const ICONS = [
   "account_balance_wallet",
@@ -66,7 +66,6 @@ export default function FinanceInsights({
   const [inlineEditingId, setInlineEditingId] = useState<number | null>(null);
   const [inlineName, setInlineName] = useState("");
   const stats = useMemo(() => {
-    // ... stats logic ...
     const txs = transactions || [];
     const totalExpenses = txs
       .filter((t) => t.transactionType === "expense")
@@ -94,7 +93,7 @@ export default function FinanceInsights({
           (t) => t.budgetId === b.id && t.transactionType === "expense",
         );
 
-        // Fallback: Transactions with the same category that aren't linked elsewhere
+        // Fallback: Transactions with the same category that aren&apos;t linked elsewhere
         const catTxs = b.category
           ? txs.filter(
               (t) =>
@@ -117,7 +116,7 @@ export default function FinanceInsights({
           id: b.id,
           name: b.name,
           icon: b.icon || "category",
-          color: b.color || "#c3c0ff",
+          color: b.color || "var(--color-primary)",
           period: b.period,
           spent: totalSpent,
           budget: limit,
@@ -226,7 +225,7 @@ export default function FinanceInsights({
     <div className="space-y-8">
       {/* Smart Insights Section */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-surface-container-low to-surface-container-high p-8 rounded-[2rem] border border-outline/10 relative overflow-hidden">
+        <div className="bg-surface p-8 rounded-[2rem] border border-outline/10 relative overflow-hidden shadow-sm">
           <div className="absolute top-0 right-0 p-8 opacity-10">
             <span className="material-symbols-outlined text-6xl text-primary">
               auto_graph
@@ -281,7 +280,7 @@ export default function FinanceInsights({
           </div>
         </div>
 
-        <div className="bg-card p-8 rounded-[2rem] border border-outline/10 flex flex-col justify-between">
+        <div className="bg-card p-8 rounded-[2rem] border border-outline/10 flex flex-col justify-between shadow-sm">
           <div>
             <h3 className="text-xl font-headline font-black text-primary-text mb-6">
               Savings Potential
@@ -289,7 +288,7 @@ export default function FinanceInsights({
             <div className="space-y-4">
               {budgetTable.slice(0, 2).map((b) => (
                 <div key={b.id} className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-card-high flex items-center justify-center text-primary">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `color-mix(in srgb, ${b.color || "var(--color-primary)"} 12%, transparent)`, color: b.color || "var(--color-primary)" }}>
                     <span className="material-symbols-outlined">{b.icon}</span>
                   </div>
                   <div className="flex-1">
@@ -301,8 +300,8 @@ export default function FinanceInsights({
                     </div>
                     <div className="h-1.5 w-full bg-card-high rounded-full mt-1 overflow-hidden">
                       <div
-                        className="h-full bg-primary"
-                        style={{ width: `${b.percent}%` }}
+                        className="h-full"
+                        style={{ width: `${b.percent}%`, backgroundColor: b.color || "var(--color-primary)" }}
                       />
                     </div>
                   </div>
@@ -336,7 +335,7 @@ export default function FinanceInsights({
               resetForm();
               setShowModal(true);
             }}
-            className="px-6 py-2 bg-primary text-on-primary rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+            className="px-6 py-2 bg-primary text-on-primary rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span className="material-symbols-outlined text-sm">add</span> New
             Budget
@@ -366,310 +365,315 @@ export default function FinanceInsights({
               </thead>
               <tbody className="divide-y divide-outline/5">
                 {budgetTable.map((row) => (
-                  <>
-                    <tr
-                      key={row.id}
-                      onClick={() =>
-                        setExpandedRow(expandedRow === row.id ? null : row.id)
-                      }
-                      className="hover:bg-card-high/40 cursor-pointer transition-colors group relative"
-                    >
-                      <td className="p-6">
-                        <div className="flex items-center gap-4">
-                          <div
-                            className="w-10 h-10 rounded-2xl bg-card-high flex items-center justify-center group-hover:scale-110 transition-all duration-500 shadow-lg"
-                            style={{ color: row.color }}
+                  <tr key={row.id} className="contents">
+                    <td className="contents">
+                      <table className="w-full text-left border-collapse table-fixed">
+                        <tbody>
+                          <tr
+                            onClick={() =>
+                              setExpandedRow(expandedRow === row.id ? null : row.id)
+                            }
+                            className="hover:bg-card-high/40 cursor-pointer transition-colors group relative"
                           >
-                            <span className="material-symbols-outlined text-xl">
-                              {row.icon}
-                            </span>
-                          </div>
-                          <div className="flex flex-col">
-                            {inlineEditingId === row.id ? (
-                              <div
-                                className="flex items-center gap-2"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <input
-                                  autoFocus
-                                  value={inlineName}
-                                  onChange={(e) =>
-                                    setInlineName(e.target.value)
-                                  }
-                                  onKeyDown={(e) =>
-                                    e.key === "Enter" &&
-                                    handleInlineSave(row.id)
-                                  }
-                                  className="bg-card-deep border border-outline/20 rounded-lg py-1 px-2 text-sm text-primary-text focus:ring-1 focus:ring-primary w-32"
-                                />
-                                <button
-                                  onClick={() => handleInlineSave(row.id)}
-                                  className="text-primary hover:text-primary-text transition-colors"
+                            <td className="p-6">
+                              <div className="flex items-center gap-4">
+                                <div
+                                  className="w-10 h-10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 shadow-lg"
+                                  style={{ backgroundColor: `color-mix(in srgb, ${row.color || "var(--color-primary)"} 12%, transparent)`, color: row.color }}
                                 >
-                                  <span className="material-symbols-outlined text-sm">
-                                    check
+                                  <span className="material-symbols-outlined text-xl">
+                                    {row.icon}
                                   </span>
-                                </button>
-                              </div>
-                            ) : (
-                              <div className="flex items-center gap-2 group/title">
-                                <span className="text-sm font-bold text-primary-text group-hover:text-primary transition-colors">
-                                  {row.name}
-                                </span>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setInlineEditingId(row.id);
-                                    setInlineName(row.name);
-                                  }}
-                                  className="opacity-0 group-hover/title:opacity-100 text-secondary-text hover:text-primary-text transition-all"
-                                >
-                                  <span className="material-symbols-outlined text-[14px]">
-                                    edit
-                                  </span>
-                                </button>
-                              </div>
-                            )}
-                            <span className="text-[9px] uppercase tracking-[0.1em] text-secondary-text font-black">
-                              {row.period}
-                            </span>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="p-6 text-sm font-bold text-secondary-text text-right">
-                        ${row.budget.toLocaleString()}
-                      </td>
-                      <td className="p-6 text-sm font-black text-primary-text text-right">
-                        $
-                        {row.spent.toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                        })}
-                      </td>
-                      <td className="p-6">
-                        <div className="flex flex-col gap-2">
-                          <div className="h-2 w-full bg-card-high rounded-full overflow-hidden p-[2px]">
-                            <div
-                              className="h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(0,0,0,0.05)]"
-                              style={{
-                                width: `${row.percent}%`,
-                                backgroundColor:
-                                  row.percent > 90 ? "var(--color-error)" : row.color,
-                              }}
-                            />
-                          </div>
-                          <span className="text-[9px] font-black text-secondary-text text-right tracking-widest">
-                            {row.percent.toFixed(0)}%
-                          </span>
-                        </div>
-                      </td>
-                      <td
-                        className={`p-6 text-sm font-black text-right ${row.remaining < 0 ? "text-error" : "text-primary"}`}
-                      >
-                        <div className="flex items-center justify-end gap-3">
-                          <span>
-                            {row.remaining < 0 ? "-" : ""}$
-                            {Math.abs(row.remaining).toLocaleString()}
-                          </span>
-                          <span
-                            className={`material-symbols-outlined text-xs text-secondary-text transition-transform ${expandedRow === row.id ? "rotate-180" : ""}`}
-                          >
-                            expand_more
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-
-                    {/* Expanded Row: Items */}
-                    {expandedRow === row.id && (
-                      <tr>
-                        <td
-                          colSpan={5}
-                          className="p-0 bg-card-deep/40 border-t border-outline/10"
-                        >
-                          <div className="p-6 space-y-4 animate-in slide-in-from-top-2 duration-300">
-                            <div className="flex items-center justify-between mb-2">
-                              <h5 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
-                                Linked Items
-                              </h5>
-                              <div className="flex gap-2">
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setShowAssignor(
-                                      showAssignor === row.id ? null : row.id,
-                                    );
-                                  }}
-                                  className="px-3 py-1 bg-card-high rounded-full text-[9px] font-black text-secondary-text hover:bg-card-highest transition-all flex items-center gap-2"
-                                >
-                                  <span className="material-symbols-outlined text-sm">
-                                    add_link
-                                  </span>{" "}
-                                  ASSIGN ITEMS
-                                </button>
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    startEdit(
-                                      budgets.find((b) => b.id === row.id)!,
-                                    );
-                                  }}
-                                  className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-secondary-text hover:text-primary-text transition-colors"
-                                >
-                                  <span className="material-symbols-outlined text-sm">
-                                    settings
-                                  </span>
-                                </button>
-                                <button
-                                  onClick={async (e) => {
-                                    e.stopPropagation();
-                                    if (!confirm("Delete this budget?")) return;
-                                    setDeleting(row.id);
-                                    await finance.deleteBudget(row.id);
-                                    onRefresh?.();
-                                    setDeleting(null);
-                                  }}
-                                  disabled={deleting === row.id}
-                                  className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-error hover:bg-error hover:text-on-primary transition-all"
-                                >
-                                  <span className="material-symbols-outlined text-sm">
-                                    delete
-                                  </span>
-                                </button>
-                              </div>
-                            </div>
-
-                            {/* Assignor Popover */}
-                            {showAssignor === row.id && (
-                              <div className="bg-card p-4 rounded-2xl border border-primary/20 space-y-3 animate-in fade-in duration-200 shadow-lg">
-                                <p className="text-[9px] font-black text-primary uppercase tracking-widest mb-2">
-                                  Select unassigned items
-                                </p>
-                                <div className="max-h-40 overflow-y-auto space-y-2 no-scrollbar">
-                                  {transactions.filter(
-                                    (t) =>
-                                      !t.budgetId &&
-                                      t.transactionType === "expense",
-                                  ).length === 0 ? (
-                                    <p className="text-[9px] text-secondary-text italic py-2">
-                                      No unassigned items available
-                                    </p>
+                                </div>
+                                <div className="flex flex-col">
+                                  {inlineEditingId === row.id ? (
+                                    <div
+                                      className="flex items-center gap-2"
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <input
+                                        autoFocus
+                                        value={inlineName}
+                                        onChange={(e) =>
+                                          setInlineName(e.target.value)
+                                        }
+                                        onKeyDown={(e) =>
+                                          e.key === "Enter" &&
+                                          handleInlineSave(row.id)
+                                        }
+                                        className="bg-card-deep border border-outline/20 rounded-lg py-1 px-2 text-sm text-primary-text focus:ring-1 focus:ring-primary w-32"
+                                      />
+                                      <button
+                                        onClick={() => handleInlineSave(row.id)}
+                                        className="text-primary hover:text-primary-text transition-colors cursor-pointer"
+                                      >
+                                        <span className="material-symbols-outlined text-sm">
+                                          check
+                                        </span>
+                                      </button>
+                                    </div>
                                   ) : (
-                                    transactions
+                                    <div className="flex items-center gap-2 group/title">
+                                      <span className="text-sm font-bold text-primary-text group-hover:text-primary transition-colors">
+                                        {row.name}
+                                      </span>
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setInlineEditingId(row.id);
+                                          setInlineName(row.name);
+                                        }}
+                                        className="opacity-0 group-hover/title:opacity-100 text-secondary-text hover:text-primary-text transition-all cursor-pointer"
+                                      >
+                                        <span className="material-symbols-outlined text-[14px]">
+                                          edit
+                                        </span>
+                                      </button>
+                                    </div>
+                                  )}
+                                  <span className="text-[9px] uppercase tracking-[0.1em] text-secondary-text font-black">
+                                    {row.period}
+                                  </span>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="p-6 text-sm font-bold text-secondary-text text-right">
+                              ${row.budget.toLocaleString()}
+                            </td>
+                            <td className="p-6 text-sm font-black text-primary-text text-right">
+                              $
+                              {row.spent.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                              })}
+                            </td>
+                            <td className="p-6">
+                              <div className="flex flex-col gap-2">
+                                <div className="h-2 w-full bg-card-high rounded-full overflow-hidden p-[2px]">
+                                  <div
+                                    className="h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(0,0,0,0.05)]"
+                                    style={{
+                                      width: `${row.percent}%`,
+                                      backgroundColor:
+                                        row.percent > 90 ? "var(--color-error)" : row.color,
+                                    }}
+                                  />
+                                </div>
+                                <span className="text-[9px] font-black text-secondary-text text-right tracking-widest">
+                                  {row.percent.toFixed(0)}%
+                                </span>
+                              </div>
+                            </td>
+                            <td
+                              className={`p-6 text-sm font-black text-right ${row.remaining < 0 ? "text-error" : "text-primary"}`}
+                            >
+                              <div className="flex items-center justify-end gap-3">
+                                <span>
+                                  {row.remaining < 0 ? "-" : ""}$
+                                  {Math.abs(row.remaining).toLocaleString()}
+                                </span>
+                                <span
+                                  className={`material-symbols-outlined text-xs text-secondary-text transition-transform ${expandedRow === row.id ? "rotate-180" : ""}`}
+                                >
+                                  expand_more
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+
+                          {/* Expanded Row: Items */}
+                          {expandedRow === row.id && (
+                            <tr>
+                              <td
+                                colSpan={5}
+                                className="p-0 bg-card-deep/40 border-t border-outline/10"
+                              >
+                                <div className="p-6 space-y-4">
+                                  <div className="flex items-center justify-between mb-2">
+                                    <h5 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                                      Linked Items
+                                    </h5>
+                                    <div className="flex gap-2">
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setShowAssignor(
+                                            showAssignor === row.id ? null : row.id,
+                                          );
+                                        }}
+                                        className="px-3 py-1 bg-card-high rounded-full text-[9px] font-black text-secondary-text hover:bg-card-highest transition-all flex items-center gap-2 cursor-pointer"
+                                      >
+                                        <span className="material-symbols-outlined text-sm">
+                                          add_link
+                                        </span>{" "}
+                                        ASSIGN ITEMS
+                                      </button>
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          startEdit(
+                                            budgets.find((b) => b.id === row.id)!,
+                                          );
+                                        }}
+                                        className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-secondary-text hover:text-primary-text transition-colors cursor-pointer"
+                                      >
+                                        <span className="material-symbols-outlined text-sm">
+                                          settings
+                                        </span>
+                                      </button>
+                                      <button
+                                        onClick={async (e) => {
+                                          e.stopPropagation();
+                                          if (!confirm("Delete this budget?")) return;
+                                          setDeleting(row.id);
+                                          await finance.deleteBudget(row.id);
+                                          onRefresh?.();
+                                          setDeleting(null);
+                                        }}
+                                        disabled={deleting === row.id}
+                                        className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-error hover:bg-error hover:text-on-primary transition-all cursor-pointer"
+                                      >
+                                        <span className="material-symbols-outlined text-sm">
+                                          delete
+                                        </span>
+                                      </button>
+                                    </div>
+                                  </div>
+
+                                  {/* Assignor Popover */}
+                                  {showAssignor === row.id && (
+                                    <div className="bg-card p-4 rounded-2xl border border-primary/20 space-y-3 shadow-lg">
+                                      <p className="text-[9px] font-black text-primary uppercase tracking-widest mb-2">
+                                        Select unassigned items
+                                      </p>
+                                      <div className="max-h-40 overflow-y-auto space-y-2 no-scrollbar">
+                                        {transactions.filter(
+                                          (t) =>
+                                            !t.budgetId &&
+                                            t.transactionType === "expense",
+                                        ).length === 0 ? (
+                                          <p className="text-[9px] text-secondary-text italic py-2">
+                                            No unassigned items available
+                                          </p>
+                                        ) : (
+                                          transactions
+                                            .filter(
+                                              (t) =>
+                                                !t.budgetId &&
+                                                t.transactionType === "expense",
+                                            )
+                                            .map((t) => (
+                                              <div
+                                                key={t.id}
+                                                className="flex items-center justify-between p-2 bg-card-high rounded-xl hover:bg-card-highest transition-colors cursor-pointer"
+                                                onClick={() =>
+                                                  assignTransaction(row.id, t.id)
+                                                }
+                                              >
+                                                <div className="flex items-center gap-2">
+                                                  <span className="material-symbols-outlined text-xs text-secondary-text">
+                                                    receipt
+                                                  </span>
+                                                  <span className="text-[10px] font-bold text-primary-text truncate max-w-[150px]">
+                                                    {t.description || t.category}
+                                                  </span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                  <span className="text-[10px] text-primary-text">
+                                                    -${Number(t.amount).toFixed(0)}
+                                                  </span>
+                                                  <span className="material-symbols-outlined text-xs text-primary">
+                                                    add_circle
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            ))
+                                        )}
+                                      </div>
+                                    </div>
+                                  )}
+
+                                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                    {transactions
                                       .filter(
                                         (t) =>
-                                          !t.budgetId &&
-                                          t.transactionType === "expense",
+                                          t.budgetId === row.id ||
+                                          (row.id &&
+                                            t.category ===
+                                              budgets.find((b) => b.id === row.id)
+                                                ?.category &&
+                                            !t.budgetId),
+                                      )
+                                      .filter((t) => t.transactionType === "expense")
+                                      .sort(
+                                        (a, b) =>
+                                          new Date(b.date).getTime() -
+                                          new Date(a.date).getTime(),
                                       )
                                       .map((t) => (
                                         <div
                                           key={t.id}
-                                          className="flex items-center justify-between p-2 bg-card-high rounded-xl hover:bg-card-highest transition-colors cursor-pointer"
-                                          onClick={() =>
-                                            assignTransaction(row.id, t.id)
-                                          }
+                                          className="bg-card p-4 rounded-2xl border border-outline/10 flex items-center justify-between group/item hover:border-outline/30 transition-all shadow-sm"
                                         >
-                                          <div className="flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-xs text-secondary-text">
-                                              receipt
-                                            </span>
-                                            <span className="text-[10px] font-bold text-primary-text truncate max-w-[150px]">
-                                              {t.description || t.category}
-                                            </span>
+                                          <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-primary">
+                                              <span className="material-symbols-outlined text-sm">
+                                                receipt_long
+                                              </span>
+                                            </div>
+                                            <div>
+                                              <p className="text-[11px] font-bold text-primary-text truncate max-w-[120px]">
+                                                {t.description || t.category}
+                                              </p>
+                                              <p className="text-[9px] text-secondary-text uppercase tracking-widest">
+                                                {new Date(
+                                                  t.date,
+                                                ).toLocaleDateString()}
+                                              </p>
+                                            </div>
                                           </div>
-                                          <div className="flex items-center gap-2">
-                                            <span className="text-[10px] text-primary-text">
+                                          <div className="flex items-center gap-3">
+                                            <p className="text-xs font-black text-primary-text">
                                               -${Number(t.amount).toFixed(0)}
-                                            </span>
-                                            <span className="material-symbols-outlined text-xs text-primary">
-                                              add_circle
-                                            </span>
+                                            </p>
+                                            {t.budgetId === row.id && (
+                                              <button
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  unassignTransaction(t.id);
+                                                }}
+                                                className="opacity-0 group-hover/item:opacity-100 text-error hover:scale-110 transition-all cursor-pointer"
+                                                title="Unlink from budget"
+                                              >
+                                                <span className="material-symbols-outlined text-sm">
+                                                  link_off
+                                                </span>
+                                              </button>
+                                            )}
                                           </div>
                                         </div>
-                                      ))
-                                  )}
-                                </div>
-                              </div>
-                            )}
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                              {transactions
-                                .filter(
-                                  (t) =>
-                                    t.budgetId === row.id ||
-                                    (row.id &&
-                                      t.category ===
-                                        budgets.find((b) => b.id === row.id)
-                                          ?.category &&
-                                      !t.budgetId),
-                                )
-                                .filter((t) => t.transactionType === "expense")
-                                .sort(
-                                  (a, b) =>
-                                    new Date(b.date).getTime() -
-                                    new Date(a.date).getTime(),
-                                )
-                                .map((t) => (
-                                  <div
-                                    key={t.id}
-                                    className="bg-card p-4 rounded-2xl border border-outline/10 flex items-center justify-between group/item hover:border-outline/30 transition-all shadow-sm"
-                                  >
-                                    <div className="flex items-center gap-3">
-                                      <div className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-primary">
-                                        <span className="material-symbols-outlined text-sm">
-                                          receipt_long
-                                        </span>
-                                      </div>
-                                      <div>
-                                        <p className="text-[11px] font-bold text-primary-text truncate max-w-[120px]">
-                                          {t.description || t.category}
-                                        </p>
-                                        <p className="text-[9px] text-secondary-text uppercase tracking-widest">
-                                          {new Date(
-                                            t.date,
-                                          ).toLocaleDateString()}
-                                        </p>
-                                      </div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                      <p className="text-xs font-black text-primary-text">
-                                        -${Number(t.amount).toFixed(0)}
+                                      ))}
+                                    {transactions.filter(
+                                      (t) =>
+                                        t.budgetId === row.id ||
+                                        (row.id &&
+                                          t.category ===
+                                            budgets.find((b) => b.id === row.id)
+                                              ?.category &&
+                                          !t.budgetId),
+                                    ).length === 0 && (
+                                      <p className="text-[10px] text-secondary-text italic col-span-full py-4 uppercase tracking-widest text-center">
+                                        No underlying items found
                                       </p>
-                                      {t.budgetId === row.id && (
-                                        <button
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            unassignTransaction(t.id);
-                                          }}
-                                          className="opacity-0 group-hover/item:opacity-100 text-error hover:scale-110 transition-all"
-                                          title="Unlink from budget"
-                                        >
-                                          <span className="material-symbols-outlined text-sm">
-                                            link_off
-                                          </span>
-                                        </button>
-                                      )}
-                                    </div>
+                                    )}
                                   </div>
-                                ))}
-                              {transactions.filter(
-                                (t) =>
-                                  t.budgetId === row.id ||
-                                  (row.id &&
-                                    t.category ===
-                                      budgets.find((b) => b.id === row.id)
-                                        ?.category &&
-                                    !t.budgetId),
-                              ).length === 0 && (
-                                <p className="text-[10px] text-secondary-text italic col-span-full py-4 uppercase tracking-widest text-center">
-                                  No underlying items found
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
                 ))}
                 {budgetTable.length === 0 && (
                   <tr>
@@ -690,7 +694,7 @@ export default function FinanceInsights({
                             resetForm();
                             setShowModal(true);
                           }}
-                          className="px-8 py-3 luminous-gradient rounded-full text-white font-bold text-xs"
+                          className="px-8 py-3 luminous-gradient rounded-full text-white font-bold text-xs cursor-pointer"
                         >
                           START BUDGETING
                         </button>
@@ -718,7 +722,7 @@ export default function FinanceInsights({
                     setShowModal(false);
                     resetForm();
                   }}
-                  className="w-10 h-10 rounded-full bg-card-high flex items-center justify-center text-secondary-text hover:text-primary-text transition-colors"
+                  className="w-10 h-10 rounded-full bg-card-high flex items-center justify-center text-secondary-text hover:text-primary-text transition-colors cursor-pointer"
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
@@ -813,7 +817,7 @@ export default function FinanceInsights({
                         <button
                           key={c}
                           onClick={() => setColor(c)}
-                          className={`w-6 h-6 rounded-full transition-all ${color === c ? "ring-2 ring-primary ring-offset-2 ring-offset-[var(--c-card)] scale-110" : "opacity-40 hover:opacity-70"}`}
+                          className={`w-6 h-6 rounded-full transition-all cursor-pointer ${color === c ? "ring-2 ring-primary ring-offset-2 ring-offset-[var(--c-card)] scale-110" : "opacity-40 hover:opacity-70"}`}
                           style={{ backgroundColor: c }}
                         />
                       ))}
@@ -823,7 +827,7 @@ export default function FinanceInsights({
                         <button
                           key={i}
                           onClick={() => setIcon(i)}
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${icon === i ? "bg-primary text-on-primary scale-110" : "bg-card-high text-secondary-text hover:bg-card-highest"}`}
+                          className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all cursor-pointer ${icon === i ? "bg-primary text-on-primary scale-110" : "bg-card-high text-secondary-text hover:bg-card-highest"}`}
                         >
                           <span className="material-symbols-outlined text-[16px]">
                             {i}
@@ -837,7 +841,7 @@ export default function FinanceInsights({
                 <button
                   onClick={handleSave}
                   disabled={submitting || !name || !limit}
-                  className="w-full py-5 luminous-gradient text-white rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all disabled:opacity-50"
+                  className="w-full py-5 luminous-gradient text-white rounded-full font-bold text-lg hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
                 >
                   {submitting ? "Saving…" : editingBudget ? "Update" : "Create"}
                 </button>
