@@ -51,34 +51,34 @@ export default function CustomDatePicker({ value, onChange }: Props) {
       <button 
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between gap-3 bg-surface p-4 rounded-2xl border border-[#464555]/10 hover:bg-[#2a2a2a] transition-colors"
+        className="w-full flex items-center justify-between gap-3 bg-surface p-4 rounded-2xl border border-[var(--c-border)] hover:bg-card-high transition-colors"
       >
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-[#c3c0ff]">calendar_month</span>
+          <span className="material-symbols-outlined text-primary">calendar_month</span>
           <span className="text-on-surface text-sm font-medium">
             {value ? new Date(value).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }) : "Select Date"}
           </span>
         </div>
-        <span className="material-symbols-outlined text-[#918fa1] text-sm">{isOpen ? "expand_less" : "expand_more"}</span>
+        <span className="material-symbols-outlined text-muted text-sm">{isOpen ? "expand_less" : "expand_more"}</span>
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-full sm:w-[320px] bg-surface border border-[#464555]/20 rounded-3xl p-5 shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-50">
+        <div className="absolute top-full left-0 mt-2 w-full sm:w-[320px] bg-surface border border-[var(--c-border)] rounded-3xl p-5 shadow-2xl shadow-black/10 dark:shadow-black/40 z-50">
           <div className="flex items-center justify-between mb-4">
-            <button type="button" onClick={handlePrevMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#353534] text-on-surface-variant transition-colors">
+            <button type="button" onClick={handlePrevMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-card-highest text-on-surface-variant transition-colors">
               <span className="material-symbols-outlined text-sm">chevron_left</span>
             </button>
             <h3 className="text-on-surface font-bold text-sm">
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
             </h3>
-            <button type="button" onClick={handleNextMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#353534] text-on-surface-variant transition-colors">
+            <button type="button" onClick={handleNextMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-card-highest text-on-surface-variant transition-colors">
               <span className="material-symbols-outlined text-sm">chevron_right</span>
             </button>
           </div>
           
           <div className="grid grid-cols-7 gap-1 mb-2">
             {dayNames.map(day => (
-              <div key={day} className="text-center text-[10px] font-bold text-[#918fa1] uppercase tracking-widest py-1">
+              <div key={day} className="text-center text-[10px] font-bold text-muted uppercase tracking-widest py-1">
                 {day}
               </div>
             ))}
@@ -100,10 +100,10 @@ export default function CustomDatePicker({ value, onChange }: Props) {
                   onClick={() => handleSelectDate(day)}
                   className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-xs transition-all ${
                     isSelected 
-                      ? "bg-[#c3c0ff] text-[#0f0069] font-bold shadow-[0_0_15px_rgba(195,192,255,0.4)]" 
+                      ? "bg-primary text-on-primary font-bold shadow-[0_0_15px_color-mix(in_srgb,var(--color-primary)_40%,transparent)]" 
                       : isToday 
-                        ? "border border-[#4f46e5]/50 text-[#c3c0ff] font-bold hover:bg-[#2a2a2a]"
-                        : "text-on-surface-variant hover:bg-[#353534]"
+                        ? "border border-primary/50 text-primary font-bold hover:bg-card-high"
+                        : "text-on-surface-variant hover:bg-card-highest"
                   }`}
                 >
                   {day}

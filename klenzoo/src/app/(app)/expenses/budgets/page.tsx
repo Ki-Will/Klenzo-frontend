@@ -10,7 +10,14 @@ const PERIODS = [
   { value: "custom", label: "Custom" },
 ];
 
-const COLORS = ["#c3c0ff", "#ffb4ab", "#b2eeff", "#d0bcff", "#f2b8b5", "#80deea"];
+const COLORS = [
+  "var(--color-primary)",
+  "var(--color-secondary)",
+  "var(--color-tertiary)",
+  "var(--color-error)",
+  "#10b981", // emerald
+  "#f59e0b", // amber
+];
 const ICONS = ["account_balance_wallet", "shopping_cart", "restaurant", "flight", "bolt", "movie", "home", "fitness_center"];
 
 export default function BudgetsPage() {
@@ -137,7 +144,7 @@ export default function BudgetsPage() {
         </div>
         <button 
           onClick={() => setShowModal(true)}
-          className="px-8 py-4 bg-primary text-white rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-3"
+          className="px-8 py-4 bg-primary text-on-primary rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-3 cursor-pointer"
         >
           <span className="material-symbols-outlined">add</span> Create New Budget
         </button>
@@ -152,31 +159,31 @@ export default function BudgetsPage() {
           {budgets.map(b => (
             <div key={b.id} className="bg-surface p-6 rounded-3xl border border-outline/10 group hover:border-primary/10 transition-all relative overflow-hidden">
               {/* Background Accent */}
-              <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.03] -mr-8 -mt-8 blur-3xl rounded-full" style={{ backgroundColor: b.color }} />
+              <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.03] -mr-8 -mt-8 blur-3xl rounded-full" style={{ backgroundColor: b.color || "var(--color-primary)" }} />
               
               <div className="flex items-center justify-between mb-6">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ backgroundColor: `${b.color}20`, color: b.color }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ backgroundColor: `color-mix(in srgb, ${b.color || "var(--color-primary)"} 12%, transparent)`, color: b.color || "var(--color-primary)" }}>
                   <span className="material-symbols-outlined">{b.icon || 'category'}</span>
                 </div>
                 <div className="flex gap-1 items-center">
                   <Link 
                     href={`/expenses/add?budgetId=${b.id}`}
                     title="Add Transaction"
-                    className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary transition-all hover:bg-primary hover:text-white"
+                    className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary transition-all hover:bg-primary hover:text-on-primary"
                   >
                     <span className="material-symbols-outlined text-[18px]">add</span>
                   </Link>
                   <button 
                     onClick={(e) => { e.stopPropagation(); handleEdit(b); }}
                     title="Edit"
-                    className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary transition-all hover:bg-primary hover:text-white"
+                    className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary transition-all hover:bg-primary hover:text-on-primary cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-[18px]">edit</span>
                   </button>
                   <button 
                     onClick={(e) => { e.stopPropagation(); handleDelete(b.id); }}
                     title="Delete"
-                    className="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error transition-all hover:bg-error hover:text-white"
+                    className="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error transition-all hover:bg-error hover:text-on-primary cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-[18px]">delete</span>
                   </button>
@@ -247,7 +254,7 @@ export default function BudgetsPage() {
             <div className="col-span-full py-20 text-center border-2 border-dashed border-outline/20 rounded-3xl">
                <span className="material-symbols-outlined text-6xl text-muted mb-4">account_balance_wallet</span>
                <p className="text-on-surface-variant font-medium">No budgets created yet.</p>
-               <button onClick={() => setShowModal(true)} className="text-primary text-sm mt-2 hover:underline">Start by creating one</button>
+               <button onClick={() => setShowModal(true)} className="text-primary text-sm mt-2 hover:underline cursor-pointer">Start by creating one</button>
             </div>
           )}
         </div>
@@ -260,11 +267,11 @@ export default function BudgetsPage() {
             <div className="p-8 lg:p-10">
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-3xl font-black text-primary-text">{editingBudget ? 'Edit Budget' : 'New Budget'}</h3>
-                <button onClick={() => { setShowModal(false); resetForm(); }} className="w-10 h-10 rounded-full bg-card-high flex items-center justify-center text-on-surface-variant hover:text-white transition-colors">
+                <button onClick={() => { setShowModal(false); resetForm(); }} className="w-10 h-10 rounded-full bg-card-high flex items-center justify-center text-on-surface-variant hover:text-primary-text transition-colors cursor-pointer">
                   <span className="material-symbols-outlined">close</span>
                 </button>
               </div>
- 
+  
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
@@ -293,7 +300,7 @@ export default function BudgetsPage() {
                     </select>
                   </div>
                 </div>
- 
+  
                 {period === "custom" && (
                   <div className="grid grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2">
                     <div>
@@ -306,7 +313,7 @@ export default function BudgetsPage() {
                     </div>
                   </div>
                 )}
- 
+  
                 <div>
                   <label className="text-[10px] uppercase tracking-widest text-muted font-bold mb-2 block">Auto-match Category (Optional)</label>
                   <input 
@@ -315,30 +322,30 @@ export default function BudgetsPage() {
                     className="w-full bg-card-deep border-none rounded-2xl p-4 text-on-surface focus:ring-2 focus:ring-primary transition-all"
                   />
                 </div>
- 
+  
                 <div>
                   <label className="text-[10px] uppercase tracking-widest text-muted font-bold mb-2 block">Style & Icon</label>
                   <div className="flex gap-4 items-center">
                     <div className="flex flex-wrap gap-2 flex-1">
                       {COLORS.map(c => (
-                        <button key={c} onClick={() => setColor(c)} className={`w-8 h-8 rounded-full transition-all ${color === c ? "scale-125 ring-2 ring-white ring-offset-2 ring-offset-card" : "opacity-40 hover:opacity-100"}`} style={{ backgroundColor: c }} />
+                        <button key={c} onClick={() => setColor(c)} className={`w-8 h-8 rounded-full transition-all cursor-pointer ${color === c ? "scale-125 ring-2 ring-[var(--c-text-primary)] ring-offset-2 ring-offset-card" : "opacity-40 hover:opacity-100"}`} style={{ backgroundColor: c }} />
                       ))}
                     </div>
                     <div className="h-12 w-px bg-outline/20" />
                     <div className="flex flex-wrap gap-2 flex-1">
                       {ICONS.map(i => (
-                        <button key={i} onClick={() => setIcon(i)} className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${icon === i ? "bg-primary text-white" : "bg-card-high text-on-surface-variant hover:text-white"}`}>
+                        <button key={i} onClick={() => setIcon(i)} className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all cursor-pointer ${icon === i ? "bg-primary text-on-primary" : "bg-card-high text-on-surface-variant hover:text-primary-text"}`}>
                           <span className="material-symbols-outlined text-[18px]">{i}</span>
                         </button>
                       ))}
                     </div>
                   </div>
                 </div>
- 
+  
                 <button 
                   onClick={handleSave}
                   disabled={submitting || !name || !limit}
-                  className="w-full py-5 bg-primary text-white rounded-full font-bold text-lg shadow-md hover:shadow-lg active:scale-[0.98] transition-all disabled:opacity-50"
+                  className="w-full py-5 bg-primary text-on-primary rounded-full font-bold text-lg shadow-md hover:shadow-lg active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
                 >
                   {submitting ? "Saving…" : editingBudget ? "Update Budget" : "Confirm Budget"}
                 </button>
@@ -349,7 +356,7 @@ export default function BudgetsPage() {
       )}
       {/* Toast Notification */}
       {toast && (
-        <div className={`fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] px-8 py-4 rounded-3xl shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-300 flex items-center gap-3 ${toast.type === "success" ? "bg-primary text-white" : "bg-error text-white"}`}>
+        <div className={`fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] px-8 py-4 rounded-3xl shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-300 flex items-center gap-3 ${toast.type === "success" ? "bg-primary text-on-primary" : "bg-error text-on-error"}`}>
           <span className="material-symbols-outlined">{toast.type === "success" ? "check_circle" : "error"}</span>
           <span className="font-bold">{toast.message}</span>
         </div>
@@ -357,4 +364,3 @@ export default function BudgetsPage() {
     </main>
   );
 }
-
