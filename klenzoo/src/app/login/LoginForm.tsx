@@ -65,8 +65,8 @@ export default function LoginForm() {
 
   return (
     <main className="min-h-screen bg-background text-on-surface flex flex-col items-center justify-center overflow-hidden relative">
-      <div className="absolute -top-40 -left-40 w-80 h-80 bg-[#c3c0ff]/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-[#c3c0ff]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -top-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-md px-6 py-12 md:py-24">
         <div className="flex flex-col items-center">
@@ -79,21 +79,21 @@ export default function LoginForm() {
 
           {forgotSent ? (
             <div className="w-full text-center space-y-6">
-              <div className="w-16 h-16 bg-[#4f46e5]/20 rounded-full flex items-center justify-center mx-auto">
-                <span className="material-symbols-outlined text-[#c3c0ff] text-3xl">
+              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
+                <span className="material-symbols-outlined text-primary text-3xl">
                   mark_email_read
                 </span>
               </div>
               <p className="text-on-surface-variant">
                 Reset link sent to{" "}
-                <span className="text-[#c3c0ff] font-bold">{email}</span>.
+                <span className="text-primary font-bold">{email}</span>.
               </p>
               <button
                 onClick={() => {
                   setForgotMode(false);
                   setForgotSent(false);
                 }}
-                className="text-[#c3c0ff] text-sm font-bold hover:underline"
+                className="text-primary text-sm font-bold hover:underline cursor-pointer"
               >
                 Back to login
               </button>
@@ -105,7 +105,7 @@ export default function LoginForm() {
                   Email
                 </label>
                 <div className="relative">
-                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#918fa1] text-sm">
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted text-sm">
                     alternate_email
                   </span>
                   <input
@@ -114,24 +114,24 @@ export default function LoginForm() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
                     required
-                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
+                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-card-high transition-all"
                   />
                 </div>
               </div>
               {error && (
-                <p className="text-[#ffb4ab] text-sm text-center">{error}</p>
+                <p className="text-error text-sm text-center">{error}</p>
               )}
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full luminous-gradient text-white font-headline font-extrabold py-4 rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
+                className="w-full luminous-gradient text-white font-headline font-extrabold py-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
               >
                 {submitting ? "Sending…" : "Send Reset Link"}
               </button>
               <button
                 type="button"
                 onClick={() => setForgotMode(false)}
-                className="w-full text-center text-on-surface-variant text-sm hover:text-[#c3c0ff] transition-colors"
+                className="w-full text-center text-on-surface-variant text-sm hover:text-primary transition-colors cursor-pointer"
               >
                 Back to login
               </button>
@@ -144,7 +144,7 @@ export default function LoginForm() {
                     Identifier
                   </label>
                   <div className="relative">
-                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#918fa1] text-sm">
+                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted text-sm">
                       alternate_email
                     </span>
                     <input
@@ -154,7 +154,7 @@ export default function LoginForm() {
                       placeholder="email or username"
                       required
                       autoComplete="email"
-                      className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
+                      className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-card-high transition-all"
                     />
                   </div>
                 </div>
@@ -166,13 +166,13 @@ export default function LoginForm() {
                     <button
                       type="button"
                       onClick={() => setForgotMode(true)}
-                      className="text-[#c3c0ff] text-[11px] font-bold hover:text-[#c3c0ff]/80 uppercase tracking-widest"
+                      className="text-primary text-[11px] font-bold hover:opacity-80 uppercase tracking-widest cursor-pointer"
                     >
                       Forgot?
                     </button>
                   </div>
                   <div className="relative">
-                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#918fa1] text-sm">
+                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted text-sm">
                       lock
                     </span>
                     <input
@@ -182,12 +182,12 @@ export default function LoginForm() {
                       placeholder="••••••••"
                       required
                       autoComplete="current-password"
-                      className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-12 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] focus:bg-[#2a2a2a] transition-all"
+                      className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-12 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-card-high transition-all"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-[#918fa1] hover:text-[#c3c0ff] transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-muted hover:text-primary transition-colors cursor-pointer"
                     >
                       <span className="material-symbols-outlined text-sm">
                         {showPassword ? "visibility_off" : "visibility"}
@@ -198,34 +198,34 @@ export default function LoginForm() {
               </div>
 
               {error && (
-                <div className="flex items-center gap-2 bg-[#93000a]/20 border border-[#ffb4ab]/20 rounded-2xl px-4 py-3">
-                  <span className="material-symbols-outlined text-[#ffb4ab] text-sm">
+                <div className="flex items-center gap-2 bg-error-container/20 border border-error/20 rounded-2xl px-4 py-3">
+                  <span className="material-symbols-outlined text-error text-sm">
                     error
                   </span>
-                  <p className="text-[#ffb4ab] text-sm">{error}</p>
+                  <p className="text-error text-sm">{error}</p>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full luminous-gradient text-white font-headline font-extrabold py-4 rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full luminous-gradient text-white font-headline font-extrabold py-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 {submitting ? "Accessing…" : "ACCESS PORTAL"}
               </button>
 
               <div className="relative flex items-center py-2">
-                <div className="flex-grow border-t border-[#464555]/10" />
+                <div className="flex-grow border-t border-[var(--c-border)]" />
                 <span className="flex-shrink mx-4 text-on-surface-variant text-[10px] tracking-[0.2em] uppercase">
                   Auth Sync
                 </span>
-                <div className="flex-grow border-t border-[#464555]/10" />
+                <div className="flex-grow border-t border-[var(--c-border)]" />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
-                  className="flex items-center justify-center gap-3 glass-panel border border-[#464555]/10 py-3 rounded-2xl hover:bg-[#2a2a2a] transition-all"
+                  className="flex items-center justify-center gap-3 glass-panel border border-[var(--c-border)] py-3 rounded-2xl hover:bg-card-high transition-all cursor-pointer"
                 >
                   <span className="text-xs font-semibold tracking-wider">
                     GOOGLE
@@ -233,7 +233,7 @@ export default function LoginForm() {
                 </button>
                 <button
                   type="button"
-                  className="flex items-center justify-center gap-3 glass-panel border border-[#464555]/10 py-3 rounded-2xl hover:bg-[#2a2a2a] transition-all"
+                  className="flex items-center justify-center gap-3 glass-panel border border-[var(--c-border)] py-3 rounded-2xl hover:bg-card-high transition-all cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-xl opacity-80">
                     phone_iphone
@@ -249,7 +249,7 @@ export default function LoginForm() {
                   New to the void?{" "}
                   <Link
                     href="/sign-up"
-                    className="text-[#c3c0ff] font-bold hover:underline underline-offset-4 ml-1"
+                    className="text-primary font-bold hover:underline underline-offset-4 ml-1"
                   >
                     Create Account
                   </Link>
@@ -268,4 +268,3 @@ export default function LoginForm() {
     </main>
   );
 }
-

@@ -50,8 +50,8 @@ export default function SignUpPage() {
 
   return (
     <main className="min-h-screen bg-background text-on-surface flex flex-col items-center justify-center overflow-x-hidden relative">
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#4f46e5]/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#413f82]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative w-full max-w-7xl px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-12 z-10">
         {/* Left: Branding */}
@@ -59,7 +59,7 @@ export default function SignUpPage() {
           <KlenzooLogo className="w-40 md:w-56 h-auto" />
           <h1 className="text-5xl md:text-7xl font-extrabold font-headline leading-tight tracking-tighter text-on-surface">
             Access the <br />
-            <span className="text-[#c3c0ff]">intelligent</span> void.
+            <span className="text-primary">intelligent</span> void.
           </h1>
           <p className="text-on-surface-variant text-lg max-w-md leading-relaxed">
             Step into a premium financial ecosystem designed for the modern
@@ -75,7 +75,7 @@ export default function SignUpPage() {
                 key={f.icon}
                 className="flex items-center space-x-3 text-on-surface-variant"
               >
-                <span className="material-symbols-outlined text-[#c3c0ff]">
+                <span className="material-symbols-outlined text-primary">
                   {f.icon}
                 </span>
                 <span className="text-sm font-medium">{f.text}</span>
@@ -86,7 +86,7 @@ export default function SignUpPage() {
 
         {/* Right: Form */}
         <div className="w-full md:w-5/12 z-10">
-          <div className="glass-panel p-8 md:p-12 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-[#464555]/15">
+          <div className="glass-panel p-8 md:p-12 rounded-2xl shadow-2xl border border-[var(--c-border)]">
             <div className="mb-8">
               <h2 className="text-2xl font-bold font-headline mb-2">
                 Create Account
@@ -103,7 +103,7 @@ export default function SignUpPage() {
                   Email Address
                 </label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-4 text-[#918fa1]">
+                  <span className="material-symbols-outlined absolute left-4 text-muted">
                     alternate_email
                   </span>
                   <input
@@ -113,7 +113,7 @@ export default function SignUpPage() {
                     placeholder="alex@klenzoo.com"
                     required
                     autoComplete="email"
-                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                   />
                 </div>
               </div>
@@ -124,7 +124,7 @@ export default function SignUpPage() {
                   Password
                 </label>
                 <div className="relative flex items-center">
-                  <span className="material-symbols-outlined absolute left-4 text-[#918fa1]">
+                  <span className="material-symbols-outlined absolute left-4 text-muted">
                     lock
                   </span>
                   <input
@@ -135,12 +135,12 @@ export default function SignUpPage() {
                     required
                     minLength={8}
                     autoComplete="new-password"
-                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-12 text-on-surface placeholder:text-[#918fa1]/50 focus:outline-none focus:ring-1 focus:ring-[#c3c0ff] transition-all"
+                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-12 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute right-4 text-[#918fa1] hover:text-[#c3c0ff] transition-colors"
+                    className="absolute right-4 text-muted hover:text-primary transition-colors cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-sm">
                       {showPassword ? "visibility_off" : "visibility"}
@@ -154,8 +154,8 @@ export default function SignUpPage() {
                         key={len}
                         className={`h-1 flex-1 rounded-full transition-all ${
                           password.length >= len
-                            ? "bg-[#c3c0ff]"
-                            : "bg-[#353534]"
+                            ? "bg-primary"
+                            : "bg-card-highest"
                         }`}
                       />
                     ))}
@@ -170,18 +170,18 @@ export default function SignUpPage() {
                   type="checkbox"
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
-                  className="w-5 h-5 rounded bg-surface border-[#464555]/30 text-[#4f46e5] focus:ring-[#c3c0ff] mt-0.5 flex-shrink-0"
+                  className="w-5 h-5 rounded bg-surface border-[var(--c-border)] text-primary focus:ring-primary mt-0.5 flex-shrink-0"
                 />
                 <label
                   htmlFor="terms"
                   className="text-xs text-on-surface-variant leading-relaxed"
                 >
                   I agree to the{" "}
-                  <a href="#" className="text-[#c3c0ff] hover:underline">
+                  <a href="#" className="text-primary hover:underline">
                     Terms and conditions
                   </a>{" "}
                   and{" "}
-                  <a href="#" className="text-[#c3c0ff] hover:underline">
+                  <a href="#" className="text-primary hover:underline">
                     Privacy Policy
                   </a>
                   .
@@ -189,18 +189,18 @@ export default function SignUpPage() {
               </div>
 
               {error && (
-                <div className="flex items-center gap-2 bg-[#93000a]/20 border border-[#ffb4ab]/20 rounded-2xl px-4 py-3">
-                  <span className="material-symbols-outlined text-[#ffb4ab] text-sm">
+                <div className="flex items-center gap-2 bg-error-container/20 border border-error/20 rounded-2xl px-4 py-3">
+                  <span className="material-symbols-outlined text-error text-sm">
                     error
                   </span>
-                  <p className="text-[#ffb4ab] text-sm">{error}</p>
+                  <p className="text-error text-sm">{error}</p>
                 </div>
               )}
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full primary-gradient text-white font-bold py-5 rounded-full shadow-lg shadow-[#4f46e5]/20 active:scale-95 transition-all mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full primary-gradient text-white font-bold py-5 rounded-full active:scale-95 transition-all mt-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 {submitting ? "Creating account…" : "Join Klenzoo →"}
               </button>
@@ -210,7 +210,7 @@ export default function SignUpPage() {
                   Already have an account?{" "}
                   <Link
                     href="/login"
-                    className="text-[#c3c0ff] font-bold hover:text-[#dad7ff] transition-colors ml-1"
+                    className="text-primary font-bold hover:text-primary-container transition-colors ml-1"
                   >
                     Login
                   </Link>
@@ -223,4 +223,3 @@ export default function SignUpPage() {
     </main>
   );
 }
-
