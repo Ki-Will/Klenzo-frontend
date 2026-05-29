@@ -6,9 +6,9 @@ import KlenzooLogo from "@/components/KlenzooLogo";
 const navItems = [
   { href: "/dashboard", icon: "space_dashboard", label: "Dashboard" },
   { href: "/habits", icon: "auto_awesome", label: "Habits" },
-  { href: "/productivity", icon: "task_alt", label: "Productivity" },
-  { href: "/expenses", icon: "account_balance_wallet", label: "Finance" },
-  { href: "/analytics", icon: "query_stats", label: "Analytics" },
+  { href: "/productivity", icon: "bolt", label: "Productivity" },
+  { href: "/expenses", icon: "credit_card", label: "Finance" },
+  { href: "/analytics", icon: "analytics", label: "Analytics" },
   { href: "/groups", icon: "group", label: "Groups" },
   { href: "/settings", icon: "settings", label: "Settings" },
 ];
@@ -18,7 +18,7 @@ export default function SideNav() {
 
   return (
     <aside
-      className="fixed left-0 top-0 h-full w-72 hidden lg:flex flex-col p-8 z-40 rounded-r-[3rem]"
+      className="fixed left-0 top-0 h-full w-72 hidden lg:flex flex-col p-8 z-40"
       style={{
         backgroundColor: "var(--c-sidenav-bg)",
         boxShadow: "var(--c-sidenav-shadow)",
@@ -43,16 +43,21 @@ export default function SideNav() {
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-4 py-3 px-4 rounded-xl transition-all duration-300 text-sm font-headline relative"
+              className="flex items-center gap-4 py-3 px-4  transition-all duration-300 text-sm font-headline relative"
               style={{
-                color: isActive ? "var(--color-primary)" : "var(--c-text-secondary)",
+                color: isActive
+                  ? "var(--color-primary)"
+                  : "var(--c-text-secondary)",
                 fontWeight: isActive ? 700 : 400,
-                backgroundColor: isActive ? "rgba(90,77,255,0.07)" : "transparent",
+                backgroundColor: isActive
+                  ? "rgba(90,77,255,0.07)"
+                  : "transparent",
                 opacity: isActive ? 1 : 0.75,
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  e.currentTarget.style.backgroundColor = "var(--c-hover-overlay)";
+                  e.currentTarget.style.backgroundColor =
+                    "var(--c-hover-overlay)";
                   e.currentTarget.style.opacity = "1";
                 }
               }}
@@ -66,7 +71,7 @@ export default function SideNav() {
               {/* Active indicator bar */}
               {isActive && (
                 <span
-                  className="absolute right-0 w-1 h-8 rounded-full"
+                  className="absolute right-0 w-1 h-12"
                   style={{ backgroundColor: "var(--color-primary)" }}
                 />
               )}
