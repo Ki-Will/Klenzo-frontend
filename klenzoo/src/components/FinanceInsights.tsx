@@ -266,13 +266,29 @@ export default function FinanceInsights({
               <p className="text-sm text-secondary-text leading-relaxed flex items-start gap-2">
                 {stats.dailyAverage * 30 > stats.totalIncome ? (
                   <>
-                    <span className="material-symbols-outlined text-error text-base flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>warning</span>
-                    <span>Your current spending pace exceeds your monthly income. Consider reducing &apos;Other&apos; expenses.</span>
+                    <span
+                      className="material-symbols-outlined text-error text-base flex-shrink-0 mt-0.5"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      warning
+                    </span>
+                    <span>
+                      Your current spending pace exceeds your monthly income.
+                      Consider reducing &apos;Other&apos; expenses.
+                    </span>
                   </>
                 ) : (
                   <>
-                    <span className="material-symbols-outlined text-emerald-500 dark:text-emerald-400 text-base flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    <span>You are spending within your means. Great job on maintaining a healthy burn rate!</span>
+                    <span
+                      className="material-symbols-outlined text-emerald-500 dark:text-emerald-400 text-base flex-shrink-0 mt-0.5"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      check_circle
+                    </span>
+                    <span>
+                      You are spending within your means. Great job on
+                      maintaining a healthy burn rate!
+                    </span>
                   </>
                 )}
               </p>
@@ -288,12 +304,20 @@ export default function FinanceInsights({
             <div className="space-y-4">
               {budgetTable.slice(0, 2).map((b) => (
                 <div key={b.id} className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `color-mix(in srgb, ${b.color || "var(--color-primary)"} 12%, transparent)`, color: b.color || "var(--color-primary)" }}>
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center"
+                    style={{
+                      backgroundColor: `color-mix(in srgb, ${b.color || "var(--color-primary)"} 12%, transparent)`,
+                      color: b.color || "var(--color-primary)",
+                    }}
+                  >
                     <span className="material-symbols-outlined">{b.icon}</span>
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-end">
-                      <p className="text-sm font-bold text-primary-text">{b.name}</p>
+                      <p className="text-sm font-bold text-primary-text">
+                        {b.name}
+                      </p>
                       <p className="text-xs text-secondary-text">
                         ${b.spent.toFixed(0)} spent
                       </p>
@@ -301,7 +325,10 @@ export default function FinanceInsights({
                     <div className="h-1.5 w-full bg-card-high rounded-full mt-1 overflow-hidden">
                       <div
                         className="h-full"
-                        style={{ width: `${b.percent}%`, backgroundColor: b.color || "var(--color-primary)" }}
+                        style={{
+                          width: `${b.percent}%`,
+                          backgroundColor: b.color || "var(--color-primary)",
+                        }}
                       />
                     </div>
                   </div>
@@ -365,343 +392,179 @@ export default function FinanceInsights({
               </thead>
               <tbody className="divide-y divide-outline/5">
                 {budgetTable.map((row) => (
-                  <tr key={row.id} className="contents">
-                    <td className="contents">
-                      <table className="w-full text-left border-collapse table-fixed">
-                        <tbody>
-                          <tr
-                            onClick={() =>
-                              setExpandedRow(expandedRow === row.id ? null : row.id)
-                            }
-                            className="hover:bg-card-high/40 cursor-pointer transition-colors group relative"
+                  <>
+                    {/* Main Row */}
+                    <tr
+                      key={row.id}
+                      onClick={() =>
+                        setExpandedRow(expandedRow === row.id ? null : row.id)
+                      }
+                      className="hover:bg-card-high/40 cursor-pointer transition-colors group"
+                    >
+                      {/* Item */}
+                      <td className="p-4 md:p-6">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0"
+                            style={{
+                              backgroundColor: `color-mix(in srgb, ${row.color} 12%, transparent)`,
+                              color: row.color,
+                            }}
                           >
-                            <td className="p-6">
-                              <div className="flex items-center gap-4">
-                                <div
-                                  className="w-10 h-10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 shadow-lg"
-                                  style={{ backgroundColor: `color-mix(in srgb, ${row.color || "var(--color-primary)"} 12%, transparent)`, color: row.color }}
-                                >
-                                  <span className="material-symbols-outlined text-xl">
-                                    {row.icon}
-                                  </span>
-                                </div>
-                                <div className="flex flex-col">
-                                  {inlineEditingId === row.id ? (
-                                    <div
-                                      className="flex items-center gap-2"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      <input
-                                        autoFocus
-                                        value={inlineName}
-                                        onChange={(e) =>
-                                          setInlineName(e.target.value)
-                                        }
-                                        onKeyDown={(e) =>
-                                          e.key === "Enter" &&
-                                          handleInlineSave(row.id)
-                                        }
-                                        className="bg-card-deep border border-outline/20 rounded-lg py-1 px-2 text-sm text-primary-text focus:ring-1 focus:ring-primary w-32"
-                                      />
-                                      <button
-                                        onClick={() => handleInlineSave(row.id)}
-                                        className="text-primary hover:text-primary-text transition-colors cursor-pointer"
-                                      >
-                                        <span className="material-symbols-outlined text-sm">
-                                          check
-                                        </span>
-                                      </button>
-                                    </div>
-                                  ) : (
-                                    <div className="flex items-center gap-2 group/title">
-                                      <span className="text-sm font-bold text-primary-text group-hover:text-primary transition-colors">
-                                        {row.name}
-                                      </span>
-                                      <button
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          setInlineEditingId(row.id);
-                                          setInlineName(row.name);
-                                        }}
-                                        className="opacity-0 group-hover/title:opacity-100 text-secondary-text hover:text-primary-text transition-all cursor-pointer"
-                                      >
-                                        <span className="material-symbols-outlined text-[14px]">
-                                          edit
-                                        </span>
-                                      </button>
-                                    </div>
-                                  )}
-                                  <span className="text-[9px] uppercase tracking-[0.1em] text-secondary-text font-black">
-                                    {row.period}
-                                  </span>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="p-6 text-sm font-bold text-secondary-text text-right">
-                              ${row.budget.toLocaleString()}
-                            </td>
-                            <td className="p-6 text-sm font-black text-primary-text text-right">
-                              $
-                              {row.spent.toLocaleString(undefined, {
-                                minimumFractionDigits: 2,
-                              })}
-                            </td>
-                            <td className="p-6">
-                              <div className="flex flex-col gap-2">
-                                <div className="h-2 w-full bg-card-high rounded-full overflow-hidden p-[2px]">
-                                  <div
-                                    className="h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(0,0,0,0.05)]"
-                                    style={{
-                                      width: `${row.percent}%`,
-                                      backgroundColor:
-                                        row.percent > 90 ? "var(--color-error)" : row.color,
-                                    }}
-                                  />
-                                </div>
-                                <span className="text-[9px] font-black text-secondary-text text-right tracking-widest">
-                                  {row.percent.toFixed(0)}%
-                                </span>
-                              </div>
-                            </td>
-                            <td
-                              className={`p-6 text-sm font-black text-right ${row.remaining < 0 ? "text-error" : "text-primary"}`}
-                            >
-                              <div className="flex items-center justify-end gap-3">
-                                <span>
-                                  {row.remaining < 0 ? "-" : ""}$
-                                  {Math.abs(row.remaining).toLocaleString()}
-                                </span>
-                                <span
-                                  className={`material-symbols-outlined text-xs text-secondary-text transition-transform ${expandedRow === row.id ? "rotate-180" : ""}`}
-                                >
-                                  expand_more
-                                </span>
-                              </div>
-                            </td>
-                          </tr>
+                            <span className="material-symbols-outlined text-lg">
+                              {row.icon}
+                            </span>
+                          </div>
 
-                          {/* Expanded Row: Items */}
-                          {expandedRow === row.id && (
-                            <tr>
-                              <td
-                                colSpan={5}
-                                className="p-0 bg-card-deep/40 border-t border-outline/10"
-                              >
-                                <div className="p-6 space-y-4">
-                                  <div className="flex items-center justify-between mb-2">
-                                    <h5 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
-                                      Linked Items
-                                    </h5>
-                                    <div className="flex gap-2">
-                                      <button
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          setShowAssignor(
-                                            showAssignor === row.id ? null : row.id,
-                                          );
-                                        }}
-                                        className="px-3 py-1 bg-card-high rounded-full text-[9px] font-black text-secondary-text hover:bg-card-highest transition-all flex items-center gap-2 cursor-pointer"
-                                      >
-                                        <span className="material-symbols-outlined text-sm">
-                                          add_link
-                                        </span>{" "}
-                                        ASSIGN ITEMS
-                                      </button>
-                                      <button
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          startEdit(
-                                            budgets.find((b) => b.id === row.id)!,
-                                          );
-                                        }}
-                                        className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-secondary-text hover:text-primary-text transition-colors cursor-pointer"
-                                      >
-                                        <span className="material-symbols-outlined text-sm">
-                                          settings
-                                        </span>
-                                      </button>
-                                      <button
-                                        onClick={async (e) => {
-                                          e.stopPropagation();
-                                          if (!confirm("Delete this budget?")) return;
-                                          setDeleting(row.id);
-                                          await finance.deleteBudget(row.id);
-                                          onRefresh?.();
-                                          setDeleting(null);
-                                        }}
-                                        disabled={deleting === row.id}
-                                        className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-error hover:bg-error hover:text-on-primary transition-all cursor-pointer"
-                                      >
-                                        <span className="material-symbols-outlined text-sm">
-                                          delete
-                                        </span>
-                                      </button>
-                                    </div>
-                                  </div>
+                          <div className="min-w-0">
+                            <p className="font-bold text-sm text-primary-text truncate">
+                              {row.name}
+                            </p>
 
-                                  {/* Assignor Popover */}
-                                  {showAssignor === row.id && (
-                                    <div className="bg-card p-4 rounded-2xl border border-primary/20 space-y-3 shadow-lg">
-                                      <p className="text-[9px] font-black text-primary uppercase tracking-widest mb-2">
-                                        Select unassigned items
-                                      </p>
-                                      <div className="max-h-40 overflow-y-auto space-y-2 no-scrollbar">
-                                        {transactions.filter(
-                                          (t) =>
-                                            !t.budgetId &&
-                                            t.transactionType === "expense",
-                                        ).length === 0 ? (
-                                          <p className="text-[9px] text-secondary-text italic py-2">
-                                            No unassigned items available
-                                          </p>
-                                        ) : (
-                                          transactions
-                                            .filter(
-                                              (t) =>
-                                                !t.budgetId &&
-                                                t.transactionType === "expense",
-                                            )
-                                            .map((t) => (
-                                              <div
-                                                key={t.id}
-                                                className="flex items-center justify-between p-2 bg-card-high rounded-xl hover:bg-card-highest transition-colors cursor-pointer"
-                                                onClick={() =>
-                                                  assignTransaction(row.id, t.id)
-                                                }
-                                              >
-                                                <div className="flex items-center gap-2">
-                                                  <span className="material-symbols-outlined text-xs text-secondary-text">
-                                                    receipt
-                                                  </span>
-                                                  <span className="text-[10px] font-bold text-primary-text truncate max-w-[150px]">
-                                                    {t.description || t.category}
-                                                  </span>
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                  <span className="text-[10px] text-primary-text">
-                                                    -${Number(t.amount).toFixed(0)}
-                                                  </span>
-                                                  <span className="material-symbols-outlined text-xs text-primary">
-                                                    add_circle
-                                                  </span>
-                                                </div>
-                                              </div>
-                                            ))
-                                        )}
-                                      </div>
-                                    </div>
-                                  )}
+                            <p className="text-[10px] uppercase tracking-widest text-secondary-text">
+                              {row.period}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
 
-                                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                                    {transactions
-                                      .filter(
-                                        (t) =>
-                                          t.budgetId === row.id ||
-                                          (row.id &&
-                                            t.category ===
-                                              budgets.find((b) => b.id === row.id)
-                                                ?.category &&
-                                            !t.budgetId),
-                                      )
-                                      .filter((t) => t.transactionType === "expense")
-                                      .sort(
-                                        (a, b) =>
-                                          new Date(b.date).getTime() -
-                                          new Date(a.date).getTime(),
-                                      )
-                                      .map((t) => (
-                                        <div
-                                          key={t.id}
-                                          className="bg-card p-4 rounded-2xl border border-outline/10 flex items-center justify-between group/item hover:border-outline/30 transition-all shadow-sm"
-                                        >
-                                          <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center text-primary">
-                                              <span className="material-symbols-outlined text-sm">
-                                                receipt_long
-                                              </span>
-                                            </div>
-                                            <div>
-                                              <p className="text-[11px] font-bold text-primary-text truncate max-w-[120px]">
-                                                {t.description || t.category}
-                                              </p>
-                                              <p className="text-[9px] text-secondary-text uppercase tracking-widest">
-                                                {new Date(
-                                                  t.date,
-                                                ).toLocaleDateString()}
-                                              </p>
-                                            </div>
-                                          </div>
-                                          <div className="flex items-center gap-3">
-                                            <p className="text-xs font-black text-primary-text">
-                                              -${Number(t.amount).toFixed(0)}
-                                            </p>
-                                            {t.budgetId === row.id && (
-                                              <button
-                                                onClick={(e) => {
-                                                  e.stopPropagation();
-                                                  unassignTransaction(t.id);
-                                                }}
-                                                className="opacity-0 group-hover/item:opacity-100 text-error hover:scale-110 transition-all cursor-pointer"
-                                                title="Unlink from budget"
-                                              >
-                                                <span className="material-symbols-outlined text-sm">
-                                                  link_off
-                                                </span>
-                                              </button>
-                                            )}
-                                          </div>
-                                        </div>
-                                      ))}
-                                    {transactions.filter(
-                                      (t) =>
-                                        t.budgetId === row.id ||
-                                        (row.id &&
-                                          t.category ===
-                                            budgets.find((b) => b.id === row.id)
-                                              ?.category &&
-                                          !t.budgetId),
-                                    ).length === 0 && (
-                                      <p className="text-[10px] text-secondary-text italic col-span-full py-4 uppercase tracking-widest text-center">
-                                        No underlying items found
-                                      </p>
-                                    )}
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                ))}
-                {budgetTable.length === 0 && (
-                  <tr>
-                    <td colSpan={5} className="p-20 text-center">
-                      <div className="flex flex-col items-center opacity-40">
-                        <span className="material-symbols-outlined text-6xl mb-4">
-                          analytics
-                        </span>
-                        <p className="text-lg font-bold text-primary-text mb-2">
-                          Ready to optimize?
-                        </p>
-                        <p className="text-sm text-secondary-text max-w-xs mx-auto mb-8">
-                          Create custom budgets to track specific goals or
-                          recurring expenses.
-                        </p>
-                        <button
-                          onClick={() => {
-                            resetForm();
-                            setShowModal(true);
-                          }}
-                          className="px-8 py-3 luminous-gradient rounded-full text-white font-bold text-xs cursor-pointer"
+                      {/* Limit */}
+                      <td className="p-4 md:p-6 text-right font-bold text-sm text-secondary-text whitespace-nowrap">
+                        ${row.budget.toLocaleString()}
+                      </td>
+
+                      {/* Actual */}
+                      <td className="p-4 md:p-6 text-right font-black text-sm text-primary-text whitespace-nowrap">
+                        ${row.spent.toFixed(2)}
+                      </td>
+
+                      {/* Utilization */}
+                      <td className="p-4 md:p-6 w-[180px]">
+                        <div className="space-y-2">
+                          <div className="h-2 rounded-full bg-card-high overflow-hidden">
+                            <div
+                              className="h-full rounded-full transition-all"
+                              style={{
+                                width: `${row.percent}%`,
+                                backgroundColor:
+                                  row.percent > 90
+                                    ? "var(--color-error)"
+                                    : row.color,
+                              }}
+                            />
+                          </div>
+
+                          <p className="text-[10px] text-right font-bold text-secondary-text">
+                            {row.percent.toFixed(0)}%
+                          </p>
+                        </div>
+                      </td>
+
+                      {/* Remaining */}
+                      <td
+                        className={`p-4 md:p-6 text-right font-black text-sm whitespace-nowrap ${
+                          row.remaining < 0 ? "text-error" : "text-primary"
+                        }`}
+                      >
+                        <div className="flex items-center justify-end gap-2">
+                          <span>
+                            {row.remaining < 0 ? "-" : ""}$
+                            {Math.abs(row.remaining).toLocaleString()}
+                          </span>
+
+                          <span
+                            className={`material-symbols-outlined text-sm transition-transform ${
+                              expandedRow === row.id ? "rotate-180" : ""
+                            }`}
+                          >
+                            expand_more
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+
+                    {/* Expanded Row */}
+                    {expandedRow === row.id && (
+                      <tr>
+                        <td
+                          colSpan={5}
+                          className="bg-card-deep/40 border-t border-outline/10"
                         >
-                          START BUDGETING
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                )}
+                          <div className="p-4 md:p-6 space-y-4">
+                            <div className="flex items-center justify-between">
+                              <h5 className="text-[10px] uppercase tracking-[0.2em] font-black text-primary">
+                                Linked Items
+                              </h5>
+
+                              <div className="flex gap-2">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+
+                                    setShowAssignor((prev) =>
+                                      prev === row.id ? null : row.id,
+                                    );
+                                  }}
+                                  className="px-3 py-1 rounded-full bg-card-high text-[10px] font-bold hover:bg-card-highest cursor-pointer transition-all"
+                                >
+                                  Assign
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    startEdit(
+                                      budgets.find((b) => b.id === row.id)!,
+                                    );
+                                  }}
+                                  className="w-8 h-8 rounded-full bg-card-high flex items-center justify-center"
+                                >
+                                  <span className="material-symbols-outlined text-sm">
+                                    settings
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                              {transactions
+                                .filter(
+                                  (t) =>
+                                    t.budgetId === row.id &&
+                                    t.transactionType === "expense",
+                                )
+                                .map((t) => (
+                                  <div
+                                    key={t.id}
+                                    className="bg-card p-4 rounded-2xl border border-outline/10"
+                                  >
+                                    <div className="flex items-center justify-between gap-3">
+                                      <div className="min-w-0">
+                                        <p className="font-bold text-sm truncate">
+                                          {t.description || t.category}
+                                        </p>
+
+                                        <p className="text-[10px] text-secondary-text">
+                                          {new Date(
+                                            t.date,
+                                          ).toLocaleDateString()}
+                                        </p>
+                                      </div>
+
+                                      <p className="font-black text-sm whitespace-nowrap">
+                                        -${Number(t.amount).toFixed(0)}
+                                      </p>
+                                    </div>
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                ))}
               </tbody>
             </table>
           </div>
@@ -765,7 +628,11 @@ export default function FinanceInsights({
                         className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all appearance-none"
                       >
                         {PERIODS.map((p) => (
-                          <option key={p.value} value={p.value} className="bg-card text-primary-text">
+                          <option
+                            key={p.value}
+                            value={p.value}
+                            className="bg-card text-primary-text"
+                          >
                             {p.label}
                           </option>
                         ))}
