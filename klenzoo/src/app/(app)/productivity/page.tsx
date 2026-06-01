@@ -15,7 +15,7 @@ const COLUMNS: { status: TaskStatus; label: string; dot: string; count?: number 
   { status: "done",        label: "Done",        dot: "bg-tertiary" },
 ];
 
-// ─── Add Task Modal ───────────────────────────────────────────────────────────
+// ─── Add Task Drawer ──────────────────────────────────────────────────────────
 function AddTaskModal({
   onClose,
   onCreated,
@@ -30,9 +30,18 @@ function AddTaskModal({
   const [dueDate, setDueDate] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const isSubmitDisabled = !title.trim();
+
+  const PRIORITY_OPTIONS = [
+    { value: 4, label: "Critical", icon: "emergency", color: "text-error" },
+    { value: 3, label: "High", icon: "priority_high", color: "text-warning" },
+    { value: 2, label: "Standard", icon: "drag_handle", color: "text-secondary-text" },
+    { value: 1, label: "Low", icon: "arrow_downward", color: "text-muted" },
+  ];
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim()) return;
+    if (isSubmitDisabled) return;
     setLoading(true);
     try {
       const created = await productivityApi.createTask({
@@ -45,7 +54,6 @@ function AddTaskModal({
       onCreated(created);
       onClose();
     } catch {
-      // Fallback: create locally
       const local: Task = {
         id: Date.now(),
         title,
@@ -63,18 +71,36 @@ function AddTaskModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      <div className="w-full max-w-md bg-surface rounded-2xl p-8 shadow-2xl border border-[var(--c-border)]">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-headline font-bold">New Task</h2>
-          <button onClick={onClose} className="text-on-surface-variant hover:text-primary-text transition-colors cursor-pointer">
-            <span className="material-symbols-outlined">close</span>
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes slideIn {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+        .animate-slide-in { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      `}} />
+
+      <div className="w-full max-w-lg bg-card border-l border-[var(--c-border)] shadow-2xl h-full flex flex-col animate-slide-in overflow-hidden">
+        {/* Header */}
+        <div className="px-6 py-5 border-b border-[var(--c-border)] flex justify-between items-center bg-card flex-shrink-0">
+          <div>
+            <h2 className="text-xl font-headline font-extrabold text-primary-text">New Task</h2>
+            <p className="text-xs text-secondary-text mt-0.5">Add to your kanban board</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full flex items-center justify-center bg-card-high hover:bg-card-highest text-secondary-text hover:text-primary-text transition-colors cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-lg">close</span>
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-5">
+
+        {/* Scrollable Form */}
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
+          {/* Title */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
-              Title *
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
+              Task Title *
             </label>
             <input
               type="text"
@@ -82,30 +108,60 @@ function AddTaskModal({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Design System Overhaul"
               required
-              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm font-semibold"
             />
           </div>
+
+          {/* Description */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
               Description
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Optional details..."
-              rows={2}
-              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none"
+              placeholder="Optional details about this task..."
+              rows={3}
+              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none text-sm"
             />
           </div>
+
+          {/* Priority */}
+          <div className="space-y-3">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
+              Priority
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {PRIORITY_OPTIONS.map((p) => (
+                <button
+                  key={p.value}
+                  type="button"
+                  onClick={() => setPriority(p.value)}
+                  className={`flex items-center gap-2 px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
+                    priority === p.value
+                      ? "bg-primary/20 border border-primary/40 text-primary"
+                      : "bg-card-deep text-secondary-text hover:bg-card-high"
+                  }`}
+                >
+                  <span className={`material-symbols-outlined text-base ${priority === p.value ? "text-primary" : p.color}`}>
+                    {p.icon}
+                  </span>
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Status + Due Date */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
+              <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
                 Status
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as TaskStatus)}
-                className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+                className="w-full bg-card-deep border-none rounded-2xl py-4 px-4 text-primary-text text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
               >
                 <option value="todo">Todo</option>
                 <option value="in_progress">In Progress</option>
@@ -114,40 +170,37 @@ function AddTaskModal({
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
-                Priority
+              <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
+                Due Date
               </label>
-              <select
-                value={priority}
-                onChange={(e) => setPriority(Number(e.target.value))}
-                className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary transition-all"
-              >
-                <option value={4}>Critical</option>
-                <option value={3}>High</option>
-                <option value={2}>Standard</option>
-                <option value={1}>Low</option>
-              </select>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="w-full bg-card-deep border-none rounded-2xl py-4 px-4 text-primary-text text-xs focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              />
             </div>
           </div>
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">
-              Due Date
-            </label>
-            <input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary transition-all"
-            />
-          </div>
+        </form>
+
+        {/* Footer */}
+        <div className="p-6 border-t border-[var(--c-border)] bg-card flex gap-3 flex-shrink-0">
           <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-4 luminous-gradient text-white font-headline font-bold rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
+            type="button"
+            onClick={onClose}
+            className="flex-1 py-4 rounded-full bg-card-high text-secondary-text hover:text-primary-text font-headline font-bold text-sm hover:bg-card-highest transition-all cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            disabled={loading || isSubmitDisabled}
+            onClick={handleSubmit}
+            className="flex-1 py-4 luminous-gradient text-white font-headline font-bold text-sm rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:hover:scale-100 cursor-pointer"
           >
             {loading ? "Creating…" : "Create Task"}
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );

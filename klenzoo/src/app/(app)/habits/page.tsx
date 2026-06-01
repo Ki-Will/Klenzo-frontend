@@ -28,7 +28,7 @@ function isCompletedToday(habit: Habit): boolean {
   return last === new Date().toDateString();
 }
 
-// ─── Add Habit Modal ──────────────────────────────────────────────────────────
+// ─── Add Habit Drawer ─────────────────────────────────────────────────────────
 function AddHabitModal({
   onClose,
   onCreated,
@@ -42,9 +42,11 @@ function AddHabitModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const isSubmitDisabled = !name.trim();
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (isSubmitDisabled) return;
     setLoading(true);
     setError("");
     try {
@@ -52,7 +54,6 @@ function AddHabitModal({
       onCreated(created);
       onClose();
     } catch (err: unknown) {
-      // Fallback: create locally so UI still works without backend
       const local: Habit = {
         id: Date.now(),
         name,
@@ -71,17 +72,35 @@ function AddHabitModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      <div className="w-full max-w-md bg-card rounded-2xl p-8 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-outline/20">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-headline font-bold text-primary-text">New Habit</h2>
-          <button onClick={onClose} className="text-secondary-text hover:text-primary-text transition-colors">
-            <span className="material-symbols-outlined">close</span>
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes slideIn {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+        .animate-slide-in { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+      `}} />
+
+      <div className="w-full max-w-lg bg-card border-l border-[var(--c-border)] shadow-2xl h-full flex flex-col animate-slide-in overflow-hidden">
+        {/* Header */}
+        <div className="px-6 py-5 border-b border-[var(--c-border)] flex justify-between items-center bg-card flex-shrink-0">
+          <div>
+            <h2 className="text-xl font-headline font-extrabold text-primary-text">New Habit</h2>
+            <p className="text-xs text-secondary-text mt-0.5">Build your daily momentum</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full flex items-center justify-center bg-card-high hover:bg-card-highest text-secondary-text hover:text-primary-text transition-colors cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-lg">close</span>
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-5">
+
+        {/* Scrollable Form */}
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
+          {/* Habit Name */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
               Habit Name *
             </label>
             <input
@@ -90,23 +109,27 @@ function AddHabitModal({
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Morning Meditation"
               required
-              className="w-full bg-input border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm font-semibold"
             />
           </div>
+
+          {/* Description */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
               Description
             </label>
-            <input
-              type="text"
+            <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="e.g. 20 minutes every morning"
-              className="w-full bg-input border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              placeholder="e.g. 20 minutes every morning before coffee"
+              rows={3}
+              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none text-sm"
             />
           </div>
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
+
+          {/* Frequency */}
+          <div className="space-y-3">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
               Frequency
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -115,26 +138,42 @@ function AddHabitModal({
                   key={f}
                   type="button"
                   onClick={() => setFrequency(f)}
-                  className={`py-3 rounded-2xl text-sm font-bold capitalize transition-all ${
+                  className={`py-4 rounded-2xl text-sm font-bold capitalize transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
                     frequency === f
                       ? "bg-primary/20 border border-primary/40 text-primary"
-                      : "bg-input text-secondary-text hover:bg-card-high"
+                      : "bg-card-deep text-secondary-text hover:bg-card-high"
                   }`}
                 >
-                  {f}
+                  <span className="material-symbols-outlined text-xl">
+                    {f === "daily" ? "wb_sunny" : "calendar_view_week"}
+                  </span>
+                  <span>{f}</span>
                 </button>
               ))}
             </div>
           </div>
-          {error && <p className="text-error text-sm">{error}</p>}
+
+          {error && <p className="text-error text-xs font-semibold">{error}</p>}
+        </form>
+
+        {/* Footer */}
+        <div className="p-6 border-t border-[var(--c-border)] bg-card flex gap-3 flex-shrink-0">
           <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-[0_10px_30px_rgba(79,70,229,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
+            type="button"
+            onClick={onClose}
+            className="flex-1 py-4 rounded-full bg-card-high text-secondary-text hover:text-primary-text font-headline font-bold text-sm hover:bg-card-highest transition-all cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            disabled={loading || isSubmitDisabled}
+            onClick={handleSubmit}
+            className="flex-1 py-4 luminous-gradient text-white font-headline font-bold text-sm rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:hover:scale-100 cursor-pointer"
           >
             {loading ? "Creating…" : "Create Habit"}
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
