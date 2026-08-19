@@ -1,7 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { finance, type Budget, type CreateBudgetDto, type Transaction } from "@/lib/api";
+import {
+  finance,
+  type Budget,
+  type CreateBudgetDto,
+  type Transaction,
+} from "@/lib/api";
 
 const PERIODS = [
   { value: "monthly", label: "Monthly" },
@@ -18,7 +23,16 @@ const COLORS = [
   "#10b981",
   "#f59e0b",
 ];
-const ICONS = ["account_balance_wallet", "shopping_cart", "restaurant", "flight", "bolt", "movie", "home", "fitness_center"];
+const ICONS = [
+  "account_balance_wallet",
+  "shopping_cart",
+  "restaurant",
+  "flight",
+  "bolt",
+  "movie",
+  "home",
+  "fitness_center",
+];
 
 // ─── Budget Drawer ────────────────────────────────────────────────────────────
 function BudgetDrawer({
@@ -32,7 +46,9 @@ function BudgetDrawer({
 }) {
   const [name, setName] = useState(editingBudget?.name ?? "");
   const [category, setCategory] = useState(editingBudget?.category ?? "");
-  const [limit, setLimit] = useState(editingBudget?.limitAmount?.toString() ?? "");
+  const [limit, setLimit] = useState(
+    editingBudget?.limitAmount?.toString() ?? "",
+  );
   const [period, setPeriod] = useState(editingBudget?.period ?? "monthly");
   const [color, setColor] = useState(editingBudget?.color ?? COLORS[0]);
   const [icon, setIcon] = useState(editingBudget?.icon ?? ICONS[0]);
@@ -74,13 +90,17 @@ function BudgetDrawer({
 
   return (
     <div className="fixed inset-0 z-[100] flex justify-end bg-black/60 backdrop-blur-sm">
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         @keyframes slideIn {
           from { transform: translateX(100%); }
           to { transform: translateX(0); }
         }
         .animate-slide-in { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-      `}} />
+      `,
+        }}
+      />
 
       <div className="w-full max-w-lg bg-card border-l border-[var(--c-border)] shadow-2xl h-full flex flex-col animate-slide-in overflow-hidden">
         {/* Header */}
@@ -90,7 +110,9 @@ function BudgetDrawer({
               {editingBudget ? "Edit Budget" : "New Budget"}
             </h2>
             <p className="text-xs text-secondary-text mt-0.5">
-              {editingBudget ? "Update your spending limit" : "Define a new spending limit"}
+              {editingBudget
+                ? "Update your spending limit"
+                : "Define a new spending limit"}
             </p>
           </div>
           <button
@@ -141,7 +163,9 @@ function BudgetDrawer({
                 className="w-full bg-card-deep border-none rounded-2xl py-4 px-4 text-primary-text text-sm focus:outline-none focus:ring-1 focus:ring-primary transition-all"
               >
                 {PERIODS.map((p) => (
-                  <option key={p.value} value={p.value}>{p.label}</option>
+                  <option key={p.value} value={p.value}>
+                    {p.label}
+                  </option>
                 ))}
               </select>
             </div>
@@ -201,12 +225,16 @@ function BudgetDrawer({
                   type="button"
                   onClick={() => setColor(c)}
                   className={`w-8 h-8 rounded-full transition-all cursor-pointer flex items-center justify-center ${
-                    color === c ? "scale-125 ring-2 ring-white ring-offset-2 ring-offset-card" : "opacity-50 hover:opacity-100"
+                    color === c
+                      ? "scale-125 ring-2 ring-white ring-offset-2 ring-offset-card"
+                      : "opacity-50 hover:opacity-100"
                   }`}
                   style={{ backgroundColor: c }}
                 >
                   {color === c && (
-                    <span className="material-symbols-outlined text-white text-xs">check</span>
+                    <span className="material-symbols-outlined text-white text-xs">
+                      check
+                    </span>
                   )}
                 </button>
               ))}
@@ -225,10 +253,14 @@ function BudgetDrawer({
                   type="button"
                   onClick={() => setIcon(ic)}
                   className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all cursor-pointer ${
-                    icon === ic ? "bg-primary text-white" : "bg-card-deep text-secondary-text hover:bg-card-high hover:text-primary-text"
+                    icon === ic
+                      ? "bg-primary text-white"
+                      : "bg-card-deep text-secondary-text hover:bg-card-high hover:text-primary-text"
                   }`}
                 >
-                  <span className="material-symbols-outlined text-lg">{ic}</span>
+                  <span className="material-symbols-outlined text-lg">
+                    {ic}
+                  </span>
                 </button>
               ))}
             </div>
@@ -252,7 +284,11 @@ function BudgetDrawer({
             onClick={handleSave}
             className="flex-1 py-4 luminous-gradient text-white font-headline font-bold text-sm rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:hover:scale-100 cursor-pointer"
           >
-            {submitting ? "Saving…" : editingBudget ? "Update Budget" : "Create Budget"}
+            {submitting
+              ? "Saving…"
+              : editingBudget
+                ? "Update Budget"
+                : "Create Budget"}
           </button>
         </div>
       </div>
@@ -267,7 +303,10 @@ export default function BudgetsPage() {
   const [loading, setLoading] = useState(true);
   const [showDrawer, setShowDrawer] = useState(false);
   const [editingBudget, setEditingBudget] = useState<Budget | null>(null);
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
   useEffect(() => {
     loadBudgets();
@@ -290,7 +329,12 @@ export default function BudgetsPage() {
   }
 
   async function handleDelete(id: number) {
-    if (!confirm("Are you sure you want to delete this budget? Transactions will be unlinked.")) return;
+    if (
+      !confirm(
+        "Are you sure you want to delete this budget? Transactions will be unlinked.",
+      )
+    )
+      return;
     try {
       await finance.deleteBudget(id);
       await loadBudgets();
@@ -326,7 +370,10 @@ export default function BudgetsPage() {
       {showDrawer && (
         <BudgetDrawer
           editingBudget={editingBudget}
-          onClose={() => { setShowDrawer(false); setEditingBudget(null); }}
+          onClose={() => {
+            setShowDrawer(false);
+            setEditingBudget(null);
+          }}
           onSaved={handleSaved}
         />
       )}
@@ -338,13 +385,17 @@ export default function BudgetsPage() {
             href="/expenses"
             className="text-primary text-xs uppercase tracking-widest mb-4 flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <span className="material-symbols-outlined text-sm">arrow_back</span>
+            <span className="material-symbols-outlined text-sm">
+              arrow_back
+            </span>
             Back to Finance
           </Link>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-primary-text mb-2">
             Manage Budgets
           </h1>
-          <p className="text-muted text-base sm:text-lg">Define limits and group your expenses.</p>
+          <p className="text-muted text-base sm:text-lg">
+            Define limits and group your expenses.
+          </p>
         </div>
         <button
           onClick={openCreate}
@@ -359,14 +410,20 @@ export default function BudgetsPage() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-48 bg-surface rounded-2xl sm:rounded-3xl animate-pulse" />
+            <div
+              key={i}
+              className="h-48 bg-surface rounded-2xl sm:rounded-3xl animate-pulse"
+            />
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {budgets.map((b) => {
-            const rawPercent = b.limitAmount > 0 ? (b.spent / b.limitAmount) * 100 : 0;
-            const safePercent = Number.isFinite(rawPercent) ? Math.max(0, Math.min(rawPercent, 100)) : 0;
+            const rawPercent =
+              b.limitAmount > 0 ? (b.spent / b.limitAmount) * 100 : 0;
+            const safePercent = Number.isFinite(rawPercent)
+              ? Math.max(0, Math.min(rawPercent, 100))
+              : 0;
             const isOver = rawPercent > 100;
 
             return (
@@ -388,7 +445,9 @@ export default function BudgetsPage() {
                       color: b.color || "var(--color-primary)",
                     }}
                   >
-                    <span className="material-symbols-outlined">{b.icon || "category"}</span>
+                    <span className="material-symbols-outlined">
+                      {b.icon || "category"}
+                    </span>
                   </div>
                   <div className="flex gap-1.5 items-center">
                     <Link
@@ -396,39 +455,59 @@ export default function BudgetsPage() {
                       title="Add Transaction"
                       className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary transition-all hover:bg-primary hover:text-on-primary"
                     >
-                      <span className="material-symbols-outlined text-[16px]">add</span>
+                      <span className="material-symbols-outlined text-[16px]">
+                        add
+                      </span>
                     </Link>
                     <button
-                      onClick={(e) => { e.stopPropagation(); handleEdit(b); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEdit(b);
+                      }}
                       title="Edit"
                       className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary transition-all hover:bg-primary hover:text-on-primary cursor-pointer"
                     >
-                      <span className="material-symbols-outlined text-[16px]">edit</span>
+                      <span className="material-symbols-outlined text-[16px]">
+                        edit
+                      </span>
                     </button>
                     <button
-                      onClick={(e) => { e.stopPropagation(); handleDelete(b.id); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(b.id);
+                      }}
                       title="Delete"
                       className="w-7 h-7 rounded-full bg-error/10 flex items-center justify-center text-error transition-all hover:bg-error hover:text-on-primary cursor-pointer"
                     >
-                      <span className="material-symbols-outlined text-[16px]">delete</span>
+                      <span className="material-symbols-outlined text-[16px]">
+                        delete
+                      </span>
                     </button>
                   </div>
                 </div>
 
                 <div
                   className="mb-5 cursor-pointer"
-                  onClick={() => setExpandedBudgetId(expandedBudgetId === b.id ? null : b.id)}
+                  onClick={() =>
+                    setExpandedBudgetId(expandedBudgetId === b.id ? null : b.id)
+                  }
                 >
                   <div className="flex justify-between items-end mb-1.5">
                     <h4 className="text-lg font-bold text-primary-text group-hover:text-primary transition-colors truncate max-w-[160px]">
                       {b.name}
                     </h4>
-                    <p className="text-[10px] font-black text-muted uppercase tracking-widest ml-2 flex-shrink-0">{b.period}</p>
+                    <p className="text-[10px] font-black text-muted uppercase tracking-widest ml-2 flex-shrink-0">
+                      {b.period}
+                    </p>
                   </div>
 
                   <div className="flex justify-between items-baseline mb-3">
-                    <p className="text-2xl font-black text-primary-text">${Number(b.spent).toLocaleString()}</p>
-                    <p className="text-xs text-muted">of ${Number(b.limitAmount).toLocaleString()}</p>
+                    <p className="text-2xl font-black text-primary-text">
+                      ${Number(b.spent).toLocaleString()}
+                    </p>
+                    <p className="text-xs text-muted">
+                      of ${Number(b.limitAmount).toLocaleString()}
+                    </p>
                   </div>
 
                   <div className="h-2.5 w-full bg-card-high rounded-full overflow-hidden">
@@ -436,18 +515,26 @@ export default function BudgetsPage() {
                       className="h-full rounded-full transition-all duration-1000 ease-out"
                       style={{
                         width: `${Math.max(4, safePercent)}%`,
-                        backgroundColor: isOver ? "var(--color-error)" : b.color || "var(--color-primary)",
+                        backgroundColor: isOver
+                          ? "var(--color-error)"
+                          : b.color || "var(--color-primary)",
                       }}
                     />
                   </div>
 
                   <div className="flex justify-between mt-2.5">
-                    <p className={`text-[10px] font-black uppercase tracking-widest ${isOver ? "text-error" : "text-primary"}`}>
-                      {isOver ? "Over Limit" : `${Math.round(100 - rawPercent)}% Left`}
+                    <p
+                      className={`text-[10px] font-black uppercase tracking-widest ${isOver ? "text-error" : "text-primary"}`}
+                    >
+                      {isOver
+                        ? "Over Limit"
+                        : `${Math.round(100 - rawPercent)}% Left`}
                     </p>
                     <div className="flex items-center gap-1 text-[10px] text-muted font-bold">
                       <span>VIEW EXPENSES</span>
-                      <span className={`material-symbols-outlined text-xs transition-transform ${expandedBudgetId === b.id ? "rotate-180" : ""}`}>
+                      <span
+                        className={`material-symbols-outlined text-xs transition-transform ${expandedBudgetId === b.id ? "rotate-180" : ""}`}
+                      >
                         expand_more
                       </span>
                     </div>
@@ -458,15 +545,29 @@ export default function BudgetsPage() {
                 {expandedBudgetId === b.id && (
                   <div className="mt-4 pt-4 border-t border-outline/10 space-y-2.5 max-h-56 overflow-y-auto no-scrollbar">
                     {transactions.filter(
-                      (t) => t.budgetId === b.id || (b.category && t.category === b.category && !t.budgetId)
+                      (t) =>
+                        t.budgetId === b.id ||
+                        (b.category &&
+                          t.category === b.category &&
+                          !t.budgetId),
                     ).length === 0 ? (
                       <p className="text-[10px] text-muted italic text-center py-4 uppercase tracking-widest">
                         No expenses found
                       </p>
                     ) : (
                       transactions
-                        .filter((t) => t.budgetId === b.id || (b.category && t.category === b.category && !t.budgetId))
-                        .sort((a, bx) => new Date(bx.date).getTime() - new Date(a.date).getTime())
+                        .filter(
+                          (t) =>
+                            t.budgetId === b.id ||
+                            (b.category &&
+                              t.category === b.category &&
+                              !t.budgetId),
+                        )
+                        .sort(
+                          (a, bx) =>
+                            new Date(bx.date).getTime() -
+                            new Date(a.date).getTime(),
+                        )
                         .map((t) => (
                           <div
                             key={t.id}
@@ -474,7 +575,9 @@ export default function BudgetsPage() {
                           >
                             <div className="flex items-center gap-2.5">
                               <div className="w-7 h-7 rounded-full bg-background flex items-center justify-center text-primary flex-shrink-0">
-                                <span className="material-symbols-outlined text-sm">payments</span>
+                                <span className="material-symbols-outlined text-sm">
+                                  payments
+                                </span>
                               </div>
                               <div>
                                 <p className="text-[11px] font-bold text-primary-text truncate max-w-[110px]">
@@ -485,7 +588,9 @@ export default function BudgetsPage() {
                                 </p>
                               </div>
                             </div>
-                            <p className="text-xs font-black text-primary-text">-${Number(t.amount).toFixed(0)}</p>
+                            <p className="text-xs font-black text-primary-text">
+                              -${Number(t.amount).toFixed(0)}
+                            </p>
                           </div>
                         ))
                     )}
@@ -500,7 +605,9 @@ export default function BudgetsPage() {
               <span className="material-symbols-outlined text-5xl text-muted mb-4 block">
                 account_balance_wallet
               </span>
-              <p className="text-on-surface-variant font-medium mb-2">No budgets created yet.</p>
+              <p className="text-on-surface-variant font-medium mb-2">
+                No budgets created yet.
+              </p>
               <button
                 onClick={openCreate}
                 className="text-primary text-sm hover:underline cursor-pointer"
@@ -516,7 +623,9 @@ export default function BudgetsPage() {
       {toast && (
         <div
           className={`fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] px-6 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 ${
-            toast.type === "success" ? "bg-primary text-on-primary" : "bg-error text-on-primary"
+            toast.type === "success"
+              ? "bg-primary text-on-primary"
+              : "bg-error text-on-primary"
           }`}
         >
           <span className="material-symbols-outlined">
@@ -526,3 +635,5 @@ export default function BudgetsPage() {
         </div>
       )}
     </main>
+  );
+}

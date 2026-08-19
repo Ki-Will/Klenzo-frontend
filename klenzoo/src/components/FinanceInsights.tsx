@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, Fragment } from "react";
 import { finance, type Transaction, type Budget } from "@/lib/api";
 import Link from "next/link";
 
@@ -373,29 +373,28 @@ export default function FinanceInsights({
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-card-high/30">
-                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em]">
+                  <th className="p-4 md:p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em]">
                     Item
                   </th>
-                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
+                  <th className="p-4 md:p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
                     Limit
                   </th>
-                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
+                  <th className="p-4 md:p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
                     Actual
                   </th>
-                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-center w-48">
+                  <th className="p-4 md:p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-center w-48">
                     Utilization
                   </th>
-                  <th className="p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
+                  <th className="p-4 md:p-6 text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] text-right">
                     Left
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline/5">
                 {budgetTable.map((row) => (
-                  <>
+                  <Fragment key={row.id}>
                     {/* Main Row */}
                     <tr
-                      key={row.id}
                       onClick={() =>
                         setExpandedRow(expandedRow === row.id ? null : row.id)
                       }
@@ -563,7 +562,7 @@ export default function FinanceInsights({
                         </td>
                       </tr>
                     )}
-                  </>
+                  </Fragment>
                 ))}
               </tbody>
             </table>
@@ -572,147 +571,215 @@ export default function FinanceInsights({
       </section>
 
       {/* Modal & Toast */}
+      {/* Budget Drawer & Toast */}
       {showModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/75 backdrop-blur-md">
-          <div className="bg-card w-full max-w-xl rounded-[40px] overflow-hidden border border-outline/15 shadow-2xl animate-in zoom-in-95 duration-200">
-            <div className="p-8 lg:p-10">
-              <div className="flex items-center justify-between mb-8">
-                <h3 className="text-3xl font-black text-primary-text">
+        <div className="fixed inset-0 z-[100] flex justify-end bg-black/60 backdrop-blur-sm">
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+            @keyframes slideIn {
+              from { transform: translateX(100%); }
+              to { transform: translateX(0); }
+            }
+            .animate-slide-in { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+          `,
+            }}
+          />
+
+          <div className="w-full max-w-lg bg-card border-l border-[var(--c-border)] shadow-2xl h-full flex flex-col animate-slide-in overflow-hidden">
+            {/* Header */}
+            <div className="px-5 sm:px-6 py-5 border-b border-[var(--c-border)] flex justify-between items-center bg-card flex-shrink-0">
+              <div>
+                <h2 className="text-xl font-headline font-extrabold text-primary-text">
                   {editingBudget ? "Edit Budget" : "New Budget"}
-                </h3>
-                <button
-                  onClick={() => {
-                    setShowModal(false);
-                    resetForm();
-                  }}
-                  className="w-10 h-10 rounded-full bg-card-high flex items-center justify-center text-secondary-text hover:text-primary-text transition-colors cursor-pointer"
-                >
-                  <span className="material-symbols-outlined">close</span>
-                </button>
+                </h2>
+                <p className="text-xs text-secondary-text mt-0.5">
+                  {editingBudget
+                    ? "Update your spending limit"
+                    : "Define a new spending limit"}
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                  resetForm();
+                }}
+                className="w-8 h-8 rounded-full flex items-center justify-center bg-card-high hover:bg-card-highest text-secondary-text hover:text-primary-text transition-colors cursor-pointer flex-shrink-0"
+              >
+                <span className="material-symbols-outlined text-lg">close</span>
+              </button>
+            </div>
+
+            {/* Scrollable Form */}
+            <div className="flex-1 overflow-y-auto px-5 sm:px-6 py-5 space-y-6 no-scrollbar">
+              {/* Name */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-semibold text-secondary-text uppercase tracking-widest block">
+                  Budget Name *
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Summer Vacation, Daily Commute"
+                  className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm"
+                />
               </div>
 
-              <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="col-span-2">
-                    <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
-                      Budget Name
-                    </label>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Summer Vacation"
-                      className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
-                      Limit Amount ($)
-                    </label>
-                    <input
-                      type="number"
-                      value={limit}
-                      onChange={(e) => setLimit(e.target.value)}
-                      placeholder="1000"
-                      className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
-                      Period
-                    </label>
-                    <div className="relative">
-                      <select
-                        value={period}
-                        onChange={(e) => setPeriod(e.target.value)}
-                        className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all appearance-none"
-                      >
-                        {PERIODS.map((p) => (
-                          <option
-                            key={p.value}
-                            value={p.value}
-                            className="bg-card text-primary-text"
-                          >
-                            {p.label}
-                          </option>
-                        ))}
-                      </select>
-                      <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-secondary-text">
-                        unfold_more
-                      </span>
-                    </div>
-                  </div>
+              {/* Limit + Period */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-[11px] font-semibold text-secondary-text uppercase tracking-widest block">
+                    Limit Amount ($) *
+                  </label>
+                  <input
+                    type="number"
+                    value={limit}
+                    onChange={(e) => setLimit(e.target.value)}
+                    placeholder="1000"
+                    className="w-full bg-card-deep border-none rounded-2xl py-4 px-4 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm"
+                  />
                 </div>
+                <div className="space-y-2">
+                  <label className="text-[11px] font-semibold text-secondary-text uppercase tracking-widest block">
+                    Period
+                  </label>
+                  <select
+                    value={period}
+                    onChange={(e) => setPeriod(e.target.value)}
+                    className="w-full bg-card-deep border-none rounded-2xl py-4 px-4 text-primary-text text-sm focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+                  >
+                    {PERIODS.map((p) => (
+                      <option key={p.value} value={p.value}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-                {period === "custom" && (
-                  <div className="grid grid-cols-2 gap-4">
+              {/* Custom date range */}
+              {period === "custom" && (
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-semibold text-secondary-text uppercase tracking-widest block">
+                      Start Date
+                    </label>
                     <input
                       type="date"
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none"
+                      className="w-full bg-card-deep border-none rounded-2xl py-4 px-4 text-primary-text text-sm focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                     />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-semibold text-secondary-text uppercase tracking-widest block">
+                      End Date
+                    </label>
                     <input
                       type="date"
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
-                      className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none"
+                      className="w-full bg-card-deep border-none rounded-2xl py-4 px-4 text-primary-text text-sm focus:outline-none focus:ring-1 focus:ring-primary transition-all"
                     />
                   </div>
-                )}
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
-                    Auto-match Category
-                  </label>
-                  <input
-                    type="text"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    placeholder="e.g. food"
-                    className="w-full bg-card-deep border border-outline/20 rounded-2xl p-4 text-primary-text focus:ring-2 focus:ring-primary focus:outline-none transition-all"
-                  />
                 </div>
+              )}
 
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-secondary-text font-bold mb-2 block">
-                    Style
-                  </label>
-                  <div className="flex gap-4 items-center">
-                    <div className="flex flex-wrap gap-2 flex-1">
-                      {COLORS.map((c) => (
-                        <button
-                          key={c}
-                          onClick={() => setColor(c)}
-                          className={`w-6 h-6 rounded-full transition-all cursor-pointer ${color === c ? "ring-2 ring-primary ring-offset-2 ring-offset-[var(--c-card)] scale-110" : "opacity-40 hover:opacity-70"}`}
-                          style={{ backgroundColor: c }}
-                        />
-                      ))}
-                    </div>
-                    <div className="flex flex-wrap gap-2 flex-1">
-                      {ICONS.map((i) => (
-                        <button
-                          key={i}
-                          onClick={() => setIcon(i)}
-                          className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all cursor-pointer ${icon === i ? "bg-primary text-on-primary scale-110" : "bg-card-high text-secondary-text hover:bg-card-highest"}`}
-                        >
-                          <span className="material-symbols-outlined text-[16px]">
-                            {i}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={handleSave}
-                  disabled={submitting || !name || !limit}
-                  className="w-full py-5 luminous-gradient text-white rounded-full font-bold text-lg hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
-                >
-                  {submitting ? "Saving…" : editingBudget ? "Update" : "Create"}
-                </button>
+              {/* Auto-match category */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-semibold text-secondary-text uppercase tracking-widest block">
+                  Auto-match Category (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  placeholder="e.g. food, travel"
+                  className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm"
+                />
               </div>
+
+              {/* Color */}
+              <div className="space-y-3">
+                <label className="text-[11px] font-semibold text-secondary-text uppercase tracking-widest block">
+                  Color
+                </label>
+                <div className="flex items-center gap-3 flex-wrap">
+                  {COLORS.map((c) => (
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => setColor(c)}
+                      className={`w-8 h-8 rounded-full transition-all cursor-pointer flex items-center justify-center ${
+                        color === c
+                          ? "scale-125 ring-2 ring-white ring-offset-2 ring-offset-card"
+                          : "opacity-50 hover:opacity-100"
+                      }`}
+                      style={{ backgroundColor: c }}
+                    >
+                      {color === c && (
+                        <span className="material-symbols-outlined text-white text-xs">
+                          check
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Icon */}
+              <div className="space-y-3">
+                <label className="text-[11px] font-semibold text-secondary-text uppercase tracking-widest block">
+                  Icon
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {ICONS.map((ic) => (
+                    <button
+                      key={ic}
+                      type="button"
+                      onClick={() => setIcon(ic)}
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all cursor-pointer ${
+                        icon === ic
+                          ? "bg-primary text-white"
+                          : "bg-card-deep text-secondary-text hover:bg-card-high hover:text-primary-text"
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-lg">
+                        {ic}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {error && <p className="text-error text-xs font-semibold">{error}</p>}
+            </div>
+
+            {/* Footer */}
+            <div className="p-5 sm:p-6 border-t border-[var(--c-border)] bg-card flex gap-3 flex-shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowModal(false);
+                  resetForm();
+                }}
+                className="flex-1 py-4 rounded-full bg-card-high text-secondary-text hover:text-primary-text font-headline font-bold text-sm hover:bg-card-highest transition-all cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={submitting || !name || !limit}
+                onClick={handleSave}
+                className="flex-1 py-4 luminous-gradient text-white font-headline font-bold text-sm rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:hover:scale-100 cursor-pointer"
+              >
+                {submitting
+                  ? "Saving…"
+                  : editingBudget
+                    ? "Update Budget"
+                    : "Create Budget"}
+              </button>
             </div>
           </div>
         </div>

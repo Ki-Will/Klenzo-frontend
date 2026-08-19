@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { habits as habitsApi, type Habit } from "@/lib/api";
-import Link from "next/link";
 
 const HABIT_ICONS: Record<string, string> = {
   "Deep Meditation": "mindfulness",
@@ -28,7 +27,7 @@ function isCompletedToday(habit: Habit): boolean {
   return last === new Date().toDateString();
 }
 
-// ─── Add Habit Drawer ─────────────────────────────────────────────────────────
+// ─── Add Habit Modal ──────────────────────────────────────────────────────────
 function AddHabitModal({
   onClose,
   onCreated,
@@ -42,11 +41,9 @@ function AddHabitModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const isSubmitDisabled = !name.trim();
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (isSubmitDisabled) return;
+    if (!name.trim()) return;
     setLoading(true);
     setError("");
     try {
@@ -72,35 +69,17 @@ function AddHabitModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes slideIn {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-        .animate-slide-in { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-      `}} />
-
-      <div className="w-full max-w-lg bg-card border-l border-[var(--c-border)] shadow-2xl h-full flex flex-col animate-slide-in overflow-hidden">
-        {/* Header */}
-        <div className="px-6 py-5 border-b border-[var(--c-border)] flex justify-between items-center bg-card flex-shrink-0">
-          <div>
-            <h2 className="text-xl font-headline font-extrabold text-primary-text">New Habit</h2>
-            <p className="text-xs text-secondary-text mt-0.5">Build your daily momentum</p>
-          </div>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center bg-card-high hover:bg-card-highest text-secondary-text hover:text-primary-text transition-colors cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-lg">close</span>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+      <div className="w-full max-w-md bg-card rounded-2xl p-8 shadow-2xl border border-outline/20">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-headline font-bold text-primary-text">New Habit</h2>
+          <button onClick={onClose} className="text-secondary-text hover:text-primary-text transition-colors">
+            <span className="material-symbols-outlined">close</span>
           </button>
         </div>
-
-        {/* Scrollable Form */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
-          {/* Habit Name */}
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
               Habit Name *
             </label>
             <input
@@ -109,27 +88,23 @@ function AddHabitModal({
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Morning Meditation"
               required
-              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm font-semibold"
+              className="w-full bg-input border border-outline/10 rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             />
           </div>
-
-          {/* Description */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
               Description
             </label>
-            <textarea
+            <input
+              type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="e.g. 20 minutes every morning before coffee"
-              rows={3}
-              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none text-sm"
+              placeholder="e.g. 20 minutes every morning"
+              className="w-full bg-input border border-outline/10 rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             />
           </div>
-
-          {/* Frequency */}
-          <div className="space-y-3">
-            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest block">
+          <div className="space-y-2">
+            <label className="text-xs font-semibold text-secondary-text uppercase tracking-widest">
               Frequency
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -138,42 +113,26 @@ function AddHabitModal({
                   key={f}
                   type="button"
                   onClick={() => setFrequency(f)}
-                  className={`py-4 rounded-2xl text-sm font-bold capitalize transition-all cursor-pointer flex flex-col items-center gap-1.5 ${
+                  className={`py-3 rounded-2xl text-sm font-bold capitalize transition-all ${
                     frequency === f
-                      ? "bg-primary/20 border border-primary/40 text-primary"
-                      : "bg-card-deep text-secondary-text hover:bg-card-high"
+                      ? "bg-primary/10 border border-primary/40 text-primary"
+                      : "bg-input text-secondary-text hover:bg-card-high"
                   }`}
                 >
-                  <span className="material-symbols-outlined text-xl">
-                    {f === "daily" ? "wb_sunny" : "calendar_view_week"}
-                  </span>
-                  <span>{f}</span>
+                  {f}
                 </button>
               ))}
             </div>
           </div>
-
-          {error && <p className="text-error text-xs font-semibold">{error}</p>}
-        </form>
-
-        {/* Footer */}
-        <div className="p-6 border-t border-[var(--c-border)] bg-card flex gap-3 flex-shrink-0">
+          {error && <p className="text-error text-sm">{error}</p>}
           <button
-            type="button"
-            onClick={onClose}
-            className="flex-1 py-4 rounded-full bg-card-high text-secondary-text hover:text-primary-text font-headline font-bold text-sm hover:bg-card-highest transition-all cursor-pointer"
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            disabled={loading || isSubmitDisabled}
-            onClick={handleSubmit}
-            className="flex-1 py-4 luminous-gradient text-white font-headline font-bold text-sm rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-40 disabled:hover:scale-100 cursor-pointer"
+            type="submit"
+            disabled={loading}
+            className="w-full py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
           >
             {loading ? "Creating…" : "Create Habit"}
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
@@ -182,11 +141,10 @@ function AddHabitModal({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HabitsPage() {
   const [habitList, setHabitList] = useState<Habit[]>([]);
-  const [loadingHabits, setLoadingHabits] = useState(true);
+  const [, setLoadingHabits] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [completing, setCompleting] = useState<number | null>(null);
 
-  // Fetch from API on mount
   useEffect(() => {
     setLoadingHabits(true);
     habitsApi
@@ -213,7 +171,6 @@ export default function HabitsPage() {
         )
       );
     } catch {
-      // Optimistic update fallback
       setHabitList((prev) =>
         prev.map((h) =>
           h.id === id
@@ -259,14 +216,7 @@ export default function HabitsPage() {
             <div>
               <h1 className="font-headline text-5xl lg:text-6xl font-extrabold tracking-tighter text-primary-text mb-2">
                 Morning{" "}
-                <span
-                  className="font-headline"
-                  style={{
-                    background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-fixed-dim) 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
+                <span className="font-headline text-primary">
                   Flow.
                 </span>
               </h1>
@@ -288,7 +238,7 @@ export default function HabitsPage() {
           <div className="grid grid-cols-12 gap-6">
             {/* Featured habit — large card */}
             {featured && (
-              <div className="col-span-12 lg:col-span-8 bg-card rounded-2xl p-8 relative overflow-hidden group border border-outline/10">
+              <div className="col-span-12 lg:col-span-8 bg-card rounded-2xl p-8 relative overflow-hidden group border border-outline/10 shadow-sm">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-24 -mt-24 group-hover:bg-primary/10 transition-all duration-700" />
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="flex justify-between items-start mb-12 flex-wrap gap-4">
@@ -303,7 +253,7 @@ export default function HabitsPage() {
                       </div>
                       <div>
                         <h3 className="text-2xl font-headline font-bold text-primary-text">{featured.name}</h3>
-                        <p className="text-secondary-text/60">{featured.description}</p>
+                        <p className="text-secondary-text">{featured.description}</p>
                       </div>
                     </div>
                     <div className="bg-card-highest px-4 py-2 rounded-full">
@@ -325,7 +275,7 @@ export default function HabitsPage() {
                             <div
                               className={`absolute bottom-0 w-full rounded-t-xl ${
                                 h === "100%"
-                                  ? "bg-primary shadow-[0_-10px_20px_rgba(90,77,255,0.3)]"
+                                  ? "bg-primary shadow-md"
                                   : "bg-primary/40"
                               }`}
                               style={{ height: h }}
@@ -346,7 +296,7 @@ export default function HabitsPage() {
                       <button
                         onClick={() => handleComplete(featured.id)}
                         disabled={isCompletedToday(featured) || completing === featured.id}
-                        className="px-8 py-3 bg-primary rounded-full text-white font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-8 py-3 bg-primary rounded-full text-white font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
                       >
                         {isCompletedToday(featured)
                           ? "✓ Done Today"
@@ -365,7 +315,7 @@ export default function HabitsPage() {
               {rest.slice(0, 2).map((habit) => (
                 <div
                   key={habit.id}
-                  className="bg-card rounded-2xl p-6 border-l-4 border-primary hover:bg-card-high transition-colors group cursor-pointer border border-outline/10"
+                  className="bg-card rounded-2xl p-6 border-l-4 border-primary hover:bg-card-high transition-colors group cursor-pointer border-t border-r border-b border-outline/10 shadow-sm"
                 >
                   <div className="flex justify-between items-center mb-4">
                     <span
@@ -445,12 +395,12 @@ export default function HabitsPage() {
                         </span>
                       </button>
                       <div className="flex-grow min-w-0">
-                        <p className="font-bold text-primary-text truncate">{habit.name}</p>
-                        <p className="text-xs text-secondary-text/60">{habit.description}</p>
+                        <p className="font-bold truncate text-primary-text">{habit.name}</p>
+                        <p className="text-xs text-secondary-text">{habit.description}</p>
                       </div>
                       <button
                         onClick={() => handleDelete(habit.id)}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:text-red-400 p-1"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-error hover:opacity-80 p-1"
                         title="Delete habit"
                       >
                         <span className="material-symbols-outlined text-sm">delete</span>
@@ -463,7 +413,7 @@ export default function HabitsPage() {
 
             {/* Vision / Quote card */}
             <div className="col-span-12 lg:col-span-5 bg-card rounded-2xl p-8 relative overflow-hidden h-[280px] border border-outline/10">
-              <div className="absolute inset-0 bg-primary/5" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
               <div className="relative z-10 h-full flex flex-col justify-end">
                 <span className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold mb-2">
                   Philosophy of Mind
@@ -496,14 +446,14 @@ export default function HabitsPage() {
                     key={i}
                     className={`flex-1 rounded-t transition-all hover:opacity-80 ${
                       i === 5
-                        ? "bg-primary shadow-[0_0_20px_rgba(139,127,255,0.4)]"
+                        ? "bg-primary shadow-sm"
                         : "bg-card-highest hover:bg-primary/20"
                     }`}
                     style={{ height: `${h}%` }}
                   />
                 ))}
               </div>
-              <div className="mt-4 flex justify-between text-[10px] text-secondary-text uppercase tracking-widest opacity-40">
+              <div className="mt-4 flex justify-between text-[10px] text-secondary-text uppercase tracking-widest opacity-60">
                 <span>Nov 12</span>
                 <span>Nov 19</span>
                 <span>Today</span>
