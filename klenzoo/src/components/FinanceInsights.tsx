@@ -58,6 +58,7 @@ export default function FinanceInsights({
   const [endDate, setEndDate] = useState("");
   const [editingBudget, setEditingBudget] = useState<Budget | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Assignment State
   const [showAssignor, setShowAssignor] = useState<number | null>(null);
@@ -137,11 +138,16 @@ export default function FinanceInsights({
     setIcon(ICONS[0]);
     setStartDate("");
     setEndDate("");
+    setError(null);
   }
 
   async function handleSave() {
-    if (!name || !limit) return;
+    if (!name || !limit) {
+      setError("Name and limit are required");
+      return;
+    }
     setSubmitting(true);
+    setError(null);
     try {
       const dto = {
         name,
@@ -166,6 +172,7 @@ export default function FinanceInsights({
       showToast(editingBudget ? "Budget updated" : "Budget created");
     } catch (e: any) {
       showToast(e.message || "Failed to save", "error");
+      setError(e.message || "Failed to save");
     } finally {
       setSubmitting(false);
     }
