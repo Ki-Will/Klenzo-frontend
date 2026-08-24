@@ -1009,3 +1009,108 @@ export const adminApi = {
       method: "DELETE",
     }),
 };
+
+// ─── Articles ───────────────────────────────────────────────────────────────
+
+/** Supported translation languages */
+export type ArticleLang = "en" | "fr" | "rw" | "es" | "ar" | "de" | "hi" | "zh";
+
+export const ARTICLE_LANGUAGES: { code: ArticleLang; label: string }[] = [
+  { code: "en", label: "English" },
+  { code: "fr", label: "French" },
+  { code: "rw", label: "Kinyarwanda" },
+  { code: "es", label: "Spanish" },
+  { code: "ar", label: "Arabic" },
+  { code: "de", label: "German" },
+  { code: "hi", label: "Hindi" },
+  { code: "zh", label: "Chinese" },
+];
+
+/** A single translation entry for an article field */
+export interface ArticleTranslation {
+  lang: ArticleLang;
+  title?: string;
+  excerpt?: string;
+  body?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  slug?: string;
+}
+
+export type ArticleStatus = "draft" | "published" | "archived";
+
+export interface ArticleSection {
+  id: string;
+  order: number;
+  translations: Partial<Record<ArticleLang, {
+    heading?: string;
+    content?: string;
+  }>>;
+}
+
+export interface Article {
+  id: number;
+  slug: string;
+  featuredImage?: string;
+  category?: string;
+  tags?: string[];
+  status: ArticleStatus;
+  publishedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+  translations: ArticleTranslation[];
+  sections: ArticleSection[];
+}
+
+export interface CreateArticleDto {
+  slug?: string;
+  featuredImage?: string;
+  category?: string;
+  tags?: string[];
+  status?: ArticleStatus;
+  publishedAt?: string;
+  translations: ArticleTranslation[];
+  sections: {
+    order: number;
+    translations: Partial<Record<ArticleLang, {
+      heading?: string;
+      content?: string;
+    }>>;
+  }[];
+}
+
+export const articles = {
+  /** POST /admin/articles */
+  create: (dto: CreateArticleDto) =>
+    apiFetch<Article>("/admin/articles", {
+      method: "POST",
+      body: JSON.stringify(dto),
+    }),
+
+  /** GET /admin/articles */
+  list: (page?: number, limit?: number) => {
+    const params = new URLSearchParams();
+    if (page) params.set("page", String(page));
+    if (limit) params.set("limit", String(limit));
+    const qs = params.toString();
+    return apiFetch<{ articles: Article[]; total: number }>(
+      `/admin/articles${qs ? `?${qs}` : ""}`,
+    );
+  },
+
+  /** GET /admin/articles/:id */
+  get: (id: number) => apiFetch<Article>(`/admin/articles/${id}`),
+
+  /** PATCH /admin/articles/:id */
+  update: (id: number, dto: Partial<CreateArticleDto>) =>
+    apiFetch<Article>(`/admin/articles/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(dto),
+    }),
+
+  /** DELETE /admin/articles/:id */
+  delete: (id: number) =>
+    apiFetch<{ success: boolean }>(`/admin/articles/${id}`, {
+      method: "DELETE",
+    }),
+};
