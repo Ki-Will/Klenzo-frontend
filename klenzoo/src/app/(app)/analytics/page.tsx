@@ -183,8 +183,9 @@ export default function AnalyticsPage() {
 
   if (!loading && transactions.length === 0) {
     return (
-      <main className="min-h-screen flex items-center justify-center px-4 sm:px-6">
-        <div className="text-center max-w-md">
+      <main className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative">
+        <div className="glow-orb glow-orb-primary glass-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[120px] pointer-events-none" />
+        <div className="glass-panel text-center max-w-md p-8 rounded-2xl relative z-10">
           <span className="material-symbols-outlined text-6xl text-muted mb-4 block">
             analytics
           </span>
@@ -196,7 +197,7 @@ export default function AnalyticsPage() {
           </p>
           <Link
             href="/expenses"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-primary text-white font-bold"
+            className="glass-btn-primary inline-flex items-center gap-2 px-5 py-3 text-white font-bold"
           >
             Add Transactions
           </Link>
@@ -206,7 +207,9 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <main className="min-h-screen px-4 sm:px-6 lg:px-10 xl:px-12 py-4 sm:py-6 pb-32">
+    <main className="min-h-screen px-4 sm:px-6 lg:px-10 xl:px-12 py-4 sm:py-6 pb-32 relative">
+      {/* Ambient glow */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-20 -right-20 w-72 h-72 rounded-full blur-[100px] pointer-events-none" />
       {/* Header */}
       <section className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
         <div>
@@ -217,7 +220,7 @@ export default function AnalyticsPage() {
             Analytics
           </h1>
         </div>
-        <div className="flex w-full sm:w-auto bg-surface p-1 rounded-full overflow-x-auto no-scrollbar border border-[var(--c-border)]">
+        <div className="flex w-full sm:w-auto glass-panel p-1 rounded-full overflow-x-auto no-scrollbar">
           {(["Monthly", "Quarterly", "Yearly"] as Period[]).map((p) => (
             <button
               key={p}
@@ -237,7 +240,7 @@ export default function AnalyticsPage() {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {SKELETON_SPANS.map((cls, i) => (
-            <div key={i} className={`${cls} h-64 bg-surface rounded-2xl animate-pulse`} />
+            <div key={i} className={`${cls} h-64 glass-panel rounded-2xl animate-pulse`} />
           ))}
         </div>
       ) : (
@@ -245,7 +248,7 @@ export default function AnalyticsPage() {
           {/* Main bento — Bar chart (dominant) + AI Insights (supporting) */}
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 lg:gap-6 mb-6">
             {/* ── Bar Chart (HERO) ── */}
-            <div className="xl:col-span-8 bg-surface rounded-2xl p-4 sm:p-6 lg:p-8 flex flex-col gap-6 relative overflow-hidden">
+            <div className="xl:col-span-8 glass-panel rounded-2xl p-4 sm:p-6 lg:p-8 flex flex-col gap-6 relative overflow-hidden">
               {/* Subtle gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
 

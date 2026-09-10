@@ -65,8 +65,9 @@ export default function LoginForm() {
 
   return (
     <main className="min-h-screen bg-background text-on-surface flex flex-col items-center justify-center overflow-hidden relative">
-      <div className="absolute -top-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Ambient glow orbs */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-40 -left-40 w-80 h-80 rounded-full blur-[100px] pointer-events-none" />
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -bottom-40 -right-40 w-80 h-80 rounded-full blur-[100px] pointer-events-none" style={{ animationDelay: "1.5s" }} />
 
       <div className="relative z-10 w-full max-w-md px-6 py-12 md:py-24">
         <div className="flex flex-col items-center">
@@ -78,8 +79,8 @@ export default function LoginForm() {
           </div>
 
           {forgotSent ? (
-            <div className="w-full text-center space-y-6">
-              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto">
+            <div className="glass-panel w-full text-center space-y-6 p-8 rounded-2xl">
+              <div className="w-16 h-16 glass-badge flex items-center justify-center mx-auto">
                 <span className="material-symbols-outlined text-primary text-3xl">
                   mark_email_read
                 </span>
@@ -99,7 +100,7 @@ export default function LoginForm() {
               </button>
             </div>
           ) : forgotMode ? (
-            <form onSubmit={handleForgot} className="w-full space-y-6">
+            <form onSubmit={handleForgot} className="glass-panel w-full space-y-6 p-8 rounded-2xl">
               <div>
                 <label className="block text-on-surface-variant text-[11px] font-semibold mb-2 ml-4 uppercase tracking-widest">
                   Email
@@ -114,17 +115,22 @@ export default function LoginForm() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
                     required
-                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-card-high transition-all"
+                    className="glass-input w-full py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none"
                   />
                 </div>
               </div>
               {error && (
-                <p className="text-error text-sm text-center">{error}</p>
+                <div className="flex items-center gap-2 bg-error-container/20 border border-error/20 rounded-2xl px-4 py-3">
+                  <span className="material-symbols-outlined text-error text-sm">
+                    error
+                  </span>
+                  <p className="text-error text-sm">{error}</p>
+                </div>
               )}
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full luminous-gradient text-white font-headline font-extrabold py-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 cursor-pointer"
+                className="glass-btn-primary w-full text-white font-headline font-extrabold py-4 disabled:opacity-50 cursor-pointer"
               >
                 {submitting ? "Sending…" : "Send Reset Link"}
               </button>
@@ -137,7 +143,7 @@ export default function LoginForm() {
               </button>
             </form>
           ) : (
-            <form onSubmit={handleLogin} className="w-full space-y-8">
+            <form onSubmit={handleLogin} className="glass-panel w-full space-y-8 p-8 rounded-2xl">
               <div className="space-y-4">
                 <div>
                   <label className="block text-on-surface-variant text-[11px] font-semibold mb-2 ml-4 uppercase tracking-widest">
@@ -154,7 +160,7 @@ export default function LoginForm() {
                       placeholder="email or username"
                       required
                       autoComplete="email"
-                      className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-card-high transition-all"
+                      className="glass-input w-full py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -182,7 +188,7 @@ export default function LoginForm() {
                       placeholder="••••••••"
                       required
                       autoComplete="current-password"
-                      className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-12 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-card-high transition-all"
+                      className="glass-input w-full py-4 pl-12 pr-12 text-on-surface placeholder:text-muted/50 focus:outline-none"
                     />
                     <button
                       type="button"
@@ -209,7 +215,7 @@ export default function LoginForm() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full luminous-gradient text-white font-headline font-extrabold py-4 rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="glass-btn-primary w-full text-white font-headline font-extrabold py-4 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 {submitting ? "Accessing…" : "ACCESS PORTAL"}
               </button>
@@ -225,7 +231,7 @@ export default function LoginForm() {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
-                  className="flex items-center justify-center gap-3 glass-panel border border-[var(--c-border)] py-3 rounded-2xl hover:bg-card-high transition-all cursor-pointer"
+                  className="glass-card flex items-center justify-center gap-3 py-3 cursor-pointer"
                 >
                   <span className="text-xs font-semibold tracking-wider">
                     GOOGLE
@@ -233,7 +239,7 @@ export default function LoginForm() {
                 </button>
                 <button
                   type="button"
-                  className="flex items-center justify-center gap-3 glass-panel border border-[var(--c-border)] py-3 rounded-2xl hover:bg-card-high transition-all cursor-pointer"
+                  className="glass-card flex items-center justify-center gap-3 py-3 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-xl opacity-80">
                     phone_iphone

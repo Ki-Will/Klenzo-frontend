@@ -74,7 +74,9 @@ export default function SecurityPage() {
   }
 
   return (
-    <main className="px-6 lg:px-12 py-6 min-h-screen">
+    <main className="px-6 lg:px-12 py-6 min-h-screen relative">
+      {/* Ambient glow */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-20 -left-20 w-72 h-72 rounded-full blur-[100px] pointer-events-none" />
       <div className="max-w-3xl mx-auto space-y-8">
         <div>
           <span className="text-primary uppercase tracking-[0.3em] text-[10px] mb-2 block">Protection</span>
@@ -82,7 +84,7 @@ export default function SecurityPage() {
         </div>
 
         {/* Change Password */}
-        <form onSubmit={handlePasswordUpdate} className="bg-surface rounded-2xl p-8 space-y-5">
+        <form onSubmit={handlePasswordUpdate} className="glass-panel rounded-2xl p-8 space-y-5 relative z-10">
           <div className="flex items-center gap-3 mb-2">
             <span className="material-symbols-outlined text-primary">lock</span>
             <h3 className="font-headline font-bold text-lg">Change Password</h3>
@@ -98,10 +100,10 @@ export default function SecurityPage() {
                 type="password"
                 value={f.value}
                 onChange={(e) => f.set(e.target.value)}
+                className="glass-input w-full px-4 py-3 text-sm"
                 placeholder="••••••••"
                 autoComplete={f.auto}
                 required
-                className="w-full bg-input border-none rounded-2xl py-4 px-6 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
               />
             </div>
           ))}
@@ -120,14 +122,14 @@ export default function SecurityPage() {
           <button
             type="submit"
             disabled={pwSaving}
-            className="px-8 py-3 luminous-gradient text-white rounded-full font-bold text-sm active:scale-95 transition-transform disabled:opacity-50"
+            className="glass-btn-primary px-8 py-3 text-white font-bold text-sm disabled:opacity-50 cursor-pointer"
           >
             {pwSaving ? "Updating…" : "Update Password"}
           </button>
         </form>
 
         {/* Forgot Password */}
-        <div className="bg-surface rounded-2xl p-8">
+        <div className="glass-panel rounded-2xl p-8 relative z-10">
           <div className="flex items-center gap-3 mb-6">
             <span className="material-symbols-outlined text-primary">mail</span>
             <h3 className="font-headline font-bold text-lg">Forgot Password</h3>
@@ -145,12 +147,12 @@ export default function SecurityPage() {
                 onChange={(e) => setForgotEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="flex-1 bg-input border-none rounded-2xl py-3 px-5 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+                className="glass-input flex-1 py-3 px-5 text-on-surface placeholder:text-muted/50 focus:outline-none"
               />
               <button
                 type="submit"
                 disabled={forgotLoading}
-                className="px-6 py-3 luminous-gradient text-white rounded-full font-bold text-sm active:scale-95 transition-transform disabled:opacity-50 whitespace-nowrap"
+                className="glass-btn-primary px-6 py-3 text-white font-bold text-sm disabled:opacity-50 whitespace-nowrap cursor-pointer"
               >
                 {forgotLoading ? "Sending…" : "Send Link"}
               </button>
@@ -159,19 +161,19 @@ export default function SecurityPage() {
         </div>
 
         {/* Active Sessions */}
-        <div className="bg-surface rounded-2xl p-8">
+        <div className="glass-panel rounded-2xl p-8 relative z-10">
           <div className="flex items-center gap-3 mb-6">
             <span className="material-symbols-outlined text-primary">devices</span>
             <h3 className="font-headline font-bold text-lg">Active Sessions</h3>
           </div>
           {loadingSessions ? (
             <div className="space-y-3">
-              {[1, 2].map((i) => <div key={i} className="h-16 bg-card-deep rounded-2xl animate-pulse" />)}
+              {[1, 2].map((i) => <div key={i} className="glass-panel h-16 rounded-2xl animate-pulse" />)}
             </div>
           ) : (
             <div className="space-y-3">
               {sessions.map((s) => (
-                <div key={s.id} className="flex justify-between items-center p-4 bg-card-deep rounded-2xl">
+                <div key={s.id} className="glass-card flex justify-between items-center p-4">
                   <div className="flex items-center gap-4">
                     <span className="material-symbols-outlined text-on-surface-variant">
                       {s.isCurrent ? "laptop" : "phone_iphone"}
@@ -205,7 +207,7 @@ export default function SecurityPage() {
         </div>
 
         {/* Passkeys */}
-        <div className="bg-surface rounded-2xl p-8">
+        <div className="glass-panel rounded-2xl p-8 relative z-10">
           <div className="flex items-center gap-3 mb-6">
             <span className="material-symbols-outlined text-primary">fingerprint</span>
             <h3 className="font-headline font-bold text-lg">Passkeys</h3>
@@ -218,7 +220,7 @@ export default function SecurityPage() {
                 on: true,
               },
             ].map((item) => (
-              <div key={item.label} className="flex justify-between items-center p-4 bg-card-deep rounded-2xl">
+              <div key={item.label} className="glass-card flex justify-between items-center p-4">
                 <div>
                   <p className="font-semibold text-sm">{item.label}</p>
                   <p className="text-xs text-on-surface-variant">{item.sub}</p>

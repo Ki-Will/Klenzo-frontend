@@ -43,15 +43,17 @@ export default function WalletsPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
+    <div className="max-w-4xl mx-auto px-4 py-8 relative">
+      {/* Ambient glow */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-20 -right-20 w-72 h-72 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="flex items-center justify-between mb-6 relative z-10">
         <h1 className="text-2xl font-bold" style={{ color: "var(--c-text-primary)" }}>
           Wallets
         </h1>
         <button
           onClick={() => setShowCreate(true)}
-          className="px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2"
-          style={{ backgroundColor: "var(--color-primary)", color: "white" }}
+          className="glass-btn-primary px-4 py-2 text-sm font-semibold flex items-center gap-2 text-white cursor-pointer"
         >
           <span className="material-symbols-outlined text-sm">add</span>
           New Wallet
@@ -65,7 +67,7 @@ export default function WalletsPage() {
       ) : error ? (
         <p className="text-center py-16" style={{ color: "#ef4444" }}>{error}</p>
       ) : wallets.length === 0 ? (
-        <div className="text-center py-16">
+        <div className="glass-panel text-center py-16 rounded-2xl">
           <span className="material-symbols-outlined text-6xl mb-4" style={{ color: "var(--c-text-muted)" }}>
             account_balance_wallet
           </span>
@@ -77,16 +79,16 @@ export default function WalletsPage() {
           </p>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 relative z-10">
           {wallets.map((w) => (
             <div
               key={w.id}
-              className="rounded-2xl p-6 luminous-gradient text-white"
+              className="glass-card p-6 luminous-gradient text-white"
             >
               <div className="flex items-center justify-between mb-4">
                 <span className="text-sm opacity-70">{w.name}</span>
                 <span
-                  className="px-2 py-0.5 rounded-full text-xs font-semibold"
+                  className="glass-badge px-2 py-0.5 text-xs font-semibold"
                   style={{
                     backgroundColor: w.status === "active" ? "rgba(34,197,94,0.3)" : "rgba(245,158,11,0.3)",
                   }}
@@ -108,11 +110,8 @@ export default function WalletsPage() {
 
       {/* Create Wallet Modal */}
       {showCreate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div
-            className="w-full max-w-md mx-4 rounded-2xl p-6"
-            style={{ backgroundColor: "var(--c-card)", border: "1px solid var(--c-border)" }}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center glass-overlay">
+          <div className="glass-panel w-full max-w-md mx-4 rounded-2xl p-6">
             <h2 className="text-lg font-semibold mb-4" style={{ color: "var(--c-text-primary)" }}>
               New Wallet
             </h2>
@@ -126,12 +125,7 @@ export default function WalletsPage() {
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="e.g. Main Account"
-                  className="w-full rounded-xl px-4 py-3 text-sm"
-                  style={{
-                    backgroundColor: "var(--c-input-bg)",
-                    color: "var(--c-text-primary)",
-                    border: "1px solid var(--c-border)",
-                  }}
+                  className="glass-input w-full px-4 py-3 text-sm"
                 />
               </div>
               <div>
@@ -141,12 +135,7 @@ export default function WalletsPage() {
                 <select
                   value={newCurrency}
                   onChange={(e) => setNewCurrency(e.target.value)}
-                  className="w-full rounded-xl px-4 py-3 text-sm"
-                  style={{
-                    backgroundColor: "var(--c-input-bg)",
-                    color: "var(--c-text-primary)",
-                    border: "1px solid var(--c-border)",
-                  }}
+                  className="glass-input w-full px-4 py-3 text-sm"
                 >
                   <option value="NGN">NGN — Nigerian Naira</option>
                   <option value="USD">USD — US Dollar</option>
@@ -154,38 +143,34 @@ export default function WalletsPage() {
                   <option value="EUR">EUR — Euro</option>
                 </select>
               </div>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => { setShowCreate(false); setNewName(""); }}
-                className="flex-1 py-3 rounded-full text-sm font-semibold"
-                style={{ backgroundColor: "var(--c-hover-overlay)", color: "var(--c-text-secondary)" }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={async () => {
-                  if (!newName.trim()) return;
-                  setCreating(true);
-                  try {
-                    await finance.createTransaction({
-                      userId: 0,
-                      amount: 0,
-                      transactionType: "income",
-                      date: new Date().toISOString(),
-                    } as any);
-                    setShowCreate(false);
-                    setNewName("");
-                    loadWallets();
-                  } catch {}
-                  setCreating(false);
-                }}
-                disabled={creating || !newName.trim()}
-                className="flex-1 py-3 rounded-full text-sm font-semibold text-white disabled:opacity-50"
-                style={{ backgroundColor: "var(--color-primary)" }}
-              >
-                {creating ? "Creating..." : "Create Wallet"}
-              </button>
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => setShowCreate(false)}
+                  className="glass-btn-ghost flex-1 py-3 text-sm font-semibold cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={async () => {
+                    if (!newName.trim()) return;
+                    setCreating(true);
+                    try {
+                      await finance.createAccount({ name: newName, currency: newCurrency });
+                      setShowCreate(false);
+                      setNewName("");
+                      loadWallets();
+                    } catch (e: any) {
+                      setError(e.message || "Failed to create wallet");
+                    } finally {
+                      setCreating(false);
+                    }
+                  }}
+                  disabled={creating || !newName.trim()}
+                  className="glass-btn-primary flex-1 py-3 text-sm font-semibold text-white disabled:opacity-50 cursor-pointer"
+                >
+                  {creating ? "Creating…" : "Create Wallet"}
+                </button>
+              </div>
             </div>
           </div>
         </div>

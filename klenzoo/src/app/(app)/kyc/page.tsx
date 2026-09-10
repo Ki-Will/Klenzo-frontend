@@ -22,16 +22,15 @@ export default function KycPage() {
   const badge = statusBadge(status);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="max-w-2xl mx-auto px-4 py-8 relative">
+      {/* Ambient glow */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-20 -right-20 w-72 h-72 rounded-full blur-[100px] pointer-events-none" />
       <h1 className="text-2xl font-bold mb-6" style={{ color: "var(--c-text-primary)" }}>
         Identity Verification
       </h1>
 
       {/* Status Card */}
-      <div
-        className="rounded-2xl p-6 mb-8 flex items-center gap-4"
-        style={{ backgroundColor: "var(--c-card)", border: "1px solid var(--c-border)" }}
-      >
+      <div className="glass-panel rounded-2xl p-6 mb-8 flex items-center gap-4 relative z-10">
         <div
           className="w-12 h-12 rounded-xl flex items-center justify-center"
           style={{ backgroundColor: "rgba(99,102,241,0.12)" }}
@@ -64,11 +63,7 @@ export default function KycPage() {
 
           <div className="space-y-3 mb-8">
             {STEPS.map((step, i) => (
-              <div
-                key={i}
-                className="rounded-2xl p-4 flex items-center gap-4"
-                style={{ backgroundColor: "var(--c-card)", border: "1px solid var(--c-border)" }}
-              >
+              <div key={i} className="glass-card p-4 flex items-center gap-4">
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{ backgroundColor: "rgba(99,102,241,0.12)" }}
@@ -92,9 +87,7 @@ export default function KycPage() {
             ))}
           </div>
 
-          <button
-            className="w-full py-4 rounded-full luminous-gradient text-white font-bold text-sm flex items-center justify-center gap-2"
-          >
+          <button className="glass-btn-primary w-full py-4 text-white font-bold text-sm flex items-center justify-center gap-2 cursor-pointer">
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
             Start Verification
           </button>

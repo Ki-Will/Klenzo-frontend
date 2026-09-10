@@ -69,8 +69,8 @@ function AddHabitModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      <div className="w-full max-w-md bg-card rounded-2xl p-8 shadow-2xl border border-outline/20">
+    <div className="fixed inset-0 z-50 flex items-center justify-center glass-overlay px-4">
+      <div className="w-full max-w-md glass-heavy rounded-2xl p-8 shadow-2xl">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-headline font-bold text-primary-text">New Habit</h2>
           <button onClick={onClose} className="text-secondary-text hover:text-primary-text transition-colors">
@@ -100,7 +100,7 @@ function AddHabitModal({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="e.g. 20 minutes every morning"
-              className="w-full bg-input border border-outline/10 rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+              className="glass-input w-full py-4 px-5 text-primary-text placeholder:text-muted focus:outline-none"
             />
           </div>
           <div className="space-y-2">
@@ -128,7 +128,7 @@ function AddHabitModal({
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 luminous-gradient text-white font-headline font-bold rounded-full shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
+            className="glass-btn-primary w-full py-4 text-white font-headline font-bold disabled:opacity-50 cursor-pointer"
           >
             {loading ? "Creating…" : "Create Habit"}
           </button>
@@ -238,7 +238,7 @@ export default function HabitsPage() {
           <div className="grid grid-cols-12 gap-6">
             {/* Featured habit — large card */}
             {featured && (
-              <div className="col-span-12 lg:col-span-8 bg-card rounded-2xl p-8 relative overflow-hidden group border border-outline/10 shadow-sm">
+              <div className="col-span-12 lg:col-span-8 glass-panel rounded-2xl p-8 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-24 -mt-24 group-hover:bg-primary/10 transition-all duration-700" />
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="flex justify-between items-start mb-12 flex-wrap gap-4">

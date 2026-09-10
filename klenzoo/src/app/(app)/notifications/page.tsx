@@ -29,8 +29,11 @@ export default function NotificationsPage() {
   const read   = notifs.filter((n) => n.read);
 
   return (
-    <main className="px-6 lg:px-12 py-6 min-h-screen">
-      <div className="max-w-3xl mx-auto space-y-8">
+    <main className="px-6 lg:px-12 py-6 min-h-screen relative">
+      {/* Ambient glow */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-20 -right-20 w-72 h-72 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="max-w-3xl mx-auto space-y-8 relative z-10">
 
         {/* Header */}
         <div className="flex justify-between items-end">
@@ -52,12 +55,12 @@ export default function NotificationsPage() {
         {loading ? (
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 bg-surface rounded-2xl animate-pulse" />
+              <div key={i} className="glass-panel h-20 rounded-2xl animate-pulse" />
             ))}
           </div>
 
         ) : notifs.length === 0 ? (
-          <div className="text-center py-20 text-on-surface-variant">
+          <div className="glass-panel text-center py-20 rounded-2xl text-on-surface-variant">
             <span className="material-symbols-outlined text-5xl mb-4 block opacity-30">notifications_off</span>
             <p className="font-headline font-bold text-lg">All caught up</p>
             <p className="text-sm mt-1">No notifications right now.</p>
@@ -75,10 +78,10 @@ export default function NotificationsPage() {
                   {unread.map((n) => (
                     <div
                       key={n.id}
-                      className="flex items-start gap-4 p-5 bg-surface rounded-2xl border border-primary/10 hover:bg-card-high transition-all group"
+                      className="glass-card flex items-start gap-4 p-5 border-primary/10 group"
                     >
                       {/* Icon — default dark style for all notification types */}
-                      <div className="w-11 h-11 rounded-full bg-card-highest flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-full glass-panel flex items-center justify-center flex-shrink-0">
                         <span className="material-symbols-outlined text-on-surface-variant text-[18px]">
                           {TYPE_ICON[n.type ?? "default"] ?? TYPE_ICON.default}
                         </span>
@@ -99,18 +102,18 @@ export default function NotificationsPage() {
                           {/* Mark read — visible on hover */}
                           <button
                             onClick={() => markRead(n.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-primary p-0.5 cursor-pointer"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-full hover:bg-card-highest cursor-pointer"
                             title="Mark as read"
                           >
-                            <span className="material-symbols-outlined text-sm">check</span>
+                            <span className="material-symbols-outlined text-on-surface-variant text-sm">check</span>
                           </button>
                           {/* Dismiss */}
                           <button
                             onClick={() => dismiss(n.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-error p-0.5 cursor-pointer"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-full hover:bg-card-highest cursor-pointer"
                             title="Dismiss"
                           >
-                            <span className="material-symbols-outlined text-sm">close</span>
+                            <span className="material-symbols-outlined text-on-surface-variant text-sm">close</span>
                           </button>
                         </div>
                       </div>
@@ -120,18 +123,20 @@ export default function NotificationsPage() {
               </section>
             )}
 
-            {/* ── Read / Earlier ── */}
+            {/* ── Read ── */}
             {read.length > 0 && (
               <section>
-                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">Earlier</p>
+                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">
+                  Earlier · {read.length}
+                </p>
                 <div className="space-y-2">
                   {read.map((n) => (
                     <div
                       key={n.id}
-                      className="flex items-start gap-4 p-5 bg-surface rounded-2xl hover:bg-card-high transition-all opacity-50 hover:opacity-100 group"
+                      className="glass-card flex items-start gap-4 p-5 opacity-70 group"
                     >
-                      <div className="w-11 h-11 rounded-full bg-card-high flex items-center justify-center flex-shrink-0">
-                        <span className="material-symbols-outlined text-muted text-[18px]">
+                      <div className="w-11 h-11 rounded-full glass-panel flex items-center justify-center flex-shrink-0">
+                        <span className="material-symbols-outlined text-on-surface-variant text-[18px]">
                           {TYPE_ICON[n.type ?? "default"] ?? TYPE_ICON.default}
                         </span>
                       </div>
@@ -147,10 +152,10 @@ export default function NotificationsPage() {
                         </span>
                         <button
                           onClick={() => dismiss(n.id)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity text-on-surface-variant hover:text-error p-0.5 cursor-pointer"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-full hover:bg-card-highest cursor-pointer"
                           title="Dismiss"
                         >
-                          <span className="material-symbols-outlined text-sm">close</span>
+                          <span className="material-symbols-outlined text-on-surface-variant text-sm">close</span>
                         </button>
                       </div>
                     </div>

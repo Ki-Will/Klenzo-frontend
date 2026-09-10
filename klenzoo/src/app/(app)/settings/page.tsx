@@ -8,8 +8,10 @@ export default function SettingsPage() {
   const { user, logout } = useAuth();
 
   return (
-    <main className="min-h-screen py-6">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+    <main className="min-h-screen py-6 relative">
+      {/* Ambient glow */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-20 -right-20 w-72 h-72 rounded-full blur-[100px] pointer-events-none" />
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="mb-10">
           <h1 className="text-5xl font-extrabold font-headline tracking-tighter mb-2">Settings</h1>
           <p className="text-on-surface-variant">Manage your financial ecosystem and personal preferences.</p>
@@ -17,7 +19,7 @@ export default function SettingsPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           {/* Profile Card */}
-          <section className="md:col-span-8 bg-surface rounded-2xl p-8 relative overflow-hidden">
+          <section className="md:col-span-8 glass-panel rounded-2xl p-8 relative overflow-hidden">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
               <div
                 className="w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden relative group"
@@ -85,7 +87,7 @@ export default function SettingsPage() {
           </section>
 
           {/* Security Card */}
-          <section className="md:col-span-4 bg-surface rounded-2xl p-8 flex flex-col justify-between"
+          <section className="md:col-span-4 glass-panel rounded-2xl p-8 flex flex-col justify-between"
             style={{ borderBottom: "4px solid rgba(90,77,255,0.15)" }}>
             <div>
               <div className="flex items-center gap-3 mb-6">
@@ -116,7 +118,7 @@ export default function SettingsPage() {
           </section>
 
           {/* Notifications */}
-          <section className="md:col-span-5 bg-surface rounded-2xl p-8">
+          <section className="md:col-span-5 glass-panel rounded-2xl p-8">
             <div className="flex items-center gap-3 mb-6">
               <span className="material-symbols-outlined text-primary">notifications_active</span>
               <h3 className="text-lg font-bold font-headline">Notifications</h3>
@@ -163,7 +165,7 @@ export default function SettingsPage() {
           </section>
 
           {/* Quick Nav */}
-          <section className="md:col-span-7 bg-surface rounded-2xl p-8">
+          <section className="md:col-span-7 glass-panel rounded-2xl p-8">
             <h3 className="text-lg font-bold font-headline mb-6">Quick Navigation</h3>
             <div className="grid grid-cols-2 gap-3">
               {[
@@ -184,7 +186,7 @@ export default function SettingsPage() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="flex items-center gap-3 p-4 bg-card-deep rounded-2xl hover:bg-card-high transition-colors group"
+                    className="glass-card flex items-center gap-3 p-4 group"
                   >
                     <span className="material-symbols-outlined text-primary text-sm">{item.icon}</span>
                     <span className="text-sm font-medium">{item.label}</span>
@@ -197,7 +199,7 @@ export default function SettingsPage() {
           </section>
 
           {/* Support & Sign Out */}
-          <section className="md:col-span-12 bg-surface rounded-2xl p-8 flex flex-col md:flex-row justify-between items-center gap-6">
+          <section className="md:col-span-12 glass-panel rounded-2xl p-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-6 flex-wrap">
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-primary">support_agent</span>
@@ -212,11 +214,11 @@ export default function SettingsPage() {
             <div className="flex gap-4">
               <button
                 onClick={logout}
-                className="px-8 py-3 bg-card-high rounded-full font-bold text-sm hover:bg-card-highest transition-all"
+                className="glass-btn-ghost px-8 py-3 font-bold text-sm cursor-pointer"
               >
                 Sign Out
               </button>
-              <button className="px-8 py-3 luminous-gradient text-white rounded-full font-bold text-sm active:scale-95 transition-transform">
+              <button className="glass-btn-primary px-8 py-3 text-white font-bold text-sm cursor-pointer">
                 Contact Expert
               </button>
             </div>

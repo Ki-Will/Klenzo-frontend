@@ -71,7 +71,7 @@ function AddTaskModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex justify-end glass-overlay">
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes slideIn {
           from { transform: translateX(100%); }
@@ -80,9 +80,9 @@ function AddTaskModal({
         .animate-slide-in { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
       `}} />
 
-      <div className="w-full max-w-lg bg-card border-l border-[var(--c-border)] shadow-2xl h-full flex flex-col animate-slide-in overflow-hidden">
+      <div className="w-full max-w-lg glass-heavy border-l border-[var(--c-border)] shadow-2xl h-full flex flex-col animate-slide-in overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-5 border-b border-[var(--c-border)] flex justify-between items-center bg-card flex-shrink-0">
+        <div className="px-6 py-5 border-b border-[var(--c-border)] flex justify-between items-center glass-heavy flex-shrink-0">
           <div>
             <h2 className="text-xl font-headline font-extrabold text-primary-text">New Task</h2>
             <p className="text-xs text-secondary-text mt-0.5">Add to your kanban board</p>
@@ -108,7 +108,7 @@ function AddTaskModal({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Design System Overhaul"
               required
-              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-sm font-semibold"
+              className="glass-input w-full py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none text-sm font-semibold"
             />
           </div>
 
@@ -122,7 +122,7 @@ function AddTaskModal({
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Optional details about this task..."
               rows={3}
-              className="w-full bg-card-deep border-none rounded-2xl py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all resize-none text-sm"
+              className="glass-input w-full py-4 px-5 text-primary-text placeholder:text-muted/50 focus:outline-none resize-none text-sm"
             />
           </div>
 

@@ -16,6 +16,8 @@ export default function OnboardingPage() {
 
   return (
     <main className="min-h-screen bg-[#0a0b0e] text-on-surface flex flex-col items-center justify-between px-5 sm:px-8 py-8 relative overflow-hidden selection:bg-teal-400 selection:text-black">
+      {/* Ambient glow orbs */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute top-[18%] left-1/2 -translate-x-1/2 w-[560px] h-[560px] rounded-full blur-[140px] pointer-events-none" />
       <div
         className={`absolute top-[18%] left-1/2 -translate-x-1/2 w-[560px] h-[560px] ${activeSlide.glow} rounded-full blur-[140px] pointer-events-none transition-all duration-700 ease-out`}
       />
@@ -26,7 +28,7 @@ export default function OnboardingPage() {
       <header className="relative z-10 w-full max-w-5xl flex items-center justify-between">
         <div className="flex items-center gap-3">
           <KlenzooLogo className="w-28 md:w-40 h-auto" />
-          <span className="hidden sm:inline-block px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-widest bg-white/5 border border-white/10 text-teal-200/80">
+          <span className="glass-badge hidden sm:inline-block px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-teal-200/80">
             Obsidian Glass
           </span>
         </div>
@@ -47,10 +49,10 @@ export default function OnboardingPage() {
               role="tab"
               aria-selected={activeIdx === i}
               onClick={() => setActiveIdx(i)}
-              className={`px-3.5 py-2 rounded-full text-[11px] font-mono tracking-wider transition-all duration-300 flex items-center gap-2 border backdrop-blur-xl ${
+              className={`glass-card px-3.5 py-2 text-[11px] font-mono tracking-wider transition-all duration-300 flex items-center gap-2 ${
                 activeIdx === i
                   ? `${slide.bg} ${slide.border} ${slide.color} font-bold scale-105 shadow-[0_0_24px_rgba(46,230,197,0.18)]`
-                  : "bg-white/5 border-white/10 text-muted hover:text-on-surface hover:bg-white/8"
+                  : "text-muted hover:text-on-surface"
               }`}
             >
               <span className="material-symbols-outlined text-sm">{slide.icon}</span>
@@ -65,7 +67,7 @@ export default function OnboardingPage() {
             {ONBOARDING_LIVE_STATS.map((stat) => (
               <div
                 key={stat.label}
-                className="px-4 py-3 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.35)] min-w-[148px]"
+                className="glass-card px-4 py-3 min-w-[148px] shadow-[0_8px_40px_rgba(0,0,0,0.35)]"
               >
                 <p className="text-lg font-headline font-black text-teal-300 tracking-tight">
                   {stat.value}
@@ -77,7 +79,7 @@ export default function OnboardingPage() {
             ))}
           </div>
 
-          <div className="relative mx-auto max-w-3xl p-8 md:p-12 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/80 transition-all duration-500 overflow-hidden">
+          <div className="glass-heavy relative mx-auto max-w-3xl p-8 md:p-12 rounded-3xl shadow-2xl shadow-black/80 transition-all duration-500 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-teal-400/8 via-transparent to-cyan-500/5 pointer-events-none" />
 
             <div className="relative flex items-center justify-between mb-6">

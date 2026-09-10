@@ -50,8 +50,8 @@ export default function SignUpPage() {
 
   return (
     <main className="min-h-screen bg-background text-on-surface flex flex-col items-center justify-center overflow-x-hidden relative">
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-24 -left-24 w-96 h-96 rounded-full blur-[120px] pointer-events-none" />
+      <div className="glow-orb glow-orb-tertiary glass-pulse absolute -bottom-24 -right-24 w-96 h-96 rounded-full blur-[120px] pointer-events-none" style={{ animationDelay: "1s" }} />
 
       <div className="relative w-full max-w-7xl px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-12 z-10">
         {/* Left: Branding */}
@@ -113,7 +113,7 @@ export default function SignUpPage() {
                     placeholder="alex@klenzoo.com"
                     required
                     autoComplete="email"
-                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+                    className="glass-input w-full py-4 pl-12 pr-4 text-on-surface placeholder:text-muted/50 focus:outline-none"
                   />
                 </div>
               </div>
@@ -135,7 +135,7 @@ export default function SignUpPage() {
                     required
                     minLength={8}
                     autoComplete="new-password"
-                    className="w-full bg-surface border-none rounded-2xl py-4 pl-12 pr-12 text-on-surface placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
+                    className="glass-input w-full py-4 pl-12 pr-12 text-on-surface placeholder:text-muted/50 focus:outline-none"
                   />
                   <button
                     type="button"

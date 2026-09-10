@@ -61,7 +61,10 @@ export default function DashboardPage() {
   const recent = [...transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
 
   return (
-    <main className="px-6 md:px-12 min-h-screen">
+    <main className="px-6 md:px-12 min-h-screen relative">
+      {/* Ambient glow */}
+      <div className="glow-orb glow-orb-primary glass-pulse absolute -top-40 -right-40 w-96 h-96 rounded-full blur-[120px] pointer-events-none" />
+
       {!user ? (
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="flex space-x-2">
@@ -71,7 +74,7 @@ export default function DashboardPage() {
           </div>
         </div>
       ) : (
-      <div className="max-w-7xl mx-auto space-y-12 py-8">
+      <div className="max-w-7xl mx-auto space-y-12 py-8 relative z-10">
         {/* Hero */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-7 space-y-4">
@@ -82,7 +85,7 @@ export default function DashboardPage() {
               <h1 className="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter text-on-surface">
                 ${balance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h1>
-              <div className="flex items-center text-primary bg-primary/10 px-3 py-1 rounded-full text-sm font-semibold">
+              <div className="glass-badge flex items-center text-primary px-3 py-1 text-sm font-semibold">
                 <span className="material-symbols-outlined text-sm mr-1">trending_up</span>
                 Net Balance
               </div>
@@ -100,15 +103,15 @@ export default function DashboardPage() {
           </div>
 
           <div className="lg:col-span-5 grid grid-cols-3 gap-4">
-            <button className="flex flex-col items-center justify-center space-y-2 p-5 rounded-2xl bg-primary text-white hover:brightness-110 transition-all active:scale-95 shadow-[0_0_20px_rgba(90,77,255,0.3)]">
+            <button className="glass-btn-primary flex flex-col items-center justify-center space-y-2 p-5 text-white cursor-pointer">
               <span className="material-symbols-outlined text-2xl">send</span>
               <span className="text-[10px] uppercase font-bold tracking-widest">Send</span>
             </button>
-            <button className="flex flex-col items-center justify-center space-y-2 p-5 rounded-2xl bg-card-high hover:bg-card-highest transition-all active:scale-95 text-primary-text">
+            <button className="glass-card flex flex-col items-center justify-center space-y-2 p-5 cursor-pointer">
               <span className="material-symbols-outlined text-2xl">request_page</span>
               <span className="text-[10px] uppercase font-bold tracking-widest">Request</span>
             </button>
-            <Link href="/expenses/add" className="flex flex-col items-center justify-center space-y-2 p-5 rounded-2xl bg-card-high hover:bg-card-highest transition-all active:scale-95 border border-outline/10 text-primary-text">
+            <Link href="/expenses/add" className="glass-card flex flex-col items-center justify-center space-y-2 p-5">
               <span className="material-symbols-outlined text-2xl">add</span>
               <span className="text-[10px] uppercase font-bold tracking-widest">Add</span>
             </Link>
@@ -117,12 +120,12 @@ export default function DashboardPage() {
 
         {/* Chart + Insight */}
         <section className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <div className="xl:col-span-2 bg-surface rounded-2xl p-8 space-y-8">
+          <div className="xl:col-span-2 glass-panel rounded-2xl p-8 space-y-8">
             <div className="flex justify-between items-center">
               <h3 className="font-headline font-bold text-xl">Spending Velocity</h3>
               <div className="flex space-x-2">
-                <button className="px-4 py-1 text-xs rounded-full bg-card-highest text-on-surface">Weekly</button>
-                <button className="px-4 py-1 text-xs rounded-full text-on-surface-variant hover:bg-card-high transition-colors">Monthly</button>
+                <button className="glass-btn-primary px-4 py-1 text-xs text-white">Weekly</button>
+                <button className="glass-btn-ghost px-4 py-1 text-xs text-on-surface-variant">Monthly</button>
               </div>
             </div>
             <div className="h-48 w-full relative pt-4 flex items-end gap-1">
@@ -140,7 +143,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="bg-card-deep border border-outline/10 rounded-2xl p-8 flex flex-col justify-between">
+          <div className="glass-card p-8 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex items-center space-x-3 text-amber-500 dark:text-amber-300">
                 <span className="material-symbols-outlined">lightbulb</span>
@@ -158,9 +161,9 @@ export default function DashboardPage() {
                   {totalIncome > 0 ? `${Math.round((balance / totalIncome) * 100)}%` : "—"}
                 </span>
               </div>
-              <div className="w-full bg-card-high h-2 rounded-full overflow-hidden">
+              <div className="glass-progress w-full h-2">
                 <div
-                  className="bg-primary h-full transition-all"
+                  className="bg-primary h-full transition-all rounded-full"
                   style={{ width: totalIncome > 0 ? `${Math.min(100, Math.max(0, (balance / totalIncome) * 100))}%` : "0%" }}
                 />
               </div>
@@ -178,15 +181,15 @@ export default function DashboardPage() {
             {loadingTx ? (
               <div className="space-y-3">
                 {[1,2,3].map((i) => (
-                  <div key={i} className="h-20 bg-surface rounded-2xl animate-pulse" />
+                  <div key={i} className="glass-panel h-20 rounded-2xl animate-pulse" />
                 ))}
               </div>
             ) : (
               <div className="space-y-3">
                 {recent.map((tx) => (
-                  <Link key={tx.id} href={`/expenses/${tx.id}`} className="group flex items-center justify-between p-5 rounded-2xl bg-surface hover:bg-card-high transition-all">
+                  <Link key={tx.id} href={`/expenses/${tx.id}`} className="glass-card group flex items-center justify-between p-5">
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 rounded-full bg-card-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
                         <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>{txIcon(tx)}</span>
                       </div>
                       <div>
@@ -202,7 +205,7 @@ export default function DashboardPage() {
                   </Link>
                 ))}
                 {recent.length === 0 && (
-                  <div className="text-center py-12 text-on-surface-variant">
+                  <div className="glass-panel text-center py-12 rounded-2xl text-on-surface-variant">
                     <span className="material-symbols-outlined text-4xl mb-3 block opacity-30">receipt_long</span>
                     No transactions yet.{" "}
                     <Link href="/expenses/add" className="text-primary hover:underline">Add one</Link>
@@ -212,7 +215,7 @@ export default function DashboardPage() {
             )}
           </div>
 
-          <div className="lg:col-span-4 bg-surface rounded-2xl overflow-hidden relative min-h-[280px]">
+          <div className="lg:col-span-4 glass-panel rounded-2xl overflow-hidden relative min-h-[280px]">
             <div className="absolute inset-0 bg-primary/5" />
             <div className="relative p-8 h-full flex flex-col justify-between">
               <div>
@@ -226,7 +229,7 @@ export default function DashboardPage() {
                   { href: "/groups", icon: "group", label: "Social Circles" },
                   { href: "/analytics", icon: "insights", label: "Analytics" },
                 ].map((item) => (
-                  <Link key={item.href} href={item.href} className="flex items-center gap-3 p-3 rounded-xl bg-card-high/50 hover:bg-card-high transition-all group">
+                  <Link key={item.href} href={item.href} className="glass-card flex items-center gap-3 p-3 group">
                     <span className="material-symbols-outlined text-primary text-sm">{item.icon}</span>
                     <span className="text-sm font-medium text-primary-text">{item.label}</span>
                     <span className="material-symbols-outlined text-on-surface-variant text-sm ml-auto opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
@@ -241,4 +244,3 @@ export default function DashboardPage() {
     </main>
   );
 }
-
