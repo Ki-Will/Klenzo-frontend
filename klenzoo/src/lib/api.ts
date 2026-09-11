@@ -786,6 +786,13 @@ export const finance = {
       method: "DELETE",
     }),
 
+  /** POST /finance/accounts */
+  createAccount: (dto: { name: string; currency: string }) =>
+    apiFetch<unknown>("/finance/accounts", {
+      method: "POST",
+      body: JSON.stringify(dto),
+    }),
+
   /** GET /finance/accounts */
   getAccounts: () => apiFetch<unknown[]>("/finance/accounts"),
 };
