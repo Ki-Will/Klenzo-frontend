@@ -70,8 +70,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       // Normal login — set user immediately
+      const { user } = result as { user: UserProfile };
       setState({
-        user: result.user,
+        user,
         loading: false,
         error: null,
       });
