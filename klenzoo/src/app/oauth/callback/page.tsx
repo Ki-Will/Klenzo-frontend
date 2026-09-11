@@ -53,7 +53,7 @@ export default function OAuthCallbackPage() {
   if (needMfa) {
     async function handleMfa(e: React.FormEvent) {
       e.preventDefault();
-      if (mfaCode.length !== 6) return;
+      if (mfaCode.length !== 6 || !mfaToken) return;
       setMfaLoading(true);
       setMfaError("");
       try {
