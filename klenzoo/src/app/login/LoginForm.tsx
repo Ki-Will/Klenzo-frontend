@@ -3,10 +3,11 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import type { MfaRequiredResult } from "@/lib/api";
 import KlenzooLogo from "@/components/KlenzooLogo";
 
 export default function LoginForm() {
-  const { login, user, loading } = useAuth();
+  const { login, completeMfaLogin, user, loading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   // Validate redirect param — only allow relative paths starting with /
@@ -20,6 +21,12 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [forgotMode, setForgotMode] = useState(false);
   const [forgotSent, setForgotSent] = useState(false);
+
+  // MFA state
+  const [mfaResult, setMfaResult] = useState<MfaRequiredResult | null>(null);
+  const [mfaCode, setMfaCode] = useState("");
+  const [mfaError, setMfaError] = useState("");
+  const [mfaLoading, setMfaLoading] = useState(false);
 
   // Only auto-redirect on initial load if already authenticated.
   // Don't run after a manual login — handleLogin does that itself.
@@ -36,13 +43,45 @@ export default function LoginForm() {
     setError("");
     try {
       didManualLogin.current = true;
-      await login(email, password);
+      const result = await login(email, password);
+
+      if ("mfaRequired" in result && result.mfaRequired) {
+        setMfaResult(result);
+        setSubmitting(false);
+        return;
+      }
+
       router.replace(redirect);
     } catch (err: unknown) {
       didManualLogin.current = false;
       setError(err instanceof Error ? err.message : "Invalid credentials");
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function handleMfaSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!mfaResult || mfaCode.length !== 6) return;
+    setMfaLoading(true);
+    setMfaError("");
+    try {
+      await completeMfaLogin(mfaResult.mfaToken, mfaCode);
+      router.replace(redirect);
+    } catch (err: unknown) {
+      setMfaError(err instanceof Error ? err.message : "Invalid code");
+    } finally {
+      setMfaLoading(false);
+    }
+  }
+
+  async function handleGoogle() {
+    try {
+      const { auth: authApi } = await import("@/lib/api");
+      const { url } = await authApi.googleUrl(redirect);
+      window.location.href = url;
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Could not start Google login");
     }
   }
 
@@ -74,11 +113,71 @@ export default function LoginForm() {
           <div className="mb-12 text-center w-full flex flex-col items-center">
             <KlenzooLogo className="w-40 md:w-56 h-auto mb-2" />
             <p className="text-on-surface-variant text-[10px] uppercase tracking-wide">
-              {forgotMode ? "Password Recovery" : "Secure Gateway to the Void"}
+              {mfaResult
+                ? "Two-Factor Authentication"
+                : forgotMode
+                  ? "Password Recovery"
+                  : "Secure Gateway to the Void"}
             </p>
           </div>
 
-          {forgotSent ? (
+          {mfaResult ? (
+            <form onSubmit={handleMfaSubmit} className="glass-panel w-full space-y-6 p-8 rounded-2xl">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-16 h-16 glass-badge flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary text-3xl">
+                    security
+                  </span>
+                </div>
+                <p className="text-on-surface-variant text-sm text-center">
+                  Enter the 6-digit code from your authenticator app.
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-on-surface-variant text-[11px] font-semibold mb-2 ml-4 uppercase tracking-widest">
+                  Authentication Code
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={6}
+                  pattern="[0-9]{6}"
+                  value={mfaCode}
+                  onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, ""))}
+                  placeholder="000000"
+                  required
+                  autoFocus
+                  className="glass-input w-full py-4 text-center text-lg tracking-[0.5em] font-mono text-on-surface placeholder:text-muted/50 focus:outline-none"
+                />
+              </div>
+
+              {mfaError && (
+                <div className="flex items-center gap-2 bg-error-container/20 border border-error/20 rounded-2xl px-4 py-3">
+                  <span className="material-symbols-outlined text-error text-sm">
+                    error
+                  </span>
+                  <p className="text-error text-sm">{mfaError}</p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={mfaLoading || mfaCode.length !== 6}
+                className="glass-btn-primary w-full text-white font-headline font-extrabold py-4 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              >
+                {mfaLoading ? "Verifying…" : "VERIFY"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setMfaResult(null); setMfaCode(""); setMfaError(""); }}
+                className="w-full text-center text-on-surface-variant text-sm hover:text-primary transition-colors cursor-pointer"
+              >
+                Back to login
+              </button>
+            </form>
+          ) : forgotSent ? (
             <div className="glass-panel w-full text-center space-y-6 p-8 rounded-2xl">
               <div className="w-16 h-16 glass-badge flex items-center justify-center mx-auto">
                 <span className="material-symbols-outlined text-primary text-3xl">
@@ -231,7 +330,8 @@ export default function LoginForm() {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
-                  className="glass-card flex items-center justify-center gap-3 py-3 cursor-pointer"
+                  onClick={handleGoogle}
+                  className="glass-card flex items-center justify-center gap-3 py-3 cursor-pointer hover:bg-[var(--c-card)] transition-colors"
                 >
                   <span className="text-xs font-semibold tracking-wider">
                     GOOGLE
@@ -239,7 +339,8 @@ export default function LoginForm() {
                 </button>
                 <button
                   type="button"
-                  className="glass-card flex items-center justify-center gap-3 py-3 cursor-pointer"
+                  disabled
+                  className="glass-card flex items-center justify-center gap-3 py-3 opacity-40 cursor-not-allowed"
                 >
                   <span className="material-symbols-outlined text-xl opacity-80">
                     phone_iphone

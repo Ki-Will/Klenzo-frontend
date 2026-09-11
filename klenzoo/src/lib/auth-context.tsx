@@ -8,7 +8,12 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
-import { auth, type UserProfile } from "./api";
+import {
+  auth,
+  type UserProfile,
+  type LoginResult,
+  type MfaRequiredResult,
+} from "./api";
 
 interface AuthState {
   user: UserProfile | null;
@@ -17,7 +22,13 @@ interface AuthState {
 }
 
 interface AuthContextValue extends AuthState {
-  login: (email: string, password: string) => Promise<void>;
+  /**
+   * Login with email + password. If MFA is enabled for the account, the
+   * caller receives a MfaRequiredResult and must call completeMfaLogin()
+   * to finish authentication.
+   */
+  login: (email: string, password: string) => Promise<LoginResult>;
+  completeMfaLogin: (mfaToken: string, code: string) => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -51,11 +62,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       const result = await auth.login(email, password);
+
+      // MFA required — the caller must handle the TOTP step
+      if ("mfaRequired" in result && result.mfaRequired) {
+        setState((s) => ({ ...s, loading: false }));
+        return result;
+      }
+
+      // Normal login — set user immediately
       setState({
         user: result.user,
         loading: false,
         error: null,
       });
+
+      return result;
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Invalid credentials";
 
@@ -69,13 +90,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const completeMfaLogin = useCallback(async (mfaToken: string, code: string) => {
+    setState((s) => ({ ...s, loading: true, error: null }));
+    try {
+      const result = await auth.verifyMfa(mfaToken, code);
+      setState({ user: result.user, loading: false, error: null });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Invalid code";
+      setState({ user: null, loading: false, error: msg });
+      throw new Error(msg);
+    }
+  }, []);
+
   const register = useCallback(async (email: string, password: string) => {
     setState((s) => ({ ...s, loading: true, error: null }));
 
     try {
       await auth.register(email, password);
       const result = await auth.login(email, password);
-      setState({ user: result.user, loading: false, error: null });
+      if ("user" in result) {
+        setState({ user: result.user, loading: false, error: null });
+      }
     } catch (err: unknown) {
       const msg =
         err instanceof Error && err.message !== "Session expired"
@@ -98,7 +133,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ ...state, login, register, logout, refreshUser }}
+      value={{ ...state, login, completeMfaLogin, register, logout, refreshUser }}
     >
       {children}
     </AuthContext.Provider>

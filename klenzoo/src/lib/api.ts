@@ -191,6 +191,7 @@ async function apiFetch<T>(
 export interface UserProfile {
   id: number;
   email: string;
+  role?: string;
   isActive: boolean;
   lastLogin: string;
   name?: string;
@@ -374,6 +375,20 @@ export interface UpdateTaskDto {
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 
+export interface LoginSuccessResult {
+  success: boolean;
+  user: UserProfile;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface MfaRequiredResult {
+  mfaRequired: true;
+  mfaToken: string;
+}
+
+export type LoginResult = LoginSuccessResult | MfaRequiredResult;
+
 export const auth = {
   /** POST /auth/register */
   register: (email: string, password: string) =>
@@ -382,16 +397,31 @@ export const auth = {
       body: JSON.stringify({ email, password }),
     }),
 
-  /** POST /auth/login */
+  /** POST /auth/login — may return mfaRequired if MFA is enabled */
   login: (email: string, password: string) =>
-    apiFetch<{
-      success: boolean;
-      user: UserProfile;
-      accessToken: string;
-      refreshToken: string;
-    }>("/auth/login", {
+    apiFetch<LoginResult>("/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
+    }),
+
+  /** POST /auth/login/mfa — completes login after a TOTP code is entered */
+  verifyMfa: (mfaToken: string, code: string) =>
+    apiFetch<LoginSuccessResult>("/auth/login/mfa", {
+      method: "POST",
+      body: JSON.stringify({ mfaToken, code }),
+    }),
+
+  /** GET /auth/google/url — returns the Google OAuth authorization URL */
+  googleUrl: (redirect?: string) =>
+    apiFetch<{ url: string }>(
+      `/auth/google/url${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ""}`,
+    ),
+
+  /** POST /auth/google/token — exchange a Google ID token (mobile / PWA) */
+  googleToken: (idToken: string) =>
+    apiFetch<LoginResult>("/auth/google/token", {
+      method: "POST",
+      body: JSON.stringify({ idToken }),
     }),
 
   /** POST /auth/refresh */
@@ -461,6 +491,31 @@ export const auth = {
     apiFetch<{ success: boolean }>(`/auth/sessions/${id}/revoke`, {
       method: "POST",
     }).catch(() => ({ success: false })),
+
+  // ─── MFA ────────────────────────────────────────────────────────────────
+
+  /** GET /auth/mfa/status */
+  mfaStatus: () => apiFetch<{ mfaEnabled: boolean }>("/auth/mfa/status"),
+
+  /** POST /auth/mfa/setup — returns otpauthUrl + secret (for QR rendering) */
+  setupMfa: () =>
+    apiFetch<{ secret: string; otpauthUrl: string }>("/auth/mfa/setup", {
+      method: "POST",
+    }),
+
+  /** POST /auth/mfa/enable — verifies first code and enables MFA */
+  enableMfa: (code: string) =>
+    apiFetch<{ mfaEnabled: boolean }>("/auth/mfa/enable", {
+      method: "POST",
+      body: JSON.stringify({ code }),
+    }),
+
+  /** POST /auth/mfa/disable — disables MFA (requires valid code) */
+  disableMfa: (code: string) =>
+    apiFetch<{ mfaEnabled: boolean }>("/auth/mfa/disable", {
+      method: "POST",
+      body: JSON.stringify({ code }),
+    }),
 };
 
 // ─── Finance ──────────────────────────────────────────────────────────────────
