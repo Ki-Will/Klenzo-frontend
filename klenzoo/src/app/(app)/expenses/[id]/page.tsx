@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { finance, type Transaction } from "@/lib/api";
+import { formatCurrency } from "@/lib/currency";
 
 const CATEGORY_ICONS: Record<string, string> = {
   food: "restaurant", dining: "restaurant", restaurant: "restaurant",
@@ -103,7 +104,7 @@ export default function ExpenseDetailPage() {
             </p>
           </div>
           <div className={`text-5xl font-headline font-extrabold tracking-tighter ${isIncome ? "text-primary" : "text-error"}`}>
-            {isIncome ? "+" : "-"}${amount.toFixed(2)}
+            {formatCurrency(amount, "RWF", { showSign: isIncome })}
           </div>
           <span className="px-4 py-1 bg-card-high rounded-full text-xs font-bold uppercase tracking-widest text-secondary-text">
             {isIncome ? "Income" : "Expense"}
@@ -135,7 +136,7 @@ export default function ExpenseDetailPage() {
             <span className="text-xs font-bold uppercase tracking-widest">AI Insight</span>
           </div>
           <p className="text-secondary-text leading-relaxed">
-            This {transaction.transactionType} of <span className="text-primary font-bold">${amount.toFixed(2)}</span> was recorded on{" "}
+            This {transaction.transactionType} of <span className="text-primary font-bold">{formatCurrency(amount, "RWF")}</span> was recorded on{" "}
             {new Date(transaction.date).toLocaleDateString("en-US", { month: "long", day: "numeric" })}.
             {transaction.category && ` Category: ${transaction.category}.`}
           </p>

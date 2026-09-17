@@ -8,6 +8,7 @@ import {
   type Budget,
   type CreateBudgetDto,
 } from "@/lib/api";
+import { formatCurrency } from "@/lib/currency";
 
 const CATEGORIES = ["All", "Food", "Travel", "Bills", "Shopping", "Other"];
 const CAT_ICONS: Record<string, string> = {
@@ -461,7 +462,7 @@ function BulkAssignModal({
                       <p className={`font-bold text-sm whitespace-nowrap ${
                         t.transactionType === "income" ? "text-primary" : "text-error"
                       }`}>
-                        {t.transactionType === "income" ? "+" : "-"}${Number(t.amount).toFixed(0)}
+                        {t.transactionType === "income" ? "+" : "-"}{formatCurrency(Number(t.amount), "RWF")}
                       </p>
                     </div>
                   ))}
@@ -679,8 +680,8 @@ export default function ExpensesPage() {
             <p className="text-on-surface-variant text-xs uppercase tracking-widest mb-1">
               Total Outflow
             </p>
-            <p className="text-2xl font-headline font-bold">
-              ${totalOutflow.toFixed(2)}
+            <p className="text-2xl font-headline font-bold" style={{ fontVariantNumeric: "tabular-nums" }}>
+              {formatCurrency(totalOutflow, "RWF")}
             </p>
           </div>
         </div>
@@ -764,13 +765,13 @@ export default function ExpensesPage() {
                       </td>
 
                       {/* Limit */}
-                      <td className="p-4 md:p-6 text-right font-bold text-sm text-secondary-text whitespace-nowrap">
-                        ${row.budget.toLocaleString()}
+                      <td className="p-4 md:p-6 text-right font-bold text-sm text-secondary-text whitespace-nowrap" style={{ fontVariantNumeric: "tabular-nums" }}>
+                        {formatCurrency(row.budget, "RWF")}
                       </td>
 
                       {/* Actual */}
-                      <td className="p-4 md:p-6 text-right font-black text-sm text-primary-text whitespace-nowrap">
-                        ${row.spent.toFixed(2)}
+                      <td className="p-4 md:p-6 text-right font-black text-sm text-primary-text whitespace-nowrap" style={{ fontVariantNumeric: "tabular-nums" }}>
+                        {formatCurrency(row.spent, "RWF")}
                       </td>
 
                       {/* Utilization */}
@@ -799,9 +800,8 @@ export default function ExpensesPage() {
                         className={`p-4 md:p-6 text-right font-black text-sm whitespace-nowrap ${row.remaining < 0 ? "text-error" : "text-primary"}`}
                       >
                         <div className="flex items-center justify-end gap-2">
-                          <span>
-                            {row.remaining < 0 ? "-" : ""}$
-                            {Math.abs(row.remaining).toLocaleString()}
+                          <span style={{ fontVariantNumeric: "tabular-nums" }}>
+                            {formatCurrency(row.remaining, "RWF")}
                           </span>
                           <span
                             className={`material-symbols-outlined text-sm transition-transform ${expandedRow === row.id ? "rotate-180" : ""}`}

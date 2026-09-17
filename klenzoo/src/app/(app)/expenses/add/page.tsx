@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { finance, type TransactionType, type Group, type GroupMember, type Budget } from "@/lib/api";
+import { formatCurrency } from "@/lib/currency";
 import CustomDatePicker from "@/components/CustomDatePicker";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -304,7 +305,7 @@ function AddExpenseForm() {
             {isGroupMode && totalAmt > 0 && splits.length > 0 && (
               <p className="text-muted text-xs mt-2">
                 Your share: <span className="text-primary font-bold">
-                  ${splits.find((s) => s.isMe)?.amount.toFixed(2) ?? "0.00"}
+                  {formatCurrency(splits.find((s) => s.isMe)?.amount ?? 0, "RWF")}
                 </span>
               </p>
             )}
@@ -478,7 +479,7 @@ function AddExpenseForm() {
                       {/* Amount input */}
                       {splitMethod === "equal" ? (
                         <div className="text-right flex-shrink-0">
-                          <p className="text-sm font-bold text-primary">${s.amount.toFixed(2)}</p>
+                          <p className="text-sm font-bold text-primary" style={{ fontVariantNumeric: "tabular-nums" }}>{formatCurrency(s.amount, "RWF")}</p>
                           <p className="text-[10px] text-muted">{s.percentage.toFixed(1)}%</p>
                         </div>
                       ) : (
@@ -508,7 +509,7 @@ function AddExpenseForm() {
                     {splitMethod === "percentage"
                       ? `${totalPct.toFixed(1)}% of 100% ${splitOk ? "✓" : `— ${(100 - totalPct).toFixed(1)}% unassigned`}`
                       : totalAmt > 0
-                        ? `$${totalSplit.toFixed(2)} of $${totalAmt.toFixed(2)} ${splitOk ? "✓" : `— $${(totalAmt - totalSplit).toFixed(2)} unassigned`}`
+                        ? `${formatCurrency(totalSplit, "RWF")} of ${formatCurrency(totalAmt, "RWF")} ${splitOk ? "✓" : `— ${formatCurrency(totalAmt - totalSplit, "RWF")} unassigned`}`
                         : "Enter a total amount"}
                   </div>
 
@@ -540,7 +541,7 @@ function AddExpenseForm() {
             {submitting
               ? "Saving…"
               : isGroupMode
-                ? `Split $${parseFloat(amount) > 0 ? parseFloat(amount).toFixed(2) : "0.00"} among ${splits.length}`
+                ? `Split ${formatCurrency(parseFloat(amount) > 0 ? parseFloat(amount) : 0, "RWF")} among ${splits.length}`
                 : "Confirm Transaction"}
           </button>
 

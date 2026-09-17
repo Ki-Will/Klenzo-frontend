@@ -7,6 +7,7 @@ import {
   type CreateBudgetDto,
   type Transaction,
 } from "@/lib/api";
+import { formatCurrency } from "@/lib/currency";
 
 const PERIODS = [
   { value: "monthly", label: "Monthly" },
@@ -503,10 +504,10 @@ export default function BudgetsPage() {
 
                   <div className="flex justify-between items-baseline mb-3">
                     <p className="text-2xl font-black text-primary-text">
-                      ${Number(b.spent).toLocaleString()}
+                      {formatCurrency(Number(b.spent), "RWF")}
                     </p>
                     <p className="text-xs text-muted">
-                      of ${Number(b.limitAmount).toLocaleString()}
+                      of {formatCurrency(Number(b.limitAmount), "RWF")}
                     </p>
                   </div>
 
@@ -589,7 +590,7 @@ export default function BudgetsPage() {
                               </div>
                             </div>
                             <p className="text-xs font-black text-primary-text">
-                              -${Number(t.amount).toFixed(0)}
+                              -{formatCurrency(Number(t.amount), "RWF")}
                             </p>
                           </div>
                         ))
