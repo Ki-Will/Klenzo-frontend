@@ -1,0 +1,4 @@
+[submodule "klenzoo-frontend"]
+	path = klenzoo-frontend
+	url = https://github.com/Ki-Will/Klenzoo-Frontend.git
+	branch = main
